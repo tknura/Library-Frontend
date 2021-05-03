@@ -1,41 +1,50 @@
 module.exports = {
-  'env': {
-    'browser': true,
-    'es2021': true
-  },
-  'extends': [
-    'eslint:recommended',
+  root: true,
+  ignorePatterns: ['**/node_modules/', '**/serviceWorker.js', '**/generated/**'],
+  extends: [
+    'react-app',
+    'airbnb',
     'plugin:react/recommended',
+    'plugin:jsx-a11y/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:promise/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended'
   ],
-  'parser': '@typescript-eslint/parser',
-  'parserOptions': {
-    'ecmaFeatures': {
-      'jsx': true
-    },
-    'ecmaVersion': 12,
-    'sourceType': 'module'
+  parser: '@typescript-eslint/parser',
+  env: {
+    browser: true,
   },
-  'plugins': [
-    'react',
-    '@typescript-eslint'
-  ],
-  'rules': {
-    'indent': [
-      'error',
-      2
-    ],
-    'linebreak-style': [
-      'error',
-      'unix'
-    ],
-    'quotes': [
-      'error',
-      'single'
-    ],
-    'semi': [
-      'error',
-      'never' 
-    ]
-  }
+  plugins: ['react', 'jsx-a11y', 'import', 'promise', '@typescript-eslint'],
+  rules: {
+    semi: ['error', 'never'],
+    'global-require': 'off',
+    'comma-dangle': 'off',
+    'object-curly-newline': 'off',
+    'react/jsx-filename-extension': 'off',
+    'react/jsx-wrap-multilines': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/forbid-prop-types': 'off',
+    'react/prop-types': 'off',
+    'react/display-name': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'import/extensions': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'no-unused-vars': 'warn',
+    'no-console': 'warn',
+    'no-nested-ternary': 'off',
+    'no-param-reassign': 'off',
+    'arrow-parens': 'off',
+    'no-confusing-arrow': 'off',
+    '@typescript-eslint/no-namespace': 'off',
+  },
+  settings: {
+    'import/resolver': {
+      typescript: {} // this loads <rootdir>/tsconfig.json to eslint
+    },
+  },
 }
