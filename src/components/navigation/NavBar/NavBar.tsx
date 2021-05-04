@@ -45,7 +45,7 @@ const NavBar = ({
           <FormControl color="primary" size="small">
             <Styled.Select
               value={i18n.language}
-              onChange={event => handleLanguageChange(event.target.value as string)}
+              onChange={event => handleLanguageChange(`${event.target.value}`)}
             >
               <MenuItem value="pl">Polski</MenuItem>
               <MenuItem value="en">English</MenuItem>
