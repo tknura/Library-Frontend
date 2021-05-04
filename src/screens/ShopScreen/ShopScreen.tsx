@@ -4,16 +4,14 @@ import { useTranslation } from 'react-i18next'
 import { NavBar } from 'components/navigation/NavBar/NavBar'
 import { ShopRoutes } from 'components/routes/ShopRoutes'
 import { useLogout, useUserLoggedIn } from 'components/providers/AuthProvider'
-import { useShowSnackbar } from 'hooks/useShowSnackbar'
 import { CART_ROUTE, AUTH_ROUTE } from 'constants/routeNames'
 import * as Styled from './ShopScreen.styles'
 
 const ShopScreen = (): JSX.Element => {
   const { url } = useRouteMatch()
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
   const isUserLoggedIn = useUserLoggedIn()
   const logout = useLogout()
-  const show = useShowSnackbar()
   const history = useHistory()
 
   const handleRedirectToCart = () => {
@@ -23,7 +21,7 @@ const ShopScreen = (): JSX.Element => {
   const handleAuthButtonClick = () => {
     if (isUserLoggedIn) {
       logout()
-      show({ message: t('navigation.signOutMessage') })
+      // TO DO Add snackbar with confirmation info
     } else {
       history.push(`${AUTH_ROUTE}`)
     }

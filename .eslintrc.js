@@ -15,6 +15,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
     browser: true,
+    node: true,
   },
   plugins: ['react', 'jsx-a11y', 'import', 'promise', '@typescript-eslint'],
   rules: {
@@ -41,6 +42,8 @@ module.exports = {
     'arrow-parens': 'off',
     'no-confusing-arrow': 'off',
     '@typescript-eslint/no-namespace': 'off',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
   },
   settings: {
     'import/resolver': {
