@@ -15,6 +15,9 @@ If you have problems with the code in this repository, please file issues & bug 
     - [Import](#import)
     - [Export](#export)
   - [Styling](#styling)
+- [Contributing](#contributing)
+  - [Commit messages](#commit-messages)
+  - [Branch names](#branch-names)
 
 ## Getting Started
 
@@ -101,7 +104,7 @@ import { TextInput } from '../components/TextInput'
 
 Do not use `export default`  in the project. Each `export` should be named to make it easier to automaticaly import types and to assist IDE in code refactoring.
 
-#### Styling
+### Styling
 
 Declare styled-components in <ComponentName>.styles.tsx file, then import styles into component as:
  
@@ -121,4 +124,39 @@ render(
     Drag me!
   </Comp>
 )
+```
+
+## Contributing
+
+### Commit messages
+```
+<type>(<scope>): <short summary> (#<task number>)
+  │       │             │
+  │       │             └─⫸ Summary in present tense. Not capitalized. No period at the end.
+  │       │
+  │       └─⫸ Commit Scope: animations|bazel|benchpress|common|compiler|compiler-cli|core|
+  │                          elements|forms|http|language-service|localize|platform-browser|
+  │                          platform-browser-dynamic|platform-server|router|service-worker|
+  │                          upgrade|zone.js|packaging|changelog|dev-infra|docs-infra|migrations|
+  │                          ngcc|ve
+  │
+  └─⫸ Commit Type: build|ci|docs|feat|fix|perf|refactor|test
+```
+
+The `<type>` and `<summary>` fields are mandatory, the `(<scope>)` field is optional.
+
+Example: 
+```
+feat: add cart button handler (#6)
+```
+
+### Branch names
+Branch should be created with pattern:
+```
+<task number>/<shorten task name, every word separated with dash>
+```
+
+Example: 
+```
+6/add-cart-screen
 ```
