@@ -1,46 +1,126 @@
-# Getting Started with Create React App
+# Library-Frontend <!-- omit in toc -->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Heroo Parent application created using **React**, **React Query** and **TypeScript**.
 
-## Available Scripts
+If you have problems with the code in this repository, please file issues & bug reports [here](https://github.com/tknura/2021_BD2_S15_WYLEGLY-UI/issues)!
 
-In the project directory, you can run:
+## Table of Contents <!-- omit in toc -->
 
-### `npm start`
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Development](#development)
+  - [Project structure](#project-structure)
+  - [Imports and exports](#imports-and-exports)
+    - [Import](#import)
+    - [Export](#export)
+  - [GraphQL flow](#graphql-flow)
+  - [Warnings and Errors](#warnings-and-errors)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To run the project you will need following globally installed tools:
+* **Node.js** v10 or newer ([download](https://nodejs.org/en/download/), [nvm](https://github.com/nvm-sh/nvm), [nvm-windows](https://github.com/coreybutler/nvm-windows))
 
-### `npm run build`
+## Development
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Project structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The basic structure of the project is as follows:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+📦project
+ ┗ 📂src
+   ┣ 📂components       # common components
+   ┃  ┣ 📂data          # components for showing simple data
+   ┃  ┣ 📂forms         # form components
+   ┃  ┣ 📂navigation    # components which are used for navigating
+   ┃  ┣ 📂providers     # hoc for contexts
+   ┃  ┗ 📂routes        # routes declaration componnets
+   ┣ 📂constants        # project constant values
+   ┣ 📂i18n             # internacionalizations
+   ┣ 📂schemas          # validation schemas
+   ┣ 📂hooks            # common hooks
+   ┣ 📂screens          # feature scoped screens with their components
+   ┣ 📂types            # typescript types
+   ┗ 📂utils            # common utility functions
+```
 
-### `npm run eject`
+When creating a new directory in the tree, add it in the description.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Imports and exports
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Import
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The project supports absolute imports from the `src` directory. Preferred import method depends on the location of the imported file. If the file is located higher in the folder tree the import should be absolute, if the file is located in the same folder or nested we use relative import.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Example file structure:
 
-## Learn More
+```
+📦project
+ ┗ 📂src
+   ┣ 📂screens
+   ┃ ┣ 📂AuthScreen.tsx
+   ┃ ┃  ┣ 📜AuthScreen.styles.tsx
+   ┃ ┃  ┗ 📜AuthScreen.tsx
+   ┗ 📂components
+     ┗ 📂forms
+       ┗ 📂SignInForm
+         ┣ 📜SignInForm.styles.tsx
+         ┗ 📜SignInForm.tsx
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Example use cases:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Import of `SignInForm` in `SignInScreen`:
+
+✅ Correct
+```
+import { SignInForm } from './SignInForm'
+```
+❌ Wrong
+```
+import { SignInForm } from 'screens/SignInForm'
+```
+
+Import of `TextInput` in `SignInForm`:
+
+✅ Correct
+```
+import { TextInput } from 'components/TextInput'
+```
+❌ Wrong
+```
+import { TextInput } from '../components/TextInput'
+```
+
+#### Styling
+
+Declare styled-components in <ComponentName>.styles.tsx file, then import styles into component as:
+ 
+```
+import * as Styled from '<ComponentName>.styles'
+```
+
+Props used only for styling in styled components should be declared as transient props ($ prefix). Example:
+```
+const Comp = styled.div`
+  color: ${props =>
+    props.$draggable || 'black'};
+`
+
+render(
+  <Comp $draggable="red" draggable="true">
+    Drag me!
+  </Comp>
+)
+```
+
+#### Export
+
+Do not use `export default`  in the project. Each `export` should be named to make it easier to automaticaly import types and to assist IDE in code refactoring.
+
