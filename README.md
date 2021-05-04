@@ -14,8 +14,7 @@ If you have problems with the code in this repository, please file issues & bug 
   - [Imports and exports](#imports-and-exports)
     - [Import](#import)
     - [Export](#export)
-  - [GraphQL flow](#graphql-flow)
-  - [Warnings and Errors](#warnings-and-errors)
+  - [Styling](#styling)
 
 ## Getting Started
 
@@ -98,6 +97,10 @@ import { TextInput } from 'components/TextInput'
 import { TextInput } from '../components/TextInput'
 ```
 
+#### Export
+
+Do not use `export default`  in the project. Each `export` should be named to make it easier to automaticaly import types and to assist IDE in code refactoring.
+
 #### Styling
 
 Declare styled-components in <ComponentName>.styles.tsx file, then import styles into component as:
@@ -119,8 +122,3 @@ render(
   </Comp>
 )
 ```
-
-#### Export
-
-Do not use `export default`  in the project. Each `export` should be named to make it easier to automaticaly import types and to assist IDE in code refactoring.
-
