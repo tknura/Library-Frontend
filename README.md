@@ -1,6 +1,6 @@
 # Library-Frontend <!-- omit in toc -->
 
-Heroo Parent application created using **React**, **React Query** and **TypeScript**.
+Library application created using **React**, **React Query** and **TypeScript**.
 
 If you have problems with the code in this repository, please file issues & bug reports [here](https://github.com/tknura/2021_BD2_S15_WYLEGLY-UI/issues)!
 
