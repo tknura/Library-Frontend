@@ -1,10 +1,11 @@
 import { ReactNode } from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core'
+import { StylesProvider, ThemeProvider as MuiThemeProvider } from '@material-ui/core'
 import { ThemeProvider } from 'styled-components'
 
 import { AuthProvider } from 'components/providers/AuthProvider'
 import { theme } from 'themes'
+import { FetchProvider } from './FetchProvider'
 
 interface AppProvidersProps {
   children: ReactNode
@@ -17,11 +18,15 @@ const AppProviders = (
 ): JSX.Element => (
   <AuthProvider>
     <QueryClientProvider client={queryClient}>
-      <MuiThemeProvider theme={theme}>
-        <ThemeProvider theme={theme}>
-          {children}
-        </ThemeProvider>
-      </MuiThemeProvider>
+      <FetchProvider>
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              {children}
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
+      </FetchProvider>
     </QueryClientProvider>
   </AuthProvider>
 )
