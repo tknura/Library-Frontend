@@ -1,9 +1,8 @@
-import { HOME_ROUTE, AUTH_ROUTE, BOOK_ROUTE } from 'constants/routeNames'
+import { HOME_ROUTE, AUTH_ROUTE } from 'constants/routeNames'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
 import { ShopScreen } from 'screens/ShopScreen/ShopScreen'
 import { AuthScreen } from 'screens/AuthScreen/AuthScreen'
-import { BookDetails } from 'screens/BookDetails/BookDetails'
 
 const MainRoutes = (): JSX.Element => (
   <Switch>
@@ -13,9 +12,6 @@ const MainRoutes = (): JSX.Element => (
     </Route>
     <Route path={AUTH_ROUTE}>
       <AuthScreen />
-    </Route>
-    <Route path={BOOK_ROUTE}>
-      <BookDetails />
     </Route>
   </Switch>
 )
