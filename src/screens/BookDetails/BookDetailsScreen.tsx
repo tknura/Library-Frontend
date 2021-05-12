@@ -34,8 +34,8 @@ const BookDetailsScreen = (): JSX.Element => {
     <Styled.DetailsContainer>
       <Styled.PictureContainer>
         <SimpleImageSlider
-          width={450}
-          height={450}
+          width={375}
+          height={375}
           showNavs
           showBullets
           images={formattedDate}

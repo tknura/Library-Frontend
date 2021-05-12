@@ -4,24 +4,23 @@ import { useTranslation } from 'react-i18next'
 import * as Styled from './BookDescription.styles'
 
 interface Props {
-    title: string,
-    author: string,
-    available: number,
-    publisher: string,
-    publicationDate: Date,
-    description: string
+  title: string,
+  author: string,
+  available: number,
+  publisher: string,
+  publicationDate: Date,
+  description: string
 }
 
-const BookDescription = (props: Props): JSX.Element => {
+const BookDescription = ({
+  title,
+  author,
+  available,
+  publisher,
+  publicationDate,
+  description
+}: Props): JSX.Element => {
   const { t } = useTranslation()
-  const {
-    title,
-    author,
-    available,
-    publisher,
-    publicationDate,
-    description
-  } = props
   return (
     <Styled.DescriptionContainer>
       <Styled.TextContainer elevation={0}>

@@ -6,12 +6,12 @@ import {
 } from '@material-ui/core'
 
 const DescriptionContainer = styled(Paper)`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 15px;
-    margin: 15px 25px;
-    max-width: 400px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px;
+  margin: 15px 25px;
+  max-width: 400px;
 `
 
 const TextContainer = styled(Paper)`
@@ -22,7 +22,7 @@ ${({ theme }) => `
     padding: 10px 15px;
     margin: 15px 25px;
     background: ${theme.palette.background.default};
-    `}
+  `}
 `
 
 const Text = styled(Typography)`
@@ -31,9 +31,9 @@ const Text = styled(Typography)`
 
 const AvailableText = styled(Typography)`
 ${({ theme }) => `
-  flex: 1;
-  font-size: 18px;
-  color: ${theme.palette.primary.main};
+    flex: 1;
+    font-size: 18px;
+    color: ${theme.palette.primary.main};
   `}
 `
 
