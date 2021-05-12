@@ -71,6 +71,12 @@ export const pl = {
         empty: 'Koszyk jest pusty.',
         sum: 'Podsumowanie: ',
       },
+      details: {
+        available: 'Dostępne egzemplarze',
+        publisher: 'Wydawca',
+        publicationDate: 'Data publikacji',
+        addToCart: 'Dodaj do koszyka',
+      },
     },
   },
 }

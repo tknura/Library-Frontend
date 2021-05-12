@@ -71,6 +71,12 @@ export const en = {
         empty: 'Cart is empty.',
         sum: 'Overall: ',
       },
+      details: {
+        available: 'Available',
+        publisher: 'Publisher',
+        publicationDate: 'Publication date',
+        addToCart: 'Add to cart',
+      },
     },
   },
 }

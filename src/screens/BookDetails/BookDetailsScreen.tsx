@@ -1,5 +1,6 @@
 import SimpleImageSlider from 'react-simple-image-slider'
-import { format } from 'date-fns'
+
+import { BookDescription } from 'components/data/BookDescription/BookDescription'
 import * as Styled from './BookDetailsScreen.styles'
 
 interface Book {
@@ -27,45 +28,29 @@ const tempBook: Book = {
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 }
 
-const BookDetailsScreen = (): JSX.Element => (
-  <Styled.DetailsContainer>
-    <Styled.PictureContainer>
-      <SimpleImageSlider
-        width={450}
-        height={450}
-        showNavs
-        showBullets
-        images={tempBook.photos.map(photo => ({ url: photo }))}
+const BookDetailsScreen = (): JSX.Element => {
+  const formattedDate = tempBook.photos.map(photo => ({ url: photo }))
+  return (
+    <Styled.DetailsContainer>
+      <Styled.PictureContainer>
+        <SimpleImageSlider
+          width={450}
+          height={450}
+          showNavs
+          showBullets
+          images={formattedDate}
+        />
+      </Styled.PictureContainer>
+      <BookDescription
+        title={tempBook.title}
+        author={tempBook.author}
+        available={tempBook.available}
+        publisher={tempBook.publisher}
+        publicationDate={tempBook.publicationDate}
+        description={tempBook.description}
       />
-    </Styled.PictureContainer>
-    <Styled.DescriptionContainer>
-      <Styled.TextContainer elevation={0}>
-        <Styled.Title>
-          {tempBook.title}
-        </Styled.Title>
-        <Styled.Author>
-          {tempBook.author}
-        </Styled.Author>
-      </Styled.TextContainer>
-      <Styled.TextContainer elevation={0}>
-        <Styled.AvailableText>
-          {`Available books: ${tempBook.available}`}
-        </Styled.AvailableText>
-        <Styled.Text>
-          {`Publisher: ${tempBook.publisher}`}
-        </Styled.Text>
-        <Styled.Text>
-          {`Publication date: ${format(tempBook.publicationDate, 'dd/MM/yyyy')}`}
-        </Styled.Text>
-        <Styled.DescriptionText>
-          {tempBook.description}
-        </Styled.DescriptionText>
-      </Styled.TextContainer>
-      <Styled.AddToCartButton>
-        Add to cart
-      </Styled.AddToCartButton>
-    </Styled.DescriptionContainer>
-  </Styled.DetailsContainer>
-)
+    </Styled.DetailsContainer>
+  )
+}
 
 export { BookDetailsScreen }
