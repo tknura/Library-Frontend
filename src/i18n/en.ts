@@ -1,7 +1,7 @@
 export const en = {
   translation: {
     common: {
-      appName: 'Bookshop',
+      appName: 'Library',
       email: 'E-mail',
       password: 'Password',
       firstName: 'First Name',
@@ -63,6 +63,7 @@ export const en = {
             notMatch: 'The passwords do not match.',
             required: 'Password repetition is required.',
           },
+          generic: 'An unknown error occurred during signing up.',
         },
       },
       cart: {

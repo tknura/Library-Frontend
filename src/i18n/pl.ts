@@ -1,7 +1,7 @@
 export const pl = {
   translation: {
     common: {
-      appName: 'Bookshop',
+      appName: 'Biblioteka',
       email: 'E-mail',
       password: 'Hasło',
       firstName: 'Imię',
@@ -63,6 +63,7 @@ export const pl = {
             notMatch: 'Podane hasło nie jest zgodne',
             required: 'Powtórzenie hasła jest wymagane',
           },
+          generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
       cart: {
