@@ -3,16 +3,10 @@ import {
   FormControl,
   IconButton,
   MenuItem,
-  Tab,
-  Tabs,
   Toolbar,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
-import { useHistory } from 'react-router-dom'
 
-import {
-  BOOKS_ROUTE,
-} from 'constants/routeNames'
 import * as Styled from './NavBar.styles'
 
 interface NavBarProps {
@@ -33,7 +27,6 @@ const NavBar = ({
   onAuthButtonClick: handleAuthButtonClick,
 }: NavBarProps): JSX.Element => {
   const { t, i18n } = useTranslation()
-  const history = useHistory()
 
   return (
     <Styled.AppBar position="sticky">
@@ -64,13 +57,6 @@ const NavBar = ({
           </Styled.AuthButton>
         </Styled.ToolbarRightContainer>
       </Toolbar>
-      <Tabs
-        value={history.location.pathname}
-        onChange={(_, value) => history.push(value)}
-        centered
-      >
-        <Tab value={`${url}${BOOKS_ROUTE}`} label={t('navigation.tabNames.books')} />
-      </Tabs>
     </Styled.AppBar>
   )
 }

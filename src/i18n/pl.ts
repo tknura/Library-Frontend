@@ -63,6 +63,7 @@ export const pl = {
             notMatch: 'Podane hasło nie jest zgodne',
             required: 'Powtórzenie hasła jest wymagane',
           },
+          generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
       cart: {

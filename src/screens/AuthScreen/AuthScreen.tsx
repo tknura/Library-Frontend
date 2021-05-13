@@ -6,17 +6,24 @@ import { SignInForm, SignInFormFields } from 'components/forms/SignInForm/SignIn
 import { SignUpForm, SignUpFormFields } from 'components/forms/SignUpForm/SignUpForm'
 import { BOOKS_ROUTE } from 'constants/routeNames'
 import { useSignInMutation, useSignUpMutation } from 'api/mutations/auth'
+import { useShowSnackbar } from 'components/providers/SnackbarProviders'
+import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import * as Styled from './AuthScreen.styles'
 
 const AuthScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const history = useHistory()
+  const { show } = useShowSnackbar()
+
   const [isSignUpFormShown, setSignUpFormShown] = useState(false)
+
   const { mutate: signUpMutate } = useSignUpMutation({
-    onSuccess: () => history.push(BOOKS_ROUTE)
+    onSuccess: () => { history.push(BOOKS_ROUTE) },
+    onError: () => { show({ message: t('screen.signUp.errors.generic'), type: SNACKBAR_ERROR }) }
   })
   const { mutate: signInMutate } = useSignInMutation({
-    onSuccess: () => history.push(BOOKS_ROUTE)
+    onSuccess: () => { history.push(BOOKS_ROUTE) },
+    onError: () => { show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR }) }
   })
 
   const handleFormChange = () => {

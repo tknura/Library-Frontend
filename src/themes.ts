@@ -7,6 +7,7 @@ export const theme = createMuiTheme(
         main: '#6772e5',
       },
       background: {
+        default: '#ffffff',
         paper: '#ECECEC'
       }
     },
