@@ -10,19 +10,19 @@ import { useTranslation } from 'react-i18next'
 import * as Styled from './NavBar.styles'
 
 interface NavBarProps {
-  url: string
   cartItemsAmount: number
   isUserLogged: boolean
   onLanguageChange: (language: string) => void
+  onAppNameButtonClick: () => void
   onCartButtonClick: () => void
   onAuthButtonClick: () => void
 }
 
 const NavBar = ({
-  url,
   cartItemsAmount,
   isUserLogged,
   onLanguageChange: handleLanguageChange,
+  onAppNameButtonClick: handleAppNameButtonClick,
   onCartButtonClick: handleCartButtonClick,
   onAuthButtonClick: handleAuthButtonClick,
 }: NavBarProps): JSX.Element => {
@@ -30,10 +30,10 @@ const NavBar = ({
 
   return (
     <Styled.AppBar position="sticky">
+      <Styled.TitleButton onClick={handleAppNameButtonClick}>
+        {t('common.appName')}
+      </Styled.TitleButton>
       <Toolbar>
-        <Styled.Title variant="h4">
-          {t('common.appName')}
-        </Styled.Title>
         <Styled.ToolbarRightContainer>
           <FormControl color="primary" size="small">
             <Styled.Select

@@ -1,7 +1,7 @@
 export const pl = {
   translation: {
     common: {
-      appName: 'Bookshop',
+      appName: 'Biblioteka',
       email: 'E-mail',
       password: 'Hasło',
       firstName: 'Imię',
