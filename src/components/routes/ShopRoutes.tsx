@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { BOOKS_ROUTE, CART_ROUTE } from 'constants/routeNames'
 import { CartScreen } from 'screens/CartScreen/CartScreen'
 import { BooksTab } from 'screens/tabs/BooksTab'
-import { BookDetailsScreen } from 'screens/BookDetails/BookDetailsScreen'
+import { BookDetailsScreen } from 'screens/BookDetailsScreen/BookDetailsScreen'
 
 interface ShopRoutesProps {
   url: string

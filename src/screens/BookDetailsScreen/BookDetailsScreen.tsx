@@ -29,7 +29,7 @@ const tempBook: Book = {
 }
 
 const BookDetailsScreen = (): JSX.Element => {
-  const formattedDate = tempBook.photos.map(photo => ({ url: photo }))
+  const mappedPhotos = tempBook.photos.map(photo => ({ url: photo }))
   return (
     <Styled.DetailsContainer>
       <Styled.PictureContainer>
@@ -38,7 +38,7 @@ const BookDetailsScreen = (): JSX.Element => {
           height={375}
           showNavs
           showBullets
-          images={formattedDate}
+          images={mappedPhotos}
         />
       </Styled.PictureContainer>
       <BookDescription
