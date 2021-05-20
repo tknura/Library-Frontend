@@ -77,6 +77,7 @@ export const en = {
         publisher: 'Publisher',
         publicationDate: 'Publication date',
         addToCart: 'Add to cart',
+        errorMessage: 'Error on fetching book data',
       },
     },
   },

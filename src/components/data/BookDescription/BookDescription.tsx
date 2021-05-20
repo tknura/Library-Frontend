@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 import * as Styled from './BookDescription.styles'
 
 interface Props {
-  title: string,
-  author: string,
-  available: number,
-  publisher: string,
-  publicationDate: Date,
-  description: string
+  title?: string,
+  author?: string,
+  available?: boolean,
+  publisher?: string,
+  publicationDate?: Date,
+  description?: string
 }
 
 const BookDescription = ({
@@ -39,7 +39,9 @@ const BookDescription = ({
           {`${t('screen.details.publisher')}: ${publisher}`}
         </Styled.Text>
         <Styled.Text>
-          {`${t('screen.details.publicationDate')}: ${format(publicationDate, 'dd/MM/yyyy')}`}
+          {publicationDate
+            ? `${t('screen.details.publicationDate')}: ${format(publicationDate, 'dd/MM/yyyy')}`
+            : `${t('screen.details.publicationDate')}: no date`}
         </Styled.Text>
         <Styled.DescriptionText>
           {description}

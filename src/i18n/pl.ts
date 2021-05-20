@@ -77,6 +77,7 @@ export const pl = {
         publisher: 'Wydawca',
         publicationDate: 'Data publikacji',
         addToCart: 'Dodaj do koszyka',
+        errorMessage: 'Błąd przy wczytywaniu danych książki'
       },
     },
   },
