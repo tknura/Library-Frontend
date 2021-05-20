@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components'
 import { AuthProvider } from 'components/providers/AuthProvider'
 import { theme } from 'themes'
 import { FetchProvider } from './FetchProvider'
+import { SnackbarProvider } from './SnackbarProviders'
 
 interface AppProvidersProps {
   children: ReactNode
@@ -22,7 +23,9 @@ const AppProviders = (
         <StylesProvider injectFirst>
           <MuiThemeProvider theme={theme}>
             <ThemeProvider theme={theme}>
-              {children}
+              <SnackbarProvider>
+                {children}
+              </SnackbarProvider>
             </ThemeProvider>
           </MuiThemeProvider>
         </StylesProvider>

@@ -1,9 +1,10 @@
-import styled from 'styled-components'
-import { AppBar, Button, Select, Typography } from '@material-ui/core'
+import styled, { css } from 'styled-components'
+import { AppBar, Button, Select } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 const StyledAppBar = styled(AppBar)`
   flex-grow: 1;
+  align-items: flex-end;
   padding: 0;
   margin: 0;
 `
@@ -12,8 +13,18 @@ const AuthButton = styled(Button)`
   margin: auto;
 `
 
-const Title = styled(Typography)`
-  flex: 1;
+const TitleButton = styled(Button)`
+${({ theme }) => css`
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;
+    margin-top: -25px;
+    font-size: 2rem;
+    color: ${theme.palette.accents.main};
+  `}
 `
 
 const ToolbarRightContainer = styled.div`
@@ -22,18 +33,22 @@ const ToolbarRightContainer = styled.div`
 `
 
 const StyledSelect = styled(Select)`
-  color: white;
-  border-color: white;
+  ${({ theme }) => css`
+    color: ${theme.palette.accents.main};
+    border-color: ${theme.palette.accents.main};
+  `}
 `
 
 const StyledShoppingCartIcon = styled(ShoppingCartIcon)`
-  color: white;
+  ${({ theme }) => css`
+    color: ${theme.palette.accents.main};
+  `}
 `
 
 export {
   StyledAppBar as AppBar,
   AuthButton,
-  Title,
+  TitleButton,
   StyledSelect as Select,
   ToolbarRightContainer,
   StyledShoppingCartIcon as ShoppingCartIcon,

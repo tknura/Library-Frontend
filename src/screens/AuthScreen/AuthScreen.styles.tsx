@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import {
   Button,
   Paper,
@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core'
 
 const RootContainer = styled.div`
-  ${({ theme }) => `
+  ${({ theme }) => css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,9 +19,12 @@ const RootContainer = styled.div`
 `
 
 const StyledPaper = styled(Paper)`
-  flex: 1;
-  max-width: 500px;
-  padding: 20px;
+  ${({ theme }) => css`
+    flex: 1;
+    max-width: 500px;
+    padding: 20px;
+    background-color: ${theme.palette.background.default};
+  `}
 `
 
 const Title = styled(Typography)`
@@ -30,7 +33,7 @@ const Title = styled(Typography)`
 `
 
 const StyledHr = styled.hr`
-${({ theme }) => `
+  ${({ theme }) => css`
     margin: 35px 0;
     border-top: 1;
     border-top-style: solid;
