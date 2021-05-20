@@ -2,8 +2,8 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 
 import { BOOKS_ROUTE, CART_ROUTE } from 'constants/routeNames'
 import { CartScreen } from 'screens/CartScreen/CartScreen'
-import { BooksTab } from 'screens/tabs/BooksTab'
-import { BookDetailsScreen } from 'screens/BookDetailsScreen/BookDetailsScreen'
+import { BooksScreen } from 'screens/BooksScreen/BooksScreen'
+import { BookDetailsScreen } from 'screens/BookDetails/BookDetailsScreen'
 
 interface ShopRoutesProps {
   url: string
@@ -11,16 +11,16 @@ interface ShopRoutesProps {
 
 const ShopRoutes = ({ url }: ShopRoutesProps): JSX.Element => (
   <Switch>
-    <Redirect exact path={`${url}`} to={`${url}/books`} />
-    <Route exact path={`${url}${BOOKS_ROUTE}`}>
-      <BooksTab />
+    <Route exact path={`${BOOKS_ROUTE}`}>
+      <BooksScreen />
     </Route>
-    <Route exact path={`${url}${CART_ROUTE}`}>
+    <Route exact path={`${CART_ROUTE}`}>
       <CartScreen />
     </Route>
-    <Route exact path={`${url}${BOOKS_ROUTE}/:id`}>
+    <Route exact path={`${BOOKS_ROUTE}/:id`}>
       <BookDetailsScreen />
     </Route>
+    <Redirect exact path="*" to={`${BOOKS_ROUTE}`} />
   </Switch>
 )
 
