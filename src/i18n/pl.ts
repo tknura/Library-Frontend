@@ -73,7 +73,10 @@ export const pl = {
         sum: 'Podsumowanie: ',
       },
       details: {
-        available: 'Dostępne egzemplarze',
+        title: 'Tytuł',
+        author: 'Autor',
+        available: 'Dostępna',
+        unavailable: 'Niedostępna',
         publisher: 'Wydawca',
         publicationDate: 'Data publikacji',
         addToCart: 'Dodaj do koszyka',

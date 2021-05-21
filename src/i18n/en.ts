@@ -73,7 +73,10 @@ export const en = {
         sum: 'Overall: ',
       },
       details: {
+        title: 'Title',
+        author: 'Author',
         available: 'Available',
+        unavailable: 'Unavailable',
         publisher: 'Publisher',
         publicationDate: 'Publication date',
         addToCart: 'Add to cart',

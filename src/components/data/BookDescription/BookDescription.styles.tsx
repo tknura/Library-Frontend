@@ -11,6 +11,7 @@ const DescriptionContainer = styled(Paper)`
   flex-direction: column;
   padding: 10px 15px;
   margin: 15px 25px;
+  min-width: 300px;
   max-width: 400px;
 `
 
@@ -30,11 +31,8 @@ const Text = styled(Typography)`
 `
 
 const AvailableText = styled(Typography)`
-${({ theme }) => `
-    flex: 1;
-    font-size: 18px;
-    color: ${theme.palette.primary.main};
-  `}
+  flex: 1;
+  font-size: 18px;
 `
 
 const DescriptionText = styled(Typography)`
