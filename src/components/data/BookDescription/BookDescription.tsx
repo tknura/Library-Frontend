@@ -27,10 +27,10 @@ const BookDescription = ({
     <Styled.DescriptionContainer>
       <Styled.TextContainer elevation={0}>
         <Styled.Text variant="h4">
-          {title}
+          {title || t('screen.details.title')}
         </Styled.Text>
         <Styled.Text variant="h5">
-          {author}
+          {author || t('screen.details.author')}
         </Styled.Text>
       </Styled.TextContainer>
       <Styled.TextContainer elevation={0}>
@@ -45,7 +45,8 @@ const BookDescription = ({
         {!!publicationDate && (
           <Styled.Text>
             {`${t('screen.details.publicationDate')}: ${format(publicationDate, 'dd/MM/yyyy')}`}
-          </Styled.Text>)}
+          </Styled.Text>
+        )}
         <Styled.DescriptionText>
           {description}
         </Styled.DescriptionText>
