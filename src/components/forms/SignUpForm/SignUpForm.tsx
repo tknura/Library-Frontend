@@ -80,6 +80,7 @@ const SignUpForm = ({
         helperText={touched.phoneNumber && t(errors.phoneNumber as string)}
         required
         label={t('common.phoneNumber')}
+        onChange={handleChange}
         variant="outlined"
       />
       <Styled.TextField

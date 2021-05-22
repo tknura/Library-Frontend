@@ -15,7 +15,7 @@ export const signUpSchema = yup.object().shape({
     .string()
     .required('common.errors.phoneNumber.required')
     .min(9, 'common.errors.phoneNumber.format')
-    .max(11, 'common.errors.phoneNumber.format'),
+    .max(12, 'common.errors.phoneNumber.format'),
   password: yup
     .string()
     .required('common.errors.password.required')

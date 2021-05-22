@@ -2,7 +2,7 @@ import SimpleImageSlider from 'react-simple-image-slider'
 import { useTranslation } from 'react-i18next'
 
 import { BookDescription } from 'components/data/BookDescription/BookDescription'
-import { useBookQuery } from 'api/queries/books'
+import { useBookQuery } from 'api/books'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import * as Styled from './BookDetailsScreen.styles'
