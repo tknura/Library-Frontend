@@ -1,3 +1,4 @@
+
 import CircularProgress from '@material-ui/core/CircularProgress'
 import styled from 'styled-components'
 
@@ -25,5 +26,5 @@ const Loading = styled(CircularProgress)`
 export {
   DetailsContainer,
   PictureContainer,
-  Loading
+  Loading,
 }
