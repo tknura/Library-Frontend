@@ -11,7 +11,7 @@ const BookDetailsScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { isLoading, isError, data: bookData } = useBookQuery(1)
   const { show } = useShowSnackbar()
-  const placeholderPhotos = ['https://bookstoreromanceday.org/wp-content/uploads/2020/08/book-cover-placeholder.png']
+  const placeholderPhotos = ['https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png']
 
   if (isError) {
     show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
