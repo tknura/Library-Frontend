@@ -1,7 +1,8 @@
 import { useQuery, UseQueryResult } from 'react-query'
 
-import { getBooks } from 'api/fetches/get'
+import { getBooks, getBook } from 'api/fetches/get'
 import { useFetch } from 'components/providers/FetchProvider'
+import { Book } from 'api/types/books'
 
 const useBooksQuery = ()
 : UseQueryResult<unknown, unknown> => {
@@ -9,4 +10,10 @@ const useBooksQuery = ()
   return useQuery('books', () => getBooks(fetch))
 }
 
-export { useBooksQuery }
+const useBookQuery = (id: number)
+: UseQueryResult<Book, unknown> => {
+  const { fetch } = useFetch()
+  return useQuery(['books', id], () => getBook(fetch, id))
+}
+
+export { useBooksQuery, useBookQuery }

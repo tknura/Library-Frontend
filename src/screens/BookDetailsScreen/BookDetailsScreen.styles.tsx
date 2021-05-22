@@ -1,3 +1,5 @@
+
+import CircularProgress from '@material-ui/core/CircularProgress'
 import styled from 'styled-components'
 
 const DetailsContainer = styled.div`
@@ -14,7 +16,15 @@ const PictureContainer = styled.div`
   margin: 5px 25px;
 `
 
+const Loading = styled(CircularProgress)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -75px;
+`
+
 export {
   DetailsContainer,
-  PictureContainer
+  PictureContainer,
+  Loading,
 }
