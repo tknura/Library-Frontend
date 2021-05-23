@@ -1,12 +1,20 @@
 import styled, { css } from 'styled-components'
 import { AppBar, Button, Select } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 const StyledAppBar = styled(AppBar)`
-  flex-grow: 1;
-  align-items: flex-end;
-  padding: 0;
-  margin: 0;
+  ${({ theme }) => css`
+    flex-grow: 1;
+    align-items: flex-end;
+    padding: 0;
+    margin: 0;
+
+    ${theme.breakpoints.down('sm')} {
+      padding-top: 80px;
+      align-items: center;
+    }
+  `}
 `
 
 const AuthButton = styled(Button)`
@@ -24,6 +32,10 @@ ${({ theme }) => css`
     margin-top: -25px;
     font-size: 2rem;
     color: ${theme.palette.accents.main};
+
+    ${theme.breakpoints.down('sm')} {
+      top: 50px;
+    }
   `}
 `
 
@@ -45,6 +57,12 @@ const StyledShoppingCartIcon = styled(ShoppingCartIcon)`
   `}
 `
 
+const StyledAccountIcon = styled(AccountCircleIcon)`
+  ${({ theme }) => css`
+    color: ${theme.palette.accents.main};
+  `}
+`
+
 export {
   StyledAppBar as AppBar,
   AuthButton,
@@ -52,4 +70,5 @@ export {
   StyledSelect as Select,
   ToolbarRightContainer,
   StyledShoppingCartIcon as ShoppingCartIcon,
+  StyledAccountIcon as AccountIcon,
 }

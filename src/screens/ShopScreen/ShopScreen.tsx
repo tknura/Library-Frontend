@@ -5,13 +5,13 @@ import { NavBar } from 'components/navigation/NavBar/NavBar'
 import { ShopRoutes } from 'components/routes/ShopRoutes'
 import { useLogout, useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-import { CART_ROUTE, AUTH_ROUTE, BOOKS_ROUTE } from 'constants/routeNames'
+import { CART_ROUTE, AUTH_ROUTE, BOOKS_ROUTE, ACCOUNT_ROUTE } from 'constants/routeNames'
 import { SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import * as Styled from './ShopScreen.styles'
 
 const ShopScreen = (): JSX.Element => {
   const { url } = useRouteMatch()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const isUserLoggedIn = useUserLoggedIn()
   const logout = useLogout()
   const history = useHistory()
@@ -24,7 +24,7 @@ const ShopScreen = (): JSX.Element => {
   const handleAuthButtonClick = () => {
     if (isUserLoggedIn) {
       logout()
-      show({ message: 'navigation.logoutMessage', type: SNACKBAR_SUCCESS })
+      show({ message: t('navigation.logoutMessage'), type: SNACKBAR_SUCCESS })
     } else {
       history.push(`${AUTH_ROUTE}`)
     }
@@ -38,6 +38,10 @@ const ShopScreen = (): JSX.Element => {
     history.push(BOOKS_ROUTE)
   }
 
+  const handleAccountButtonClick = () => {
+    history.push(ACCOUNT_ROUTE)
+  }
+
   return (
     <Styled.RootContainer>
       <NavBar
@@ -45,6 +49,7 @@ const ShopScreen = (): JSX.Element => {
         cartItemsAmount={0}
         onCartButtonClick={handleRedirectToCart}
         onAppNameButtonClick={handleAppNameButtonClick}
+        onAccountButtonClick={handleAccountButtonClick}
         onLanguageChange={handleLanguageChange}
         onAuthButtonClick={handleAuthButtonClick}
       />

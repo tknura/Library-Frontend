@@ -41,6 +41,7 @@ module.exports = {
     'no-console': 'warn',
     'no-nested-ternary': 'off',
     'no-param-reassign': 'off',
+    'no-unused-expressions': ['error', { allowTernary: true }],
     'arrow-parens': 'off',
     'no-confusing-arrow': 'off',
     '@typescript-eslint/no-namespace': 'off',

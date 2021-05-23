@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
+import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
 import * as Styled from './NavBar.styles'
 
 interface NavBarProps {
@@ -14,6 +15,7 @@ interface NavBarProps {
   isUserLogged: boolean
   onLanguageChange: (language: string) => void
   onAppNameButtonClick: () => void
+  onAccountButtonClick: () => void
   onCartButtonClick: () => void
   onAuthButtonClick: () => void
 }
@@ -23,6 +25,7 @@ const NavBar = ({
   isUserLogged,
   onLanguageChange: handleLanguageChange,
   onAppNameButtonClick: handleAppNameButtonClick,
+  onAccountButtonClick: handleAccountButtonClick,
   onCartButtonClick: handleCartButtonClick,
   onAuthButtonClick: handleAuthButtonClick,
 }: NavBarProps): JSX.Element => {
@@ -44,6 +47,13 @@ const NavBar = ({
               <MenuItem value="en">English</MenuItem>
             </Styled.Select>
           </FormControl>
+          <RestrictedContent accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']}>
+            <IconButton onClick={handleAccountButtonClick}>
+              <Badge badgeContent={cartItemsAmount} color="secondary">
+                <Styled.AccountIcon />
+              </Badge>
+            </IconButton>
+          </RestrictedContent>
           <IconButton onClick={handleCartButtonClick}>
             <Badge badgeContent={cartItemsAmount} color="secondary">
               <Styled.ShoppingCartIcon />

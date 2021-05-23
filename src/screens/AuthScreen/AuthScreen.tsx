@@ -4,26 +4,36 @@ import { useHistory } from 'react-router'
 
 import { SignInForm, SignInFormFields } from 'components/forms/SignInForm/SignInForm'
 import { SignUpForm, SignUpFormFields } from 'components/forms/SignUpForm/SignUpForm'
-import { BOOKS_ROUTE } from 'constants/routeNames'
-import { useSignInMutation, useSignUpMutation } from 'api/mutations/auth'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { useLogin } from 'components/providers/AuthProvider'
+import { useSignInMutation, useSignUpMutation } from 'api/auth'
+import { BOOKS_ROUTE, MANAGE_ROUTE } from 'constants/routeNames'
+import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
+import { UserRole } from 'types/UserRole'
 import * as Styled from './AuthScreen.styles'
 
 const AuthScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const history = useHistory()
   const { show } = useShowSnackbar()
+  const login = useLogin()
 
   const [isSignUpFormShown, setSignUpFormShown] = useState(false)
 
   const { mutate: signUpMutate } = useSignUpMutation({
-    onSuccess: () => { history.push(BOOKS_ROUTE) },
-    onError: () => { show({ message: t('screen.signUp.errors.generic'), type: SNACKBAR_ERROR }) }
+    onSuccess: () => {
+      setSignUpFormShown(false)
+      show({ message: t('screen.signUp.success'), type: SNACKBAR_SUCCESS })
+    },
+    onError: () => show({ message: t('screen.signUp.errors.generic'), type: SNACKBAR_ERROR })
   })
   const { mutate: signInMutate } = useSignInMutation({
-    onSuccess: () => { history.push(BOOKS_ROUTE) },
-    onError: () => { show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR }) }
+    onSuccess: ({ accessToken }) => {
+      const userRole: UserRole = 'CLIENT' // <- this should be in response of auth endpoint soon
+      login(accessToken, userRole)
+      userRole === 'CLIENT' ? history.push(BOOKS_ROUTE) : history.push(MANAGE_ROUTE)
+    },
+    onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
   })
 
   const handleFormChange = () => {
@@ -45,8 +55,8 @@ const AuthScreen = (): JSX.Element => {
           {t('common.appName').toUpperCase()}
         </Styled.Title>
         {isSignUpFormShown
-          ? (<SignUpForm onSubmit={handleSignUpSubmit} />)
-          : (<SignInForm onSubmit={handleSignInSubmit} />)}
+          ? <SignUpForm onSubmit={handleSignUpSubmit} />
+          : <SignInForm onSubmit={handleSignInSubmit} />}
         <Styled.Hr />
         <Styled.Button
           color="secondary"

@@ -3,7 +3,7 @@ import constate from 'constate'
 import { SnackbarCloseReason } from '@material-ui/core'
 
 import { SNACKBAR_INFO } from 'constants/snackbarTypes'
-import { SnackbarType } from 'types/snackbar'
+import { SnackbarType } from 'types/SnackbarType'
 
 interface SnackbarInfo {
   message: string
