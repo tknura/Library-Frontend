@@ -15,10 +15,8 @@ const RestrictedRoute: React.FC<RestrictedRouteProps> = ({ accessRoles, children
   const location = useLocation()
   const isAllowed = useHasRole(accessRoles)
   const isLoggedIn = useUserLoggedIn()
-  const redirectPath = isLoggedIn && !isAllowed ? {
-    pathname: '/',
-  } : {
-    pathname: '/sign-in',
+  const redirectPath = {
+    pathname: '/auth',
     state: {
       redirectPath: location.pathname,
     },

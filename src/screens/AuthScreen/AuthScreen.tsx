@@ -7,8 +7,9 @@ import { SignUpForm, SignUpFormFields } from 'components/forms/SignUpForm/SignUp
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { useLogin } from 'components/providers/AuthProvider'
 import { useSignInMutation, useSignUpMutation } from 'api/auth'
-import { BOOKS_ROUTE } from 'constants/routeNames'
+import { BOOKS_ROUTE, MANAGE_ROUTE } from 'constants/routeNames'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { UserRole } from 'types/UserRole'
 import * as Styled from './AuthScreen.styles'
 
 const AuthScreen = (): JSX.Element => {
@@ -25,8 +26,9 @@ const AuthScreen = (): JSX.Element => {
   })
   const { mutate: signInMutate } = useSignInMutation({
     onSuccess: ({ accessToken }) => {
-      login(accessToken)
-      history.push(BOOKS_ROUTE)
+      const userRole: UserRole = 'CLIENT' // <- this should be in response of auth endpoint soon
+      login(accessToken, userRole)
+      userRole === 'CLIENT' ? history.push(BOOKS_ROUTE) : history.push(MANAGE_ROUTE)
     },
     onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
   })
