@@ -8,7 +8,7 @@ import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { useLogin } from 'components/providers/AuthProvider'
 import { useSignInMutation, useSignUpMutation } from 'api/auth'
 import { BOOKS_ROUTE, MANAGE_ROUTE } from 'constants/routeNames'
-import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import { UserRole } from 'types/UserRole'
 import * as Styled from './AuthScreen.styles'
 
@@ -21,7 +21,10 @@ const AuthScreen = (): JSX.Element => {
   const [isSignUpFormShown, setSignUpFormShown] = useState(false)
 
   const { mutate: signUpMutate } = useSignUpMutation({
-    onSuccess: () => setSignUpFormShown(false),
+    onSuccess: () => {
+      setSignUpFormShown(false)
+      show({ message: t('screen.signUp.success'), type: SNACKBAR_SUCCESS })
+    },
     onError: () => show({ message: t('screen.signUp.errors.generic'), type: SNACKBAR_ERROR })
   })
   const { mutate: signInMutate } = useSignInMutation({
