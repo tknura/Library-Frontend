@@ -67,10 +67,9 @@ export const en = {
         },
       },
       cart: {
-        title: 'Your cart',
-        order: 'Make an order',
-        empty: 'Cart is empty.',
-        sum: 'Overall: ',
+        title: 'Title',
+        author: 'Author',
+        reservedUntil: 'Item reserved until',
       },
       details: {
         title: 'Title',
