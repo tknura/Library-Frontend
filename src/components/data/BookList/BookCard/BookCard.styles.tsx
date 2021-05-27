@@ -24,10 +24,15 @@ const StyledFab = styled(Fab)`
   margin: 10px;
 `
 
+interface StockTextProps {
+  $color: string;
+}
+
 const StockText = styled(Typography)`
   position: absolute;
   top: 5px;
   right: 10px;
+  background-color: ${({ $color }: StockTextProps) => $color};
 `
 
 export {

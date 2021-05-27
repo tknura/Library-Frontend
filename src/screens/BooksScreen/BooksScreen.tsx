@@ -1,9 +1,8 @@
-import { Button } from '@material-ui/core'
-import { BOOKS_ROUTE } from 'constants/routeNames'
 import { useHistory } from 'react-router'
 
-import { BookList } from '../../components/data/BookList/BookCardList'
-import { Book } from '../../components/data/BookList/BookCard/BookCard'
+import { BOOKS_ROUTE } from 'constants/routeNames'
+import { BookList } from 'components/data/BookList/BookCardList'
+import { Book } from 'components/data/BookList/BookCard/BookCard'
 
 const placeholderBooks: Book[] = [
   {
@@ -12,7 +11,7 @@ const placeholderBooks: Book[] = [
     author: 'zxc',
     photos: ['https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'],
     available: true,
-    howMany: 5
+    howMany: 115
   },
   {
     id: 2,
@@ -27,16 +26,16 @@ const placeholderBooks: Book[] = [
     title: 'asd',
     author: 'zxc',
     photos: ['https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'],
-    available: true,
-    howMany: 5
+    available: false,
+    howMany: 0
   },
   {
     id: 4,
     title: 'asd',
     author: 'zxc',
     photos: ['https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'],
-    available: true,
-    howMany: 5
+    available: false,
+    howMany: 0
   },
   {
     id: 5,
@@ -69,19 +68,10 @@ const BooksScreen = (): JSX.Element => {
 
   return (
     <div>
-      <br />
       <BookList
         items={placeholderBooks}
         onItemButtonClick={() => history.push(`${BOOKS_ROUTE}/1`)}
       />
-      <br />
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={() => history.push(`${BOOKS_ROUTE}/1`)}
-      >
-        Redirect to book
-      </Button>
     </div>
   )
 }

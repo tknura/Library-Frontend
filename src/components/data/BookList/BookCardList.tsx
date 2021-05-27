@@ -14,7 +14,7 @@ const BookList = ({
   onItemButtonClick: handleItemButtonClick,
 }: BookListProps): JSX.Element => (
   <Styled.RootGrid container spacing={2}>
-    {items?.filter(item => item.available).map(item => (
+    {items?.map(item => (
       <Grid key={item.id} item xs={4}>
         <BookCard item={item} onButtonClick={() => handleItemButtonClick(item.id)} />
       </Grid>

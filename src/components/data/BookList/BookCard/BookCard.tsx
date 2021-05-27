@@ -40,22 +40,25 @@ const BookCard = ({
       </CardActionArea>
       <Styled.ContentContainer>
         <CardContent>
-          <Typography variant="h6" component="h2">
-            {item.title || 'title'}
+          <Typography variant="h6">
+            {item.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {item.author || 'author'}
+            {item.author}
           </Typography>
-          <Styled.StockText variant="body2">
+          <Styled.StockText
+            variant="body2"
+            $color={item.howMany > 0 ? 'lightgreen' : 'red'}
+          >
             {t('screen.bookList.howMany')}
-            {item.howMany || '--'}
+            {item.howMany}
           </Styled.StockText>
         </CardContent>
         <Styled.CardActions>
           <Fab
             size="small"
             color="secondary"
-            onClick={handleButtonClick}
+            onClick={() => null}
           >
             <AddShoppingCartIcon />
           </Fab>
