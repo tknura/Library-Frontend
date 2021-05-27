@@ -4,14 +4,17 @@ import { AxiosInstance } from 'axios'
 import { useFetch } from 'components/providers/FetchProvider'
 
 interface Book {
-  id: number,
-  photos: string []
-  author: string,
-  title: string,
-  available: boolean,
-  publisher: string,
-  publicationDate: Date,
+  author: string
+  bookId: number
   description: string
+  isOccupied: boolean
+  name: string
+  numberOfBooks: number
+  numberOfOccupiedBooks: number
+  publicationDate: Date
+  publisher: string
+  serialNumber: number
+  urls: string[]
 }
 
 // TO DO Add response types when the backend is ready

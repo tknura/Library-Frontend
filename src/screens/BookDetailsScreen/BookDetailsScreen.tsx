@@ -17,7 +17,7 @@ const BookDetailsScreen = (): JSX.Element => {
     show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
   }
 
-  const mappedPhotos = (bookData?.photos || placeholderPhotos).map(photo => ({ url: photo }))
+  const mappedPhotos = (bookData?.urls || placeholderPhotos).map(photo => ({ url: photo }))
 
   return (
     <>
@@ -35,13 +35,13 @@ const BookDetailsScreen = (): JSX.Element => {
             />
           </Styled.PictureContainer>
           <BookDescription
-            title={bookData?.title}
+            title={bookData?.name}
             author={bookData?.author}
-            available={bookData?.available}
+            available={bookData?.isOccupied}
             publisher={bookData?.publisher}
             publicationDate={bookData?.publicationDate}
             description={bookData?.description}
-            buttonEnabled={bookData?.available || !isError}
+            buttonEnabled={bookData?.isOccupied || !isError}
           />
         </Styled.DetailsContainer>
       )}
