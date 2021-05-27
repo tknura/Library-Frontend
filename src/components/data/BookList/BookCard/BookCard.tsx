@@ -50,8 +50,7 @@ const BookCard = ({
             variant="body2"
             $color={item.howMany > 0 ? 'lightgreen' : 'red'}
           >
-            {t('screen.bookList.howMany')}
-            {item.howMany}
+            {`${t('screen.bookList.howMany')}: ${item.howMany}`}
           </Styled.StockText>
         </CardContent>
         <Styled.CardActions>

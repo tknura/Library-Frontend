@@ -83,7 +83,7 @@ export const pl = {
         errorMessage: 'Błąd przy wczytywaniu danych książki'
       },
       bookList: {
-        howMany: 'Dostepne ksiazki: '
+        howMany: 'Dostepne ksiazki'
       },
     },
   },

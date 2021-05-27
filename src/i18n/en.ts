@@ -83,7 +83,7 @@ export const en = {
         errorMessage: 'Error on fetching book data',
       },
       bookList: {
-        howMany: 'Available books: '
+        howMany: 'Available books'
       },
     },
   },
