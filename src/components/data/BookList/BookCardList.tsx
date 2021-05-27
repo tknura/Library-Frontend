@@ -1,7 +1,8 @@
 import { Grid } from '@material-ui/core'
 
 import { Id } from 'types/Id'
-import { Book, BookCard } from './BookCard/BookCard'
+import { Book } from 'api/books'
+import { BookCard } from './BookCard/BookCard'
 import * as Styled from './BookCardList.styles'
 
 interface BookListProps {
@@ -15,8 +16,8 @@ const BookList = ({
 }: BookListProps): JSX.Element => (
   <Styled.RootGrid container spacing={2}>
     {items?.map(item => (
-      <Grid key={item.id} item xs={4}>
-        <BookCard item={item} onButtonClick={() => handleItemButtonClick(item.id)} />
+      <Grid key={item.bookId} item xs={4}>
+        <BookCard item={item} onButtonClick={() => handleItemButtonClick(item.bookId)} />
       </Grid>
     ))}
   </Styled.RootGrid>
