@@ -8,12 +8,20 @@ import * as Styled from './BooksScreen.styles'
 
 const BooksScreen = (): JSX.Element => {
   const { t } = useTranslation()
-  const { isLoading, isError, data: booksData } = useBooksQuery()
+  const { isLoading, isError, data: queryData } = useBooksQuery()
   const { show } = useShowSnackbar()
 
   if (isError) {
     show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
   }
+
+  const data = queryData?.content.map((book) => ({
+    id: book.bookId,
+    title: book.name,
+    author: book.author,
+    photos: book.urls,
+    howMany: book.numberOfBooks - book.numberOfOccupiedBooks
+  }))
 
   return (
     <div>
@@ -21,7 +29,7 @@ const BooksScreen = (): JSX.Element => {
         <Styled.Loading size={150} />
       ) : (
         <BookList
-          items={booksData}
+          items={data}
           onItemButtonClick={() => null}
         />
       )}

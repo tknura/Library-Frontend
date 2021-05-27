@@ -9,8 +9,15 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import { useTranslation } from 'react-i18next'
 
 import { BOOKS_ROUTE } from 'constants/routeNames'
-import { Book } from 'api/books'
 import * as Styled from './BookCard.styles'
+
+interface Book {
+  id: number
+  title: string
+  author: string
+  photos: string[]
+  howMany: number
+}
 
 interface BookCardProps {
   item: Book
@@ -26,22 +33,22 @@ const BookCard = ({
 
   return (
     <Styled.Card>
-      <CardActionArea href={`${BOOKS_ROUTE}/${item.bookId}`}>
-        <Styled.CardMedia image={item.urls[0] || placeholderPhoto} />
+      <CardActionArea href={`${BOOKS_ROUTE}/${item.id}`}>
+        <Styled.CardMedia image={item.photos[0] || placeholderPhoto} />
       </CardActionArea>
       <Styled.ContentContainer>
         <CardContent>
           <Typography variant="h6">
-            {item.name}
+            {item.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {item.author}
           </Typography>
           <Styled.StockText
             variant="body2"
-            $color={(item.numberOfBooks - item.numberOfOccupiedBooks) > 0 ? 'lightgreen' : 'red'}
+            $color={item.howMany > 0 ? 'lightgreen' : 'red'}
           >
-            {`${t('screen.bookList.howMany')}: ${(item.numberOfBooks - item.numberOfOccupiedBooks)}`}
+            {`${t('screen.bookList.howMany')}: ${item.howMany}`}
           </Styled.StockText>
         </CardContent>
         <Styled.CardActions>
