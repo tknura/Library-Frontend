@@ -82,6 +82,9 @@ export const pl = {
         addToCart: 'Dodaj do koszyka',
         errorMessage: 'Błąd przy wczytywaniu danych książki'
       },
+      bookList: {
+        howMany: 'Dostepne ksiazki'
+      },
     },
   },
 }
