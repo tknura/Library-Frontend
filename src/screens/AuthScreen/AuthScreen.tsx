@@ -48,6 +48,13 @@ const AuthScreen = (): JSX.Element => {
     signInMutate(values)
   }
 
+  // Mock data until user roles will be in log in response
+  const handleLogAsManagerButton = () => {
+    const userRole: UserRole = 'MANAGER'
+    login('XD', userRole)
+    userRole !== 'MANAGER' ? history.push(BOOKS_ROUTE) : history.push(MANAGE_ROUTE)
+  }
+
   return (
     <Styled.RootContainer>
       <Styled.Paper elevation={0}>
@@ -65,6 +72,9 @@ const AuthScreen = (): JSX.Element => {
           {isSignUpFormShown
             ? t('screen.auth.buttons.haveAccount')
             : t('screen.auth.buttons.noAccount')}
+        </Styled.Button>
+        <Styled.Button onClick={handleLogAsManagerButton}>
+          (DEV ONLY) Przejdź do konta managera
         </Styled.Button>
       </Styled.Paper>
     </Styled.RootContainer>
