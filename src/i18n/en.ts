@@ -82,6 +82,9 @@ export const en = {
         addToCart: 'Add to cart',
         errorMessage: 'Error on fetching book data',
       },
+      bookList: {
+        howMany: 'Available books: '
+      },
     },
   },
 }

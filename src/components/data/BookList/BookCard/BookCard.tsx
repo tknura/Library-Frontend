@@ -1,18 +1,24 @@
+/* eslint-disable arrow-body-style */
 import {
   CardContent,
   Fab,
   Typography,
+  CardActionArea
 } from '@material-ui/core'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
+import { useTranslation } from 'react-i18next'
 
+import { BOOKS_ROUTE } from 'constants/routeNames'
 import { Id } from 'types/Id'
 import * as Styled from './BookCard.styles'
 
 interface Book {
   id: Id
-  name: string
+  title: string
   author: string
-  image: string
+  photos: string[]
+  available: boolean
+  howMany: number
 }
 
 interface BookCardProps {
@@ -23,30 +29,41 @@ interface BookCardProps {
 const BookCard = ({
   item,
   onButtonClick: handleButtonClick,
-}: BookCardProps): JSX.Element => (
-  <Styled.Card>
-    <Styled.CardMedia image={item.image} />
-    <Styled.ContentContainer>
-      <CardContent>
-        <Typography variant="h6" component="h2">
-          {item.name}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {item.author}
-        </Typography>
-      </CardContent>
-      <Styled.CardActions>
-        <Fab
-          size="small"
-          color="secondary"
-          onClick={handleButtonClick}
-        >
-          <AddShoppingCartIcon />
-        </Fab>
-      </Styled.CardActions>
-    </Styled.ContentContainer>
-  </Styled.Card>
-)
+}: BookCardProps): JSX.Element => {
+  const { t } = useTranslation()
+  const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'
+
+  return (
+    <Styled.Card>
+      <CardActionArea href={`${BOOKS_ROUTE}/${item.id}`}>
+        <Styled.CardMedia image={item.photos[0] || placeholderPhoto} />
+      </CardActionArea>
+      <Styled.ContentContainer>
+        <CardContent>
+          <Typography variant="h6" component="h2">
+            {item.title || 'title'}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            {item.author || 'author'}
+          </Typography>
+          <Styled.StockText variant="body2">
+            {t('screen.bookList.howMany')}
+            {item.howMany || '--'}
+          </Styled.StockText>
+        </CardContent>
+        <Styled.CardActions>
+          <Fab
+            size="small"
+            color="secondary"
+            onClick={handleButtonClick}
+          >
+            <AddShoppingCartIcon />
+          </Fab>
+        </Styled.CardActions>
+      </Styled.ContentContainer>
+    </Styled.Card>
+  )
+}
 
 export { BookCard }
 export type { Book }

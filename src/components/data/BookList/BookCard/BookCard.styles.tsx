@@ -1,12 +1,14 @@
 import styled from 'styled-components'
-import { Card, CardActions, CardMedia, Fab } from '@material-ui/core'
+import { Card, CardActions, CardMedia, Fab, Typography } from '@material-ui/core'
 
 const StyledCard = styled(Card)`
+  position: relative;
   min-width: 345;
 `
 
 const StyledCardMedia = styled(CardMedia)`
   height: 140;
+  padding-top: 80%;
 `
 
 const ContentContainer = styled.div`
@@ -22,10 +24,17 @@ const StyledFab = styled(Fab)`
   margin: 10px;
 `
 
+const StockText = styled(Typography)`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+`
+
 export {
   StyledCard as Card,
   StyledCardMedia as CardMedia,
   ContentContainer,
   StyledCardActions as CardActions,
   StyledFab as Fab,
+  StockText
 }
