@@ -9,15 +9,13 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import { useTranslation } from 'react-i18next'
 
 import { BOOKS_ROUTE } from 'constants/routeNames'
-import { Id } from 'types/Id'
 import * as Styled from './BookCard.styles'
 
 interface Book {
-  id: Id
+  id: number
   title: string
   author: string
   photos: string[]
-  available: boolean
   howMany: number
 }
 
@@ -57,7 +55,7 @@ const BookCard = ({
           <Fab
             size="small"
             color="secondary"
-            onClick={() => null}
+            onClick={handleButtonClick}
           >
             <AddShoppingCartIcon />
           </Fab>

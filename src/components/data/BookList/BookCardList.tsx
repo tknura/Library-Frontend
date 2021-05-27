@@ -1,7 +1,8 @@
 import { Grid } from '@material-ui/core'
 
 import { Id } from 'types/Id'
-import { Book, BookCard } from './BookCard/BookCard'
+import { Book } from './BookCard/BookCard'
+import { BookCard } from './BookCard/BookCard'
 import * as Styled from './BookCardList.styles'
 
 interface BookListProps {
