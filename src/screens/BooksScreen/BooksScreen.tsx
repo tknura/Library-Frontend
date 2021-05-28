@@ -21,7 +21,7 @@ const BooksScreen = (): JSX.Element => {
     author: book.author,
     photos: book.urls,
     howMany: book.numberOfBooks - book.numberOfOccupiedBooks
-  }))
+  })) || []
 
   return (
     <div>

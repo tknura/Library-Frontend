@@ -11,10 +11,10 @@ interface Book {
   name: string,
   numberOfBooks: number,
   numberOfOccupiedBooks: number,
-  publicationDate: string,
+  publicationDate: Date,
   publisher: string,
   serialNumber: number,
-  urls: string []
+  urls: string[]
 }
 
 interface AllBooksResponse {
