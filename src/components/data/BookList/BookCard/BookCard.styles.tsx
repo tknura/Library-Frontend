@@ -3,11 +3,11 @@ import { Card, CardActions, CardMedia, Fab, Typography } from '@material-ui/core
 
 const StyledCard = styled(Card)`
   position: relative;
-  min-width: 345;
+  min-width: 345px;
 `
 
 const StyledCardMedia = styled(CardMedia)`
-  height: 140;
+  height: 140px;
   padding-top: 80%;
 `
 
