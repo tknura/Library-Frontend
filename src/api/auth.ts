@@ -8,12 +8,12 @@ interface SignUpValues {
   username: string
   firstName: string
   lastName: string
-  phoneNumber: string
   password: string
 }
 
 interface SignInValues {
-  email: string
+  email?: string
+  username?: string
   password: string
 }
 

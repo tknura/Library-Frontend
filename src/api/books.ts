@@ -4,16 +4,16 @@ import { AxiosInstance } from 'axios'
 import { useFetch } from 'components/providers/FetchProvider'
 
 interface Book {
-  author: string,
-  bookId: number,
-  description: string,
-  isOccupied: boolean,
-  name: string,
-  numberOfBooks: number,
-  numberOfOccupiedBooks: number,
-  publicationDate: Date,
-  publisher: string,
-  serialNumber: number,
+  author: string
+  bookId: number
+  description: string
+  isOccupied: boolean
+  name: string
+  numberOfBooks: number
+  numberOfOccupiedBooks: number
+  publicationDate: string
+  publisher: string
+  serialNumber: number
   urls: string[]
 }
 
@@ -23,12 +23,12 @@ interface AllBooksResponse {
 
 // TO DO Add response types when the backend is ready
 const getBooks = async (instance: AxiosInstance): Promise<unknown> => {
-  const { data } = await instance.get('/books')
+  const { data } = await instance.get('/books/full')
   return data
 }
 
 const getBook = async (instance: AxiosInstance, id: number): Promise<unknown> => {
-  const { data } = await instance.get(`/books/${id}`)
+  const { data } = await instance.get(`/books/full/${id}`)
   return data
 }
 

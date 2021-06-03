@@ -41,11 +41,15 @@ const AuthScreen = (): JSX.Element => {
   }
 
   const handleSignUpSubmit = (values: SignUpFormFields) => {
-    signUpMutate({ username: values.email, ...values })
+    signUpMutate(values)
   }
 
   const handleSignInSubmit = (values: SignInFormFields) => {
-    signInMutate(values)
+    if (values.usernameOrEmail.includes('@')) {
+      signInMutate({ email: values.usernameOrEmail, password: values.password })
+    } else {
+      signInMutate({ username: values.usernameOrEmail, password: values.password })
+    }
   }
 
   // Mock data until user roles will be in log in response

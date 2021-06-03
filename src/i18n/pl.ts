@@ -2,12 +2,16 @@ export const pl = {
   translation: {
     common: {
       appName: 'Biblioteka',
+      username: 'Nazwa użytkownika',
       email: 'E-mail',
       password: 'Hasło',
       firstName: 'Imię',
       lastName: 'Nazwisko',
       phoneNumber: 'Numer telefonu',
       errors: {
+        username: {
+          required: 'Nazwa użytkownika jest wymagana',
+        },
         email: {
           required: 'Adres e-mail jest wymagany',
           format: 'Adres e-mail jest niepoprawny.',
@@ -21,10 +25,6 @@ export const pl = {
         },
         lastName: {
           required: 'Nazwisko jest wymagane',
-        },
-        phoneNumber: {
-          required: 'Numer telefonu jest wymagany',
-          format: 'Podany numer telefonu ma nieprawidlowy format',
         },
       },
     },
@@ -50,6 +50,9 @@ export const pl = {
         },
         errors: {
           generic: 'Niepoprawne dane logowania.',
+          usernameOrEmail: {
+            required: 'Pole Nazwa użytkownika/E-mail jest wymagane',
+          },
         },
       },
       signUp: {

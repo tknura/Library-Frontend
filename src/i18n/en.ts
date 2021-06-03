@@ -2,12 +2,16 @@ export const en = {
   translation: {
     common: {
       appName: 'Library',
+      username: 'Username',
       email: 'E-mail',
       password: 'Password',
       firstName: 'First Name',
       lastName: 'Last Name',
       phoneNumber: 'Phone number',
       errors: {
+        username: {
+          required: 'Username is required',
+        },
         email: {
           required: 'E-mail address is required.',
           format: 'E-mail address format is incorrect.',
@@ -49,7 +53,10 @@ export const en = {
           resetPassword: 'Reset password',
         },
         errors: {
-          generic: 'Incorrect credentials',
+          generic: 'Incorect credentials.',
+          usernameOrEmail: {
+            required: 'Username/E-mail is required',
+          },
         },
       },
       signUp: {
