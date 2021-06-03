@@ -7,12 +7,27 @@ import {
 const CartItemContainer = styled(Paper)`
   flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 10px 15px;
   margin: 15px 25px;
   min-width: 400px;
   max-width: 800px;
 `
+
+const CartItemDataContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 15px;
+  margin: 15px 25px;
+`
+
+const CartItemDeleteContainer = styled.div`
+  flex: 1;
+  height: 20px;
+  margin-left: 90%;
+`
+
 const Image = styled.img`
   flex: 1;
   width: 125px;
@@ -44,6 +59,8 @@ const ReservationDateContainer = styled.div`
 
 export {
   CartItemContainer,
+  CartItemDataContainer,
+  CartItemDeleteContainer,
   Image,
   DescriptionContainer,
   Text,

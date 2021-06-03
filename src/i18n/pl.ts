@@ -70,6 +70,7 @@ export const pl = {
         title: 'Tytuł',
         author: 'Autor',
         reservedUntil: 'Przedmiot zarezerwowany do',
+        order: 'Złóż zamówienie'
       },
       details: {
         title: 'Tytuł',

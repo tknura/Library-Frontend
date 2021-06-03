@@ -70,6 +70,7 @@ export const en = {
         title: 'Title',
         author: 'Author',
         reservedUntil: 'Item reserved until',
+        order: 'Place order',
       },
       details: {
         title: 'Title',

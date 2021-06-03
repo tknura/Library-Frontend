@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { CartItem } from 'components/data/CartItem/CartItem'
 import * as Styled from './CartScreen.styles'
 
-interface CartItemTemp {
+export interface CartItemTemp {
   id: number,
   title: string,
   author: string,
@@ -27,16 +28,32 @@ const items: CartItemTemp[] = [
 ]
 
 const CartScreen = (): JSX.Element => {
-  const [cartItems] = useState<CartItemTemp[]>(items)
+  const { t } = useTranslation()
+  const [cartItems, setCartItems] = useState<CartItemTemp[]>(items)
+
+  const handleDelete = (cartItem: CartItemTemp) => {
+    const newCartItems = cartItems.filter(value => value.id !== cartItem.id)
+    setCartItems(newCartItems)
+  }
+
   return (
-    <Styled.CartContainer>
-      {cartItems.map(cartItem => <CartItem
-        key={cartItem.id}
-        title={cartItem.title}
-        author={cartItem.author}
-        photo={cartItem.photo}
-      />)}
-    </Styled.CartContainer>
+    <>
+      <Styled.CartItemsContainer>
+        {cartItems.map(cartItem => <CartItem
+          key={cartItem.id}
+          cartItem={cartItem}
+          onDelete={handleDelete}
+        />)}
+      </Styled.CartItemsContainer>
+      <Styled.CartFooterContainer>
+        <Styled.AddToCartButton
+          variant="contained"
+          color="primary"
+        >
+          {t('screen.cart.order')}
+        </Styled.AddToCartButton>
+      </Styled.CartFooterContainer>
+    </>
   )
 }
 
