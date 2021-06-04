@@ -1,58 +1,61 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { CartItem } from 'components/data/CartItem/CartItem'
+import { useHistory } from 'react-router'
+import { CartItem, useCartItemsQuery } from 'api/cart'
+import { AUTH_ROUTE } from 'constants/routeNames'
+import { useUserLoggedIn } from 'components/providers/AuthProvider'
+import { useShowSnackbar } from 'components/providers/SnackbarProviders'
+import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { CartItemArea } from 'components/data/CartItemArea/CartItemArea'
 import * as Styled from './CartScreen.styles'
-
-export interface CartItemTemp {
-  id: number,
-  title: string,
-  author: string,
-  photo: string
-}
-
-const items: CartItemTemp[] = [
-  {
-    id: 1,
-    title: 'book1',
-    author: 'author1',
-    photo: ''
-  },
-  {
-    id: 2,
-    title: 'book2',
-    author: 'author2',
-    photo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Question_book-4.svg/1280px-Question_book-4.svg.png'
-  },
-
-]
 
 const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
-  const [cartItems, setCartItems] = useState<CartItemTemp[]>(items)
+  const { isLoading, isError, data: cartData } = useCartItemsQuery()
+  const { show } = useShowSnackbar()
+  const isLoggedIn = useUserLoggedIn()
+  const history = useHistory()
 
-  const handleDelete = (cartItem: CartItemTemp) => {
-    const newCartItems = cartItems.filter(value => value.id !== cartItem.id)
-    setCartItems(newCartItems)
+  if (isError) {
+    show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
+  }
+
+  const handleDelete = (cartItem: CartItem) => {
+    // delete cartItem
+  }
+
+  const handleReserve = () => {
+    if (isLoggedIn) {
+      // reserve
+    } else {
+      history.push(AUTH_ROUTE)
+    }
   }
 
   return (
     <>
-      <Styled.CartItemsContainer>
-        {cartItems.map(cartItem => <CartItem
-          key={cartItem.id}
-          cartItem={cartItem}
-          onDelete={handleDelete}
-        />)}
-      </Styled.CartItemsContainer>
-      <Styled.CartFooterContainer>
-        <Styled.AddToCartButton
-          variant="contained"
-          color="primary"
-        >
-          {t('screen.cart.order')}
-        </Styled.AddToCartButton>
-      </Styled.CartFooterContainer>
+      {isLoading ? (
+        <Styled.Loading size={150} />
+      ) : (
+        <>
+          <Styled.CartItemsContainer>
+            {cartData?.map(cartItem => <CartItemArea
+              key={cartItem.itemId}
+              cartItem={cartItem}
+              onDelete={handleDelete}
+            />)}
+          </Styled.CartItemsContainer>
+          <Styled.CartFooterContainer>
+            <Styled.ReservationButton
+              variant="contained"
+              color="primary"
+              onClick={handleReserve}
+            >
+              {t('screen.cart.order')}
+            </Styled.ReservationButton>
+          </Styled.CartFooterContainer>
+        </>
+      )}
     </>
   )
 }

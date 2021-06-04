@@ -26,7 +26,7 @@ const getBook = async (instance: AxiosInstance, id: number): Promise<unknown> =>
 }
 
 const useBooksQuery = ()
-: UseQueryResult<unknown, unknown> => {
+: UseQueryResult<Book[], unknown> => {
   const { fetch } = useFetch()
   return useQuery('books', () => getBooks(fetch))
 }

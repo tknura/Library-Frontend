@@ -70,7 +70,8 @@ export const pl = {
         title: 'Tytuł',
         author: 'Autor',
         reservedUntil: 'Przedmiot zarezerwowany do',
-        order: 'Złóż zamówienie'
+        order: 'Złóż zamówienie',
+        errorMessage: 'Błąd przy wczytywaniu danych koszyka',
       },
       details: {
         title: 'Tytuł',
@@ -80,7 +81,7 @@ export const pl = {
         publisher: 'Wydawca',
         publicationDate: 'Data publikacji',
         addToCart: 'Dodaj do koszyka',
-        errorMessage: 'Błąd przy wczytywaniu danych książki'
+        errorMessage: 'Błąd przy wczytywaniu danych książki',
       },
     },
   },

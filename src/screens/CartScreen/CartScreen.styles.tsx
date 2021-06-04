@@ -1,4 +1,4 @@
-import { Button, Paper } from '@material-ui/core'
+import { Button, CircularProgress, Paper } from '@material-ui/core'
 import styled from 'styled-components'
 
 const CartItemsContainer = styled.div`
@@ -14,14 +14,22 @@ const CartFooterContainer = styled(Paper)`
   width: 100%;
 `
 
-const AddToCartButton = styled(Button)`
+const ReservationButton = styled(Button)`
   padding: 10px 15px;
   margin: 15px 25px;
   margin-left: 85%;
 `
 
+const Loading = styled(CircularProgress)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -75px;
+`
+
 export {
   CartItemsContainer,
   CartFooterContainer,
-  AddToCartButton
+  ReservationButton,
+  Loading
 }

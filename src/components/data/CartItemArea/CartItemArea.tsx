@@ -2,24 +2,24 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
-import { CartItemTemp } from 'screens/CartScreen/CartScreen'
+import { CartItem } from 'api/cart'
 import { DatePicker } from 'components/inputs/DatePicker'
 import { IconButton } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
-import * as Styled from './CartItem.styles'
+import * as Styled from './CartItemArea.styles'
 
 interface Props {
-  cartItem: CartItemTemp,
+  cartItem: CartItem,
   // eslint-disable-next-line @typescript-eslint/ban-types
   onDelete: Function
 }
 
-const CartItem = ({
+const CartItemArea = ({
   cartItem,
   onDelete
 }: Props): JSX.Element => {
   const { t } = useTranslation()
-  const [, setDate] = useState<Date>(new Date())
+  const [date, setDate] = useState<Date>(new Date())
 
   const todayDate = new Date()
   const minDate = new Date().setDate(todayDate.getDate() + 1)
@@ -28,6 +28,7 @@ const CartItem = ({
   const handleChangeDate = (targetDate: MaterialUiPickersDate) => {
     if (targetDate) {
       setDate(targetDate)
+      // patch date
     }
   }
 
@@ -44,7 +45,7 @@ const CartItem = ({
         </IconButton>
       </Styled.CartItemDeleteContainer>
       <Styled.CartItemDataContainer>
-        <Styled.Image src={cartItem.photo || placeholderPhoto} />
+        <Styled.Image src={cartItem.photoUrl || placeholderPhoto} />
         <Styled.DescriptionContainer>
           <Styled.Text variant="h4">
             {cartItem.title || t('screen.cart.title')}
@@ -59,9 +60,8 @@ const CartItem = ({
           </Styled.Text>
           <Styled.Text>
             <DatePicker
-              disablePast
               label="Reservation date"
-              value={minDate}
+              value={date}
               onChange={handleChangeDate}
               minDate={minDate}
               maxDate={maxDate}
@@ -73,4 +73,4 @@ const CartItem = ({
   )
 }
 
-export { CartItem }
+export { CartItemArea }
