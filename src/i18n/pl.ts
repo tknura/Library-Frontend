@@ -70,10 +70,12 @@ export const pl = {
         },
       },
       cart: {
-        title: 'Twój Koszyk',
+        title: 'Tytuł',
+        author: 'Autor',
+        reservedUntil: 'Przedmiot zarezerwowany do',
         order: 'Złóż zamówienie',
-        empty: 'Koszyk jest pusty.',
-        sum: 'Podsumowanie: ',
+        errorMessage: 'Błąd przy wczytywaniu danych koszyka',
+        login: 'Zaloguj się',
       },
       details: {
         title: 'Tytuł',
@@ -83,7 +85,7 @@ export const pl = {
         publisher: 'Wydawca',
         publicationDate: 'Data publikacji',
         addToCart: 'Dodaj do koszyka',
-        errorMessage: 'Błąd przy wczytywaniu danych książki'
+        errorMessage: 'Błąd przy wczytywaniu danych książki',
       },
       bookList: {
         howMany: 'Dostepne ksiazki'
