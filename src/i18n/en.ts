@@ -71,7 +71,8 @@ export const en = {
         author: 'Author',
         reservedUntil: 'Item reserved until',
         order: 'Place order',
-        errorMessage: 'Erron on fetching cart data',
+        errorMessage: 'Error on fetching cart data',
+        login: 'Log in',
       },
       details: {
         title: 'Title',

@@ -1,23 +1,29 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
-
-import { CartItem } from 'api/cart'
-import { DatePicker } from 'components/inputs/DatePicker'
 import { IconButton } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
+
+import { DatePicker } from 'components/inputs/DatePicker'
 import * as Styled from './CartItemArea.styles'
 
-interface Props {
+interface CartItem {
+  itemId: number,
+  title: string,
+  author: string,
+  photoUrl: string,
+  endDate: Date
+}
+
+interface CartItemProps {
   cartItem: CartItem,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  onDelete: Function
+  onDelete: (id: number) => void
 }
 
 const CartItemArea = ({
   cartItem,
   onDelete
-}: Props): JSX.Element => {
+}: CartItemProps): JSX.Element => {
   const { t } = useTranslation()
   const [date, setDate] = useState<Date>(new Date())
 
@@ -33,7 +39,7 @@ const CartItemArea = ({
   }
 
   const handleDelete = () => {
-    onDelete(cartItem)
+    onDelete(cartItem.itemId)
   }
 
   const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'

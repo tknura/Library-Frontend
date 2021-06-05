@@ -72,6 +72,7 @@ export const pl = {
         reservedUntil: 'Przedmiot zarezerwowany do',
         order: 'Złóż zamówienie',
         errorMessage: 'Błąd przy wczytywaniu danych koszyka',
+        login: 'Zaloguj się',
       },
       details: {
         title: 'Tytuł',

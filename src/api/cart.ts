@@ -34,4 +34,3 @@ const useCartItemQuery = (id: number)
 }
 
 export { useCartItemsQuery, useCartItemQuery }
-export type { CartItem }

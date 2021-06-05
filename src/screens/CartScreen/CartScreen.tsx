@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { useHistory } from 'react-router'
-import { CartItem, useCartItemsQuery } from 'api/cart'
+import { useCartItemsQuery } from 'api/cart'
 import { AUTH_ROUTE } from 'constants/routeNames'
 import { useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
@@ -20,7 +20,7 @@ const CartScreen = (): JSX.Element => {
     show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   }
 
-  const handleDelete = (cartItem: CartItem) => {
+  const handleDelete = (id: number) => {
     // delete cartItem
   }
 
@@ -39,19 +39,23 @@ const CartScreen = (): JSX.Element => {
       ) : (
         <>
           <Styled.CartItemsContainer>
-            {cartData?.map(cartItem => <CartItemArea
-              key={cartItem.itemId}
-              cartItem={cartItem}
-              onDelete={handleDelete}
-            />)}
+            {cartData?.map(cartItem => (
+              <CartItemArea
+                key={cartItem.itemId}
+                cartItem={cartItem}
+                onDelete={handleDelete}
+              />))}
           </Styled.CartItemsContainer>
           <Styled.CartFooterContainer>
             <Styled.ReservationButton
               variant="contained"
               color="primary"
               onClick={handleReserve}
+              disabled={isLoggedIn && isError}
             >
-              {t('screen.cart.order')}
+              {isLoggedIn
+                ? t('screen.cart.order')
+                : t('screen.cart.login')}
             </Styled.ReservationButton>
           </Styled.CartFooterContainer>
         </>
