@@ -77,6 +77,13 @@ export const pl = {
         errorMessage: 'Błąd przy wczytywaniu danych koszyka',
         login: 'Zaloguj się',
       },
+      cartConfirmationModal: {
+        title: 'Czy chcesz potwierdzić rezerwację?',
+        itemsMissing: 'Brakujące przedmiot(y):',
+        orderIsComplete: 'Zamówienie jest kompletne',
+        confirm: 'Potwierdź',
+        cancel: 'Anuluj',
+      },
       details: {
         title: 'Tytuł',
         author: 'Autor',

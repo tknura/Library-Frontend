@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
-
 import { useHistory } from 'react-router'
+import { useState } from 'react'
+
+import { ConfirmReservationModal } from 'components/data/ConfirmReservationDialog/ConfirmReservationDialog'
 import { useCartItemsQuery } from 'api/cart'
 import { AUTH_ROUTE } from 'constants/routeNames'
 import { useUserLoggedIn } from 'components/providers/AuthProvider'
@@ -12,6 +14,9 @@ import * as Styled from './CartScreen.styles'
 const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { isLoading, isError, data: cartData } = useCartItemsQuery()
+  const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
+  const [booksMissing] = useState<boolean>(false)
+  const [missingBooksData] = useState<string>('')
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
@@ -26,10 +31,18 @@ const CartScreen = (): JSX.Element => {
 
   const handleReserve = () => {
     if (isLoggedIn) {
-      // reserve
+      setModalConfirmationOpen(true)
     } else {
       history.push(AUTH_ROUTE)
     }
+  }
+
+  const handleCancelConfirmationModal = () => {
+    setModalConfirmationOpen(false)
+  }
+
+  const handleConfirmReservationModal = () => {
+    setModalConfirmationOpen(false)
   }
 
   return (
@@ -57,6 +70,13 @@ const CartScreen = (): JSX.Element => {
                 ? t('screen.cart.order')
                 : t('screen.cart.login')}
             </Styled.ReservationButton>
+            <ConfirmReservationModal
+              open={modalConfirmationOpen}
+              booksMissing={booksMissing}
+              missingBooksData={missingBooksData}
+              onConfirm={handleConfirmReservationModal}
+              onCancel={handleCancelConfirmationModal}
+            />
           </Styled.CartFooterContainer>
         </>
       )}

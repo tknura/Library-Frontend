@@ -81,6 +81,13 @@ export const en = {
         errorMessage: 'Error on fetching cart data',
         login: 'Log in',
       },
+      cartConfirmationModal: {
+        title: 'Do you want to confirm your reservation?',
+        itemsMissing: 'Item(s) missing:',
+        orderIsComplete: 'Order is complete',
+        confirm: 'Confirm',
+        cancel: 'Cancel',
+      },
       details: {
         title: 'Title',
         author: 'Author',
