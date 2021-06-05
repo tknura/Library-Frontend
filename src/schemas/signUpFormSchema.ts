@@ -1,6 +1,9 @@
 import * as yup from 'yup'
 
 export const signUpSchema = yup.object().shape({
+  username: yup
+    .string()
+    .required('common.errors.username.required'),
   email: yup
     .string()
     .email('common.errors.email.format')

@@ -6,12 +6,11 @@ import { signInSchema } from 'schemas/signInFormSchema'
 import * as Styled from './SignInForm.styles'
 
 interface SignInFormFields {
-  email: string
+  usernameOrEmail: string
   password: string
 }
 
 interface SignInFormProps {
-  // eslint-disable-next-line no-unused-vars
   onSubmit: (values: SignInFormFields, helpers: FormikHelpers<SignInFormFields>) => void
 }
 
@@ -28,7 +27,7 @@ const SignInForm = ({
     touched,
   } = useFormik({
     initialValues: {
-      email: '',
+      usernameOrEmail: '',
       password: '',
     },
     onSubmit: handleSubmit,
@@ -38,13 +37,13 @@ const SignInForm = ({
   return (
     <Styled.Form autoComplete="off" onSubmit={handleFormSubmit}>
       <Styled.TextField
-        id="email"
-        value={values.email}
-        error={touched.email && !!errors.email}
-        helperText={touched.password && t(errors.email as string)}
+        id="usernameOrEmail"
+        value={values.usernameOrEmail}
+        error={touched.usernameOrEmail && !!errors.usernameOrEmail}
+        helperText={touched.password && t(errors.usernameOrEmail as string)}
         onChange={handleChange}
         required
-        label={t('common.email')}
+        label={`${t('common.username')}/${t('common.email')}`}
         variant="outlined"
       />
       <Styled.TextField

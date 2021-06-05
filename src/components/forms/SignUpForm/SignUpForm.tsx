@@ -5,16 +5,15 @@ import { signUpSchema } from 'schemas/signUpFormSchema'
 import * as Styled from './SignUpForm.styles'
 
 interface SignUpFormFields {
+  username: string
   email: string
   firstName: string
   lastName: string
-  phoneNumber: string
   password: string
   repeatPassword: string
 }
 
 interface SignUpFormProps {
-  // eslint-disable-next-line no-unused-vars
   onSubmit: (values: SignUpFormFields, helpers: FormikHelpers<SignUpFormFields>) => void
 }
 
@@ -31,10 +30,10 @@ const SignUpForm = ({
     touched,
   } = useFormik<SignUpFormFields>({
     initialValues: {
+      username: '',
       email: '',
       firstName: '',
       lastName: '',
-      phoneNumber: '',
       password: '',
       repeatPassword: '',
     },
@@ -44,6 +43,16 @@ const SignUpForm = ({
 
   return (
     <Styled.Form autoComplete="off" onSubmit={handleFormSubmit}>
+      <Styled.TextField
+        id="username"
+        value={values.username}
+        error={touched.username && !!errors.username}
+        helperText={touched.password && t(errors.username as string)}
+        onChange={handleChange}
+        required
+        label={t('common.username')}
+        variant="outlined"
+      />
       <Styled.TextField
         id="email"
         value={values.email}
@@ -72,15 +81,6 @@ const SignUpForm = ({
         onChange={handleChange}
         required
         label={t('common.lastName')}
-        variant="outlined"
-      />
-      <Styled.TextField
-        id="phoneNumber"
-        error={touched.phoneNumber && !!errors.phoneNumber}
-        helperText={touched.phoneNumber && t(errors.phoneNumber as string)}
-        required
-        label={t('common.phoneNumber')}
-        onChange={handleChange}
         variant="outlined"
       />
       <Styled.TextField

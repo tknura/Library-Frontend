@@ -41,11 +41,22 @@ const AuthScreen = (): JSX.Element => {
   }
 
   const handleSignUpSubmit = (values: SignUpFormFields) => {
-    signUpMutate({ username: values.email, ...values })
+    signUpMutate(values)
   }
 
   const handleSignInSubmit = (values: SignInFormFields) => {
-    signInMutate(values)
+    if (values.usernameOrEmail.includes('@')) {
+      signInMutate({ email: values.usernameOrEmail, password: values.password })
+    } else {
+      signInMutate({ username: values.usernameOrEmail, password: values.password })
+    }
+  }
+
+  // Mock data until user roles will be in log in response
+  const handleLogAsManagerButton = () => {
+    const userRole: UserRole = 'MANAGER'
+    login('XD', userRole)
+    userRole !== 'MANAGER' ? history.push(BOOKS_ROUTE) : history.push(MANAGE_ROUTE)
   }
 
   return (
@@ -65,6 +76,9 @@ const AuthScreen = (): JSX.Element => {
           {isSignUpFormShown
             ? t('screen.auth.buttons.haveAccount')
             : t('screen.auth.buttons.noAccount')}
+        </Styled.Button>
+        <Styled.Button onClick={handleLogAsManagerButton}>
+          (DEV ONLY) Przejdź do konta managera
         </Styled.Button>
       </Styled.Paper>
     </Styled.RootContainer>

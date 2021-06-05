@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Axios from 'axios'
 import constate from 'constate'
 
 import { UserRole } from 'types/UserRole'
@@ -10,17 +9,16 @@ interface User {
 }
 
 const useAuthorization = () => {
-  const [user, setUser] = useState<User | undefined>(undefined)
+  const [user, setUser] = useState<User | null>(null)
 
   const login = (newAccessToken: string, newUserRole?: UserRole) => {
-    Axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
     setUser({
       accessToken: newAccessToken,
       userRole: newUserRole,
     })
   }
 
-  const logout = () => setUser(undefined)
+  const logout = () => setUser(null)
 
   return { login, logout, user }
 }
@@ -31,12 +29,14 @@ const [
   useLogout,
   useUserRole,
   useUserLoggedIn,
+  useUserAccessToken,
 ] = constate(
   useAuthorization,
   value => value.login,
   value => value.logout,
   value => value.user?.userRole,
   value => !!value.user?.accessToken,
+  value => value.user?.accessToken
 )
 
 export {
@@ -45,4 +45,5 @@ export {
   useLogout,
   useUserRole,
   useUserLoggedIn,
+  useUserAccessToken,
 }
