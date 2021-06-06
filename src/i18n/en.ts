@@ -83,7 +83,7 @@ export const en = {
       },
       cartConfirmationModal: {
         title: 'Do you want to confirm your reservation?',
-        itemsMissing: 'Item(s) missing:',
+        itemsMissing: 'Item(s) missing that will not be reserved:',
         orderIsComplete: 'Order is complete',
         confirm: 'Confirm',
         cancel: 'Cancel',

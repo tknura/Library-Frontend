@@ -15,8 +15,7 @@ const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { isLoading, isError, data: cartData } = useCartItemsQuery()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
-  const [booksMissing] = useState<boolean>(false)
-  const [missingBooksData] = useState<string>('')
+  const [missingBooksData] = useState<string>()
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
@@ -72,8 +71,7 @@ const CartScreen = (): JSX.Element => {
             </Styled.ReservationButton>
             <ConfirmReservationModal
               open={modalConfirmationOpen}
-              booksMissing={booksMissing}
-              missingBooksData={missingBooksData}
+              missingBooks={missingBooksData}
               onConfirm={handleConfirmReservationModal}
               onCancel={handleCancelConfirmationModal}
             />

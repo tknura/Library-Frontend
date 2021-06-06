@@ -79,7 +79,7 @@ export const pl = {
       },
       cartConfirmationModal: {
         title: 'Czy chcesz potwierdzić rezerwację?',
-        itemsMissing: 'Brakujące przedmiot(y):',
+        itemsMissing: 'Brakujące przedmiot(y) które nie zostaną zarezerwowane:',
         orderIsComplete: 'Zamówienie jest kompletne',
         confirm: 'Potwierdź',
         cancel: 'Anuluj',
