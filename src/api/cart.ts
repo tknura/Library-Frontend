@@ -12,12 +12,12 @@ interface CartItem {
 }
 
 const getCartItems = async (instance: AxiosInstance): Promise<unknown> => {
-  const { data } = await instance.get('/cart')
+  const { data } = await instance.get('/public/cart')
   return data
 }
 
 const getCartItem = async (instance: AxiosInstance, id: number): Promise<unknown> => {
-  const { data } = await instance.get(`/cart/${id}`)
+  const { data } = await instance.get(`/public/cart/${id}`)
   return data
 }
 
