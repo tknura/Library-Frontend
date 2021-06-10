@@ -88,6 +88,22 @@ export const pl = {
       bookList: {
         howMany: 'Dostepne ksiazki'
       },
+      account: {
+        username: 'Nazwa uzytkownika',
+        firstName: 'Imie',
+        lastName: 'Nazwisko',
+        password: 'Haslo',
+        save: 'Zapisz',
+        cancel: 'Anuluj',
+        edit: 'Edytuj',
+        accInfo: 'Informacje o koncie',
+        book: 'Ksiazka',
+        returnDate: 'Data zwrotu',
+        isReturned: 'Zwrocona?',
+        yes: 'Tak',
+        no: 'Nie',
+        borrows: 'Historia Wypozyczen',
+      }
     },
   },
 }

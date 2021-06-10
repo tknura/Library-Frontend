@@ -92,6 +92,22 @@ export const en = {
       bookList: {
         howMany: 'Available books'
       },
+      account: {
+        username: 'User name',
+        firstName: 'First name',
+        lastName: 'Last name',
+        password: 'Password',
+        save: 'Save',
+        cancel: 'Cancel',
+        edit: 'Edit',
+        accInfo: 'Account Information',
+        book: 'Book',
+        returnDate: 'Date of return',
+        isReturned: 'Returned?',
+        yes: 'Yes',
+        no: 'No',
+        borrows: 'Borrow History',
+      }
     },
   },
 }
