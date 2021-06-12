@@ -8,13 +8,16 @@ export const pl = {
       firstName: 'Imię',
       lastName: 'Nazwisko',
       phoneNumber: 'Numer telefonu',
+      add: 'Dodaj',
+      save: 'Zapisz',
+      cancel: 'Anuluj',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
         },
         email: {
           required: 'Adres e-mail jest wymagany',
-          format: 'Adres e-mail jest niepoprawny.',
+          format: 'Adres e-mail jest niepoprawny',
         },
         password: {
           required: 'Hasło jest wymagane',
@@ -34,6 +37,10 @@ export const pl = {
       logoutMessage: 'Zostałeś wylogowany pomyślnie.',
       tabNames: {
         books: 'Książki',
+      },
+      manage: {
+        books: 'Książki',
+        users: 'Użytkownicy',
       },
     },
     screen: {
@@ -96,6 +103,56 @@ export const pl = {
       },
       bookList: {
         howMany: 'Dostepne ksiazki'
+      },
+      manageBooks: {
+        id: 'ID',
+        title: 'Tytuł',
+        description: 'Opis',
+        author: 'Autor',
+        publisher: 'Wydawca',
+        publicationDate: 'Data publikacji',
+        numberOfBooks: 'Ilość ogółem',
+        numberOfOccupiedBooks: 'Ilość wypożyczona',
+        serialNumber: 'Numer seryjny',
+        actions: 'Akcje',
+        addOrEditBook: 'Dodaj/Edytuj książkę',
+        photo: 'Zdjęcie (link)',
+        empty: 'Brak książek w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
+        errors: {
+          title: {
+            required: 'Tytuł jest wymagany'
+          },
+          author: {
+            required: 'Autor jest wymagany'
+          },
+          description: {
+            required: 'Opis jest wymagany'
+          },
+          publicationDate: {
+            required: 'Data publikacji jest wymagana'
+          },
+          publisher: {
+            required: 'Wydawca jest wymagany'
+          },
+          photo: {
+            required: 'Zdjęcie jest wymagan'
+          },
+          addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
+          editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
+        }
+      },
+      manageUsers: {
+        editUser: 'Edytuj użytkownika',
+        email: 'E-mail',
+        username: 'Nazwa użytkownika',
+        firstName: 'Imię',
+        lastName: 'Nazwisko',
+        password: 'Hasło',
+        roles: 'Role',
+        actions: 'Akcje',
+        errors: {
+          editUser: 'Nie udało się zedytować danych użytkownika, spróbuj ponownie później.'
+        },
       },
     },
   },

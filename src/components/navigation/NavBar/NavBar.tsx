@@ -3,9 +3,9 @@ import {
   FormControl,
   IconButton,
   MenuItem,
-  Toolbar,
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
+import MenuIcon from '@material-ui/icons/Menu'
 
 import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
 import * as Styled from './NavBar.styles'
@@ -15,9 +15,13 @@ interface NavBarProps {
   isUserLogged: boolean
   onLanguageChange: (language: string) => void
   onAppNameButtonClick: () => void
-  onAccountButtonClick: () => void
-  onCartButtonClick: () => void
   onAuthButtonClick: () => void
+  onAccountButtonClick?: () => void
+  onCartButtonClick?: () => void
+  hideAccount?: boolean
+  hideCart?: boolean
+  onManageDrawerOpen?: () => void
+  hideManageDrawerButton?: boolean
 }
 
 const NavBar = ({
@@ -26,8 +30,12 @@ const NavBar = ({
   onLanguageChange: handleLanguageChange,
   onAppNameButtonClick: handleAppNameButtonClick,
   onAccountButtonClick: handleAccountButtonClick,
-  onCartButtonClick: handleCartButtonClick,
-  onAuthButtonClick: handleAuthButtonClick,
+  onAuthButtonClick: handleAuthButtonClick = () => null,
+  onCartButtonClick: handleCartButtonClick = () => null,
+  hideCart = false,
+  hideAccount = false,
+  hideManageDrawerButton = false,
+  onManageDrawerOpen: handleManageDrawerOpen,
 }: NavBarProps): JSX.Element => {
   const { t, i18n } = useTranslation()
 
@@ -36,7 +44,16 @@ const NavBar = ({
       <Styled.TitleButton onClick={handleAppNameButtonClick}>
         {t('common.appName')}
       </Styled.TitleButton>
-      <Toolbar>
+      <Styled.Toolbar>
+        <Styled.DrawerButton
+          color="inherit"
+          onClick={handleManageDrawerOpen}
+          edge="start"
+          $hidden={hideManageDrawerButton}
+          disabled={hideManageDrawerButton}
+        >
+          <MenuIcon />
+        </Styled.DrawerButton>
         <Styled.ToolbarRightContainer>
           <FormControl color="primary" size="small">
             <Styled.Select
@@ -47,18 +64,21 @@ const NavBar = ({
               <MenuItem value="en">English</MenuItem>
             </Styled.Select>
           </FormControl>
-          <RestrictedContent accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']}>
-            <IconButton onClick={handleAccountButtonClick}>
+          {!hideAccount && (
+            <RestrictedContent accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']}>
+              <IconButton onClick={handleAccountButtonClick}>
+                <Badge badgeContent={cartItemsAmount} color="secondary">
+                  <Styled.AccountIcon />
+                </Badge>
+              </IconButton>
+            </RestrictedContent>)}
+          {!hideCart && (
+            <IconButton onClick={handleCartButtonClick}>
               <Badge badgeContent={cartItemsAmount} color="secondary">
-                <Styled.AccountIcon />
+                <Styled.ShoppingCartIcon />
               </Badge>
             </IconButton>
-          </RestrictedContent>
-          <IconButton onClick={handleCartButtonClick}>
-            <Badge badgeContent={cartItemsAmount} color="secondary">
-              <Styled.ShoppingCartIcon />
-            </Badge>
-          </IconButton>
+          )}
           <Styled.AuthButton
             color="inherit"
             onClick={handleAuthButtonClick}
@@ -66,7 +86,7 @@ const NavBar = ({
             {isUserLogged ? t('navigation.logout') : t('navigation.login')}
           </Styled.AuthButton>
         </Styled.ToolbarRightContainer>
-      </Toolbar>
+      </Styled.Toolbar>
     </Styled.AppBar>
   )
 }

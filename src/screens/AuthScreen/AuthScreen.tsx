@@ -29,9 +29,9 @@ const AuthScreen = (): JSX.Element => {
   })
   const { mutate: signInMutate } = useSignInMutation({
     onSuccess: ({ accessToken }) => {
-      const userRole: UserRole = 'CLIENT' // <- this should be in response of auth endpoint soon
+      const userRole: UserRole = 'MANAGER' // <- this should be in response of auth endpoint soon
       login(accessToken, userRole)
-      userRole === 'CLIENT' ? history.push(BOOKS_ROUTE) : history.push(MANAGE_ROUTE)
+      userRole !== 'MANAGER' ? history.push(BOOKS_ROUTE) : history.push(MANAGE_ROUTE)
     },
     onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
   })

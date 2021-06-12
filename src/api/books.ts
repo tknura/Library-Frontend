@@ -4,6 +4,7 @@ import { AxiosInstance } from 'axios'
 import { useFetch } from 'components/providers/FetchProvider'
 
 interface Book {
+  [key: string]: string | string[] | boolean | number | undefined
   author: string
   bookId: number
   description: string
