@@ -8,6 +8,7 @@ import {
 import { useTranslation } from 'react-i18next'
 
 import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
+import { useGetAmountOfItems } from 'components/providers/CartProvider'
 import * as Styled from './NavBar.styles'
 
 interface NavBarProps {
@@ -30,6 +31,7 @@ const NavBar = ({
   onAuthButtonClick: handleAuthButtonClick,
 }: NavBarProps): JSX.Element => {
   const { t, i18n } = useTranslation()
+  const getCartItemsNumber = useGetAmountOfItems
 
   return (
     <Styled.AppBar position="sticky">
@@ -49,13 +51,11 @@ const NavBar = ({
           </FormControl>
           <RestrictedContent accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']}>
             <IconButton onClick={handleAccountButtonClick}>
-              <Badge badgeContent={cartItemsAmount} color="secondary">
-                <Styled.AccountIcon />
-              </Badge>
+              <Styled.AccountIcon />
             </IconButton>
           </RestrictedContent>
           <IconButton onClick={handleCartButtonClick}>
-            <Badge badgeContent={cartItemsAmount} color="secondary">
+            <Badge badgeContent={getCartItemsNumber()} color="secondary">
               <Styled.ShoppingCartIcon />
             </Badge>
           </IconButton>
