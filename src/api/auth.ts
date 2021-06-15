@@ -25,7 +25,7 @@ const postSignUp = async (
   instance: AxiosInstance,
   values: SignUpValues
 ): Promise<unknown> => {
-  const { data } = await instance.post('/auth/signUp', values)
+  const { data } = await instance.post('/public/register', values)
   return data
 }
 
@@ -33,7 +33,7 @@ const postSignIn = async (
   instance: AxiosInstance,
   values: SignInValues
 ): Promise<SignInResponse> => {
-  const { data } = await instance.post('/auth/signIn', values)
+  const { data } = await instance.post('/public/auth', values)
   return data
 }
 

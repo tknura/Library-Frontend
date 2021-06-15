@@ -70,10 +70,20 @@ export const pl = {
         },
       },
       cart: {
-        title: 'Twój Koszyk',
+        title: 'Tytuł',
+        author: 'Autor',
+        reservedUntil: 'Przedmiot zarezerwowany do',
         order: 'Złóż zamówienie',
-        empty: 'Koszyk jest pusty.',
-        sum: 'Podsumowanie: ',
+        errorMessage: 'Błąd przy wczytywaniu danych koszyka',
+        login: 'Zaloguj się',
+        reservationDatePickerLabel: 'Data rezerwacji',
+      },
+      cartConfirmationModal: {
+        title: 'Czy chcesz potwierdzić rezerwację?',
+        itemsMissing: 'Brakujące przedmiot(y) które nie zostaną zarezerwowane:',
+        orderIsComplete: 'Zamówienie jest kompletne',
+        confirm: 'Potwierdź',
+        cancel: 'Anuluj',
       },
       details: {
         title: 'Tytuł',
@@ -83,7 +93,7 @@ export const pl = {
         publisher: 'Wydawca',
         publicationDate: 'Data publikacji',
         addToCart: 'Dodaj do koszyka',
-        errorMessage: 'Błąd przy wczytywaniu danych książki'
+        errorMessage: 'Błąd przy wczytywaniu danych książki',
       },
       bookList: {
         howMany: 'Dostepne ksiazki'

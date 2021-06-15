@@ -23,12 +23,12 @@ interface AllBooksResponse {
 
 // TO DO Add response types when the backend is ready
 const getBooks = async (instance: AxiosInstance): Promise<unknown> => {
-  const { data } = await instance.get('/books/full')
+  const { data } = await instance.get('/public/books/full')
   return data
 }
 
 const getBook = async (instance: AxiosInstance, id: number): Promise<unknown> => {
-  const { data } = await instance.get(`/books/full/${id}`)
+  const { data } = await instance.get(`/public/books/full/${id}`)
   return data
 }
 
