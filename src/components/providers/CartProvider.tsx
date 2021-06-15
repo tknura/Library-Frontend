@@ -1,33 +1,78 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import constate from 'constate'
 
-const useCart = () => {
-  const [cartIterator, setCartIterator] = useState<number>(0)
+import { useCartItemsQuery } from 'api/cart'
 
-  const changeItemsAmount = (itemNumber: number) => {
-    setCartIterator(itemNumber)
+interface CartItem {
+  itemId: number,
+  title: string,
+  author: string,
+  photoUrl: string,
+  endDate: Date
+}
+
+interface Cart {
+  cartItems: CartItem[] | undefined,
+  cartIterator: number | undefined
+}
+
+const useCart = () => {
+  const { data: cartData } = useCartItemsQuery()
+  const [cart, setCart] = useState<Cart>()
+
+  useEffect(() => {
+    setCart({
+      cartItems: cartData,
+      cartIterator: cartData?.length
+    })
+  }, [cartData])
+
+  const editItems = (items: CartItem[]) => {
+    setCart({
+      cartItems: items,
+      cartIterator: items.length
+    })
   }
 
-  const finishOrder = () => setCartIterator(0)
+  const addItem = (item: CartItem) => {
+    const newItems = cart?.cartItems?.concat(item)
+    setCart({
+      cartItems: newItems,
+      cartIterator: newItems?.length
+    })
+  }
 
-  return { changeItemsAmount, finishOrder, cartIterator }
+  const finishOrder = () => {
+    setCart({
+      cartItems: undefined,
+      cartIterator: 0
+    })
+  }
+
+  return { editItems, addItem, finishOrder, cart }
 }
 
 const [
   CartProvider,
-  useChangeItemsAmount,
+  useChangeItems,
+  useAddItem,
+  useGetItems,
   useGetAmountOfItems,
   useFinishOrder,
 ] = constate(
   useCart,
-  value => value.changeItemsAmount,
-  value => value.cartIterator,
-  value => value.finishOrder,
+  value => value.editItems,
+  value => value.addItem,
+  value => value.cart?.cartItems,
+  value => value.cart?.cartIterator,
+  value => value.finishOrder
 )
 
 export {
   CartProvider,
-  useChangeItemsAmount,
+  useChangeItems,
+  useAddItem,
+  useGetItems,
   useGetAmountOfItems,
-  useFinishOrder
+  useFinishOrder,
 }
