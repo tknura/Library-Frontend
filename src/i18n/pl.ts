@@ -83,6 +83,7 @@ export const pl = {
         order: 'Złóż zamówienie',
         errorMessage: 'Błąd przy wczytywaniu danych koszyka',
         login: 'Zaloguj się',
+        reservationDatePickerLabel: 'Data rezerwacji',
       },
       cartConfirmationModal: {
         title: 'Czy chcesz potwierdzić rezerwację?',

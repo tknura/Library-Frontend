@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import MenuIcon from '@material-ui/icons/Menu'
 
 import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
+import { useGetAmountOfItems } from 'components/providers/CartProvider'
 import * as Styled from './NavBar.styles'
 
 interface NavBarProps {
@@ -38,6 +39,7 @@ const NavBar = ({
   onManageDrawerOpen: handleManageDrawerOpen,
 }: NavBarProps): JSX.Element => {
   const { t, i18n } = useTranslation()
+  const getCartItemsNumber = useGetAmountOfItems
 
   return (
     <Styled.AppBar position="sticky">
@@ -67,9 +69,7 @@ const NavBar = ({
           {!hideAccount && (
             <RestrictedContent accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']}>
               <IconButton onClick={handleAccountButtonClick}>
-                <Badge badgeContent={cartItemsAmount} color="secondary">
-                  <Styled.AccountIcon />
-                </Badge>
+                <Styled.AccountIcon />
               </IconButton>
             </RestrictedContent>)}
           {!hideCart && (

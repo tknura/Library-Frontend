@@ -66,7 +66,7 @@ const CartItemArea = ({
           </Styled.Text>
           <Styled.Text>
             <DatePicker
-              label="Reservation date"
+              label={t('screen.cart.reservationDatePickerLabel')}
               value={date}
               onChange={handleChangeDate}
               minDate={minDate}
