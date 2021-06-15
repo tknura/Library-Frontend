@@ -11,7 +11,7 @@ const MainRoutes = (): JSX.Element => (
     <Route exact path={AUTH_ROUTE}>
       <AuthScreen />
     </Route>
-    <RestrictedRoute exact path={MANAGE_ROUTE} accessRoles={['EMPLOYEE', 'MANAGER']}>
+    <RestrictedRoute path={MANAGE_ROUTE} accessRoles={['EMPLOYEE', 'MANAGER']}>
       <ManageScreen />
     </RestrictedRoute>
     <Route path="/">

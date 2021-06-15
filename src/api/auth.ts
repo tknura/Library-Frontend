@@ -25,7 +25,7 @@ const postSignUp = async (
   instance: AxiosInstance,
   values: SignUpValues
 ): Promise<unknown> => {
-  const { data } = await instance.post('/public/register', values)
+  const { data } = await instance.post('/public/register/client', values)
   return data
 }
 

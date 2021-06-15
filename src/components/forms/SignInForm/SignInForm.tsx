@@ -2,7 +2,7 @@ import { Link, Button } from '@material-ui/core'
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 
-import { signInSchema } from 'schemas/signInFormSchema'
+import { signInFormSchema } from 'schemas/signInFormSchema'
 import * as Styled from './SignInForm.styles'
 
 interface SignInFormFields {
@@ -31,7 +31,7 @@ const SignInForm = ({
       password: '',
     },
     onSubmit: handleSubmit,
-    validationSchema: signInSchema,
+    validationSchema: signInFormSchema,
   })
 
   return (
@@ -40,7 +40,7 @@ const SignInForm = ({
         id="usernameOrEmail"
         value={values.usernameOrEmail}
         error={touched.usernameOrEmail && !!errors.usernameOrEmail}
-        helperText={touched.password && t(errors.usernameOrEmail as string)}
+        helperText={touched.usernameOrEmail && t(errors.usernameOrEmail as string)}
         onChange={handleChange}
         required
         label={`${t('common.username')}/${t('common.email')}`}

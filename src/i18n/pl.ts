@@ -8,13 +8,16 @@ export const pl = {
       firstName: 'Imię',
       lastName: 'Nazwisko',
       phoneNumber: 'Numer telefonu',
+      add: 'Dodaj',
+      save: 'Zapisz',
+      cancel: 'Anuluj',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
         },
         email: {
           required: 'Adres e-mail jest wymagany',
-          format: 'Adres e-mail jest niepoprawny.',
+          format: 'Adres e-mail jest niepoprawny',
         },
         password: {
           required: 'Hasło jest wymagane',
@@ -26,6 +29,10 @@ export const pl = {
         lastName: {
           required: 'Nazwisko jest wymagane',
         },
+        repeatPassword: {
+          notMatch: 'Podane hasło nie jest zgodne',
+          required: 'Powtórzenie hasła jest wymagane',
+        },
       },
     },
     navigation: {
@@ -34,6 +41,10 @@ export const pl = {
       logoutMessage: 'Zostałeś wylogowany pomyślnie.',
       tabNames: {
         books: 'Książki',
+      },
+      manage: {
+        books: 'Książki',
+        users: 'Użytkownicy',
       },
     },
     screen: {
@@ -62,10 +73,6 @@ export const pl = {
           signUp: 'Zarejestruj się',
         },
         errors: {
-          repeatPassword: {
-            notMatch: 'Podane hasło nie jest zgodne',
-            required: 'Powtórzenie hasła jest wymagane',
-          },
           generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
@@ -109,7 +116,59 @@ export const pl = {
         yes: 'Tak',
         no: 'Nie',
         borrows: 'Historia wypożyczeń',
-      }
+      },
+      manageBooks: {
+        id: 'ID',
+        title: 'Tytuł',
+        description: 'Opis',
+        author: 'Autor',
+        publisher: 'Wydawca',
+        publicationDate: 'Data publikacji',
+        numberOfBooks: 'Ilość ogółem',
+        numberOfOccupiedBooks: 'Ilość wypożyczona',
+        serialNumber: 'Numer seryjny',
+        actions: 'Akcje',
+        addOrEditBook: 'Dodaj/Edytuj książkę',
+        photo: 'Zdjęcie (link)',
+        empty: 'Brak książek w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
+        errors: {
+          serialNumber: {
+            required: 'Numer seryjny jest wymagany',
+            min: 'Numer seryjny musi być liczbą dodatnią',
+          },
+          title: {
+            required: 'Tytuł jest wymagany'
+          },
+          author: {
+            required: 'Autor jest wymagany'
+          },
+          description: {
+            required: 'Opis jest wymagany'
+          },
+          publicationDate: {
+            date: 'Data publikacji musi być datą w formacie YYYY-MM-DD'
+          },
+          addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
+          editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
+        }
+      },
+      manageUsers: {
+        editUser: 'Edytuj użytkownika',
+        email: 'E-mail',
+        username: 'Nazwa użytkownika',
+        firstName: 'Imię',
+        lastName: 'Nazwisko',
+        password: 'Hasło',
+        roles: 'Role',
+        actions: 'Akcje',
+        errors: {
+          roles: {
+            oneOf: 'Niepoprawna rola.',
+            min: 'Użytkownik musi mieć minimum jedną rolę',
+          },
+          editUser: 'Nie udało się zedytować danych użytkownika, spróbuj ponownie później.'
+        },
+      },
     },
   },
 }

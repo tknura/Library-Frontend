@@ -1,7 +1,7 @@
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 
-import { signUpSchema } from 'schemas/signUpFormSchema'
+import { signUpFormSchema } from 'schemas/signUpFormSchema'
 import * as Styled from './SignUpForm.styles'
 
 interface SignUpFormFields {
@@ -38,7 +38,7 @@ const SignUpForm = ({
       repeatPassword: '',
     },
     onSubmit: handleSubmit,
-    validationSchema: signUpSchema,
+    validationSchema: signUpFormSchema,
   })
 
   return (

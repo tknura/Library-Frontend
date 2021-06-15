@@ -7,11 +7,7 @@ import { BookDetailsScreen } from 'screens/BookDetailsScreen/BookDetailsScreen'
 import { RestrictedRoute } from 'components/navigation/RestrictedRoute/RestrictedRoute'
 import { AccountScreen } from 'screens/AccountScreen/AccountScreen'
 
-interface ShopRoutesProps {
-  url: string
-}
-
-const ShopRoutes = ({ url }: ShopRoutesProps): JSX.Element => (
+const ShopRoutes = (): JSX.Element => (
   <Switch>
     <Route exact path={BOOKS_ROUTE}>
       <BooksScreen />
