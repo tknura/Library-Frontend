@@ -4,6 +4,7 @@ import { AxiosInstance } from 'axios'
 import { useFetch } from 'components/providers/FetchProvider'
 
 interface Book {
+  [key: string]: string | string[] | boolean | number | undefined
   author: string
   bookId: number
   description: string
@@ -21,13 +22,12 @@ interface AllBooksResponse {
   content: Book[]
 }
 
-// TO DO Add response types when the backend is ready
-const getBooks = async (instance: AxiosInstance): Promise<unknown> => {
+const getBooks = async (instance: AxiosInstance): Promise<AllBooksResponse> => {
   const { data } = await instance.get('/public/books/full')
   return data
 }
 
-const getBook = async (instance: AxiosInstance, id: number): Promise<unknown> => {
+const getBook = async (instance: AxiosInstance, id: number): Promise<Book> => {
   const { data } = await instance.get(`/public/books/full/${id}`)
   return data
 }

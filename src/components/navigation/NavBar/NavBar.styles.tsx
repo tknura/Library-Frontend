@@ -1,12 +1,18 @@
 import styled, { css } from 'styled-components'
-import { AppBar, Button, Select } from '@material-ui/core'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import {
+  AppBar,
+  Button,
+  IconButton,
+  IconButtonProps,
+  Select,
+  Toolbar
+} from '@material-ui/core'
 
 const StyledAppBar = styled(AppBar)`
   ${({ theme }) => css`
     flex-grow: 1;
-    align-items: flex-end;
     padding: 0;
     margin: 0;
 
@@ -26,6 +32,7 @@ ${({ theme }) => css`
     position: absolute;
     width: 200px;
     height: 50px;
+    z-index: 10;
     left: 50%;
     top: 50%;
     margin-left: -100px;
@@ -37,6 +44,11 @@ ${({ theme }) => css`
       top: 50px;
     }
   `}
+`
+
+const StyledToolbar = styled(Toolbar)`
+  display: flex;
+  justify-content: space-between;
 `
 
 const ToolbarRightContainer = styled.div`
@@ -63,12 +75,24 @@ const StyledAccountIcon = styled(AccountCircleIcon)`
   `}
 `
 
+interface DrawerButtonProps extends IconButtonProps {
+  $hidden?: boolean
+}
+
+const DrawerButton = styled(
+  (props: DrawerButtonProps) => (<IconButton {...props} />)
+)`
+  opacity: ${({ $hidden }) => $hidden ? 0 : 1};
+`
+
 export {
   StyledAppBar as AppBar,
   AuthButton,
   TitleButton,
+  StyledToolbar as Toolbar,
   StyledSelect as Select,
   ToolbarRightContainer,
   StyledShoppingCartIcon as ShoppingCartIcon,
   StyledAccountIcon as AccountIcon,
+  DrawerButton,
 }

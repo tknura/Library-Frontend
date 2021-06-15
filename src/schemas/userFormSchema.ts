@@ -1,6 +1,7 @@
+import { CLIENT_ROLE, EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
 import * as yup from 'yup'
 
-export const signUpFormSchema = yup.object().shape({
+export const userFormSchema = yup.object().shape({
   username: yup
     .string()
     .required('common.errors.username.required'),
@@ -22,4 +23,11 @@ export const signUpFormSchema = yup.object().shape({
     .string()
     .required('common.errors.repeatPassword.required')
     .oneOf([yup.ref('password'), ''], 'common.errors.repeatPassword.notMatch'),
+  roles: yup
+    .array().of(yup.string().oneOf([
+      CLIENT_ROLE,
+      MANAGER_ROLE,
+      EMPLOYEE_ROLE
+    ], 'screen.manageUsers.errors.roles.oneOf'))
+    .min(1, 'screen.manageUsers.errors.roles.min')
 })
