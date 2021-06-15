@@ -19,8 +19,8 @@ const AppProviders = (
   { children }: AppProvidersProps
 ): JSX.Element => (
   <AuthProvider>
-    <CartProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <CartProvider>
         <FetchProvider>
           <StylesProvider injectFirst>
             <MuiThemeProvider theme={theme}>
@@ -32,8 +32,8 @@ const AppProviders = (
             </MuiThemeProvider>
           </StylesProvider>
         </FetchProvider>
-      </QueryClientProvider>
-    </CartProvider>
+      </CartProvider>
+    </QueryClientProvider>
   </AuthProvider>
 )
 
