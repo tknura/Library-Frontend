@@ -21,7 +21,7 @@ import { useAddBookMutation, useUpdateBookMutation } from 'api/stocks'
 import { BookFormFields, BookFormModal } from 'components/forms/BookFormModal/BookFormModal'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
-import { booksColumns } from './ManageBookScreen.utils'
+import { booksColumns } from './ManageBookScreen.constants'
 import * as Styled from './ManageBookScreen.styles'
 
 const ManageBooksScreen = (): JSX.Element => {
@@ -32,6 +32,7 @@ const ManageBooksScreen = (): JSX.Element => {
   const [bookFormInitialValues, setBookFormInitialValues] = useState<BookFormFields | null>(null)
 
   const { data } = useBooksQuery()
+
   const { mutate: addBookMutate } = useAddBookMutation({
     onSuccess: () => {
       setBookModalOpen(false)
@@ -107,7 +108,7 @@ const ManageBooksScreen = (): JSX.Element => {
                     const value = row[column.id]
                     return (
                       <TableCell key={column.id} align="left">
-                        {value}
+                        {value || '-'}
                       </TableCell>
                     )
                   })}

@@ -15,12 +15,9 @@ export const bookFormSchema = yup.object().shape({
     .string()
     .required('screen.manageBooks.errors.description.required'),
   publicationDate: yup
-    .string()
-    .required('screen.manageBooks.errors.publicationDate.required'),
+    .date(),
   publisher: yup
-    .string()
-    .required('screen.manageBooks.errors.publisher.required'),
+    .string(),
   photo: yup
-    .string()
-    .required('screen.manageBooks.errors.photo.required'),
+    .string(),
 })

@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
+
 import { Modal } from 'components/utillity/Modal/Modal'
+import { Select } from 'components/inputs/Select'
 
 const Form = styled.form`
   display: flex;
@@ -12,6 +14,10 @@ const Form = styled.form`
 `
 
 const StyledTextField = styled(TextField)`
+  margin-top: 20px;
+`
+
+const StyledSelect = styled(Select)`
   margin-top: 20px;
 `
 
@@ -31,4 +37,5 @@ export {
   StyledTextField as TextField,
   ButtonContainer,
   StyledModalContent as ModalContent,
+  StyledSelect as Select,
 }

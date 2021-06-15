@@ -29,6 +29,10 @@ export const pl = {
         lastName: {
           required: 'Nazwisko jest wymagane',
         },
+        repeatPassword: {
+          notMatch: 'Podane hasło nie jest zgodne',
+          required: 'Powtórzenie hasła jest wymagane',
+        },
       },
     },
     navigation: {
@@ -69,10 +73,6 @@ export const pl = {
           signUp: 'Zarejestruj się',
         },
         errors: {
-          repeatPassword: {
-            notMatch: 'Podane hasło nie jest zgodne',
-            required: 'Powtórzenie hasła jest wymagane',
-          },
           generic: 'Wystąpił nieznany błąd podczas rejestracji'
         },
       },
@@ -133,13 +133,7 @@ export const pl = {
             required: 'Opis jest wymagany'
           },
           publicationDate: {
-            required: 'Data publikacji jest wymagana'
-          },
-          publisher: {
-            required: 'Wydawca jest wymagany'
-          },
-          photo: {
-            required: 'Zdjęcie jest wymagan'
+            date: 'Data publikacji musi być datą w formacie YYYY-MM-DD'
           },
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
@@ -155,6 +149,10 @@ export const pl = {
         roles: 'Role',
         actions: 'Akcje',
         errors: {
+          roles: {
+            oneOf: 'Niepoprawna rola.',
+            min: 'Użytkownik musi mieć minimum jedną rolę',
+          },
           editUser: 'Nie udało się zedytować danych użytkownika, spróbuj ponownie później.'
         },
       },

@@ -107,7 +107,6 @@ const BookFormModal = ({
             onChange={handleChangeDate}
             inputVariant="outlined"
             label={t('screen.manageBooks.publicationDate')}
-            required
           />
           <Styled.TextField
             id="publisher"
@@ -115,7 +114,6 @@ const BookFormModal = ({
             error={touched.publisher && !!errors.publisher}
             helperText={touched.publisher && t(errors.publisher as string)}
             onChange={handleChange}
-            required
             label={t('screen.manageBooks.publisher')}
             variant="outlined"
           />
@@ -125,7 +123,6 @@ const BookFormModal = ({
             error={touched.photo && !!errors.photo}
             helperText={touched.photo && t(errors.photo as string)}
             onChange={handleChange}
-            required
             label={t('screen.manageBooks.photo')}
             variant="outlined"
           />

@@ -20,7 +20,7 @@ import { useBooksQuery } from 'api/books'
 import { UserFormFields, UserFormModal } from 'components/forms/UserFormModal/UserFormModal'
 // import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 // import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
-import { booksColumns } from './ManageUsersScreen.utils'
+import { booksColumns } from './ManageUsersScreen.constants'
 import * as Styled from './ManageUsersScreen.styles'
 
 const ManageUsersScreen = (): JSX.Element => {

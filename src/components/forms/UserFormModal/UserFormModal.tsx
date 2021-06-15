@@ -1,8 +1,10 @@
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
+import { CLIENT_ROLE } from 'constants/userRoles'
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 
 import { bookFormSchema } from 'schemas/bookFormSchema'
+import { UserRole } from 'types/UserRole'
 import * as Styled from './UserFormModal.styles'
 
 interface UserFormFields {
@@ -10,7 +12,7 @@ interface UserFormFields {
   username: string
   firstName: string
   lastName: string
-  roles: string[]
+  roles: UserRole
 }
 
 interface UserFormModalProps extends Omit<ModalProps, 'children' | 'onSubmit'> {
@@ -27,7 +29,7 @@ const UserFormModal = ({
     username: '',
     firstName: '',
     lastName: '',
-    roles: [''],
+    roles: CLIENT_ROLE,
   },
   ...props
 }: UserFormModalProps): JSX.Element => {
@@ -92,7 +94,7 @@ const UserFormModal = ({
             label={t('screen.manageUsers.lastName')}
             variant="outlined"
           />
-          <Styled.TextField
+          {/* <Styled.Select
             id="roles"
             value={values.roles}
             error={touched.roles && !!errors.roles}
@@ -101,7 +103,9 @@ const UserFormModal = ({
             required
             label={t('screen.manageUsers.roles')}
             variant="outlined"
-          />
+          >
+            <MenuItems
+          </Styled.Select> */}
         </Styled.Form>
       </Styled.ModalContent>
       <Modal.Actions
