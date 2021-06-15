@@ -12,8 +12,8 @@ interface CartItem {
 }
 
 interface Cart {
-  cartItems: CartItem[] | undefined,
-  cartIterator: number | undefined
+  cartItems?: CartItem[],
+  cartIterator?: number
 }
 
 const useCart = () => {
@@ -44,7 +44,6 @@ const useCart = () => {
 
   const finishOrder = () => {
     setCart({
-      cartItems: undefined,
       cartIterator: 0
     })
   }
