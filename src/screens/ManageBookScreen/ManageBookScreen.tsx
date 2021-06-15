@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded'
 import EditRoundedIcon from '@material-ui/icons/EditRounded'
+import { format } from 'date-fns'
 
 import { useBooksQuery } from 'api/books'
 import { useAddBookMutation, useUpdateBookMutation } from 'api/stocks'
@@ -60,12 +61,12 @@ const ManageBooksScreen = (): JSX.Element => {
   const handleBookFormSubmit = async (values: BookFormFields) => {
     const mutationHandler = bookFormInitialValues ? updateBookMutate : addBookMutate
     await mutationHandler({
-      id: 0,
+      serial_number: values.serialNumber,
       title: values.title,
       author: values.author,
       description: values.description,
-      photos: [''],
-      publicationDate: values.publicationDate.toDateString(),
+      photos: [values.photo],
+      publicationDate: format(values.publicationDate, 'yyyy-MM-dd'),
       publisher: values.publisher,
       available: true,
     })

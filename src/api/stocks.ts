@@ -3,7 +3,8 @@ import { useFetch } from 'components/providers/FetchProvider'
 import { useMutation, UseMutationOptions, UseMutationResult } from 'react-query'
 
 interface Book {
-  id: number
+  // eslint-disable-next-line camelcase
+  serial_number: number
   title: string
   author: string
   available: boolean
@@ -17,7 +18,7 @@ const addBook = async (
   instance: AxiosInstance,
   values: Book
 ): Promise<unknown> => {
-  const { data } = await instance.post('/secured/books/add', values)
+  const { data } = await instance.put('/secured/books/add', values)
   return data
 }
 
@@ -25,7 +26,7 @@ const updateBook = async (
   instance: AxiosInstance,
   values: Book
 ): Promise<unknown> => {
-  const { data } = await instance.post('/secured/books/update', values)
+  const { data } = await instance.patch('/secured/books/update', values)
   return data
 }
 
@@ -33,7 +34,7 @@ const deleteBook = async (
   instance: AxiosInstance,
   serialNumber: number
 ): Promise<unknown> => {
-  const { data } = await instance.post('/secured/books/remove', null, { params: { serialNumber } })
+  const { data } = await instance.delete('/secured/books/remove', { params: { serialNumber } })
   return data
 }
 

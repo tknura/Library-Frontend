@@ -119,6 +119,10 @@ export const pl = {
         photo: 'Zdjęcie (link)',
         empty: 'Brak książek w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
         errors: {
+          serialNumber: {
+            required: 'Numer seryjny jest wymagany',
+            min: 'Numer seryjny musi być liczbą dodatnią',
+          },
           title: {
             required: 'Tytuł jest wymagany'
           },

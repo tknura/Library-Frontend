@@ -7,6 +7,7 @@ import { bookFormSchema } from 'schemas/bookFormSchema'
 import * as Styled from './BookFormModal.styles'
 
 interface BookFormFields {
+  serialNumber: number
   title: string
   author: string
   description: string
@@ -25,6 +26,7 @@ const BookFormModal = ({
   onClose: handleClose,
   onSubmit: handleSubmit,
   initialValues = {
+    serialNumber: 0,
     title: '',
     author: '',
     description: '',
@@ -62,6 +64,22 @@ const BookFormModal = ({
       </Modal.Title>
       <Styled.ModalContent>
         <Styled.Form autoComplete="off" onSubmit={handleFormSubmit}>
+          <Styled.TextField
+            id="serialNumber"
+            value={values.serialNumber}
+            error={touched.serialNumber && !!errors.serialNumber}
+            helperText={touched.serialNumber && t(errors.serialNumber as string)}
+            onChange={handleChange}
+            required
+            type="number"
+            label={t('screen.manageBooks.serialNumber')}
+            variant="outlined"
+            InputProps={{
+              inputProps: {
+                min: 0
+              }
+            }}
+          />
           <Styled.TextField
             id="title"
             value={values.title}
