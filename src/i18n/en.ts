@@ -80,6 +80,7 @@ export const en = {
         order: 'Place order',
         errorMessage: 'Error on fetching cart data',
         login: 'Log in',
+        reservationDatePickerLabel: 'Reservation date',
       },
       cartConfirmationModal: {
         title: 'Do you want to confirm your reservation?',
