@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography'
 import * as Styled from './AccountDataForm.styles'
 
 export interface UserData {
+  id: number
   email: string
   username: string
   firstName: string

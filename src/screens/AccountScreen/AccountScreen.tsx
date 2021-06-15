@@ -1,9 +1,14 @@
+import { useTranslation } from 'react-i18next'
+
 import { AccountDataForm, UserData } from 'components/forms/AccountDataForm/AccountDataForm'
 import { BorrowList } from 'components/data/BorrowList/BorrowList'
-import { Borrow } from 'components/data/BorrowList/BorrowArea'
+import { useShowSnackbar } from 'components/providers/SnackbarProviders'
+import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { useReservationsQuery } from 'api/reservations'
 import * as Styled from './AccountScreen.styles'
 
 const tempValues: UserData = {
+  id: 1,
   email: 'abc@gmail.com',
   username: 'malyszex123',
   firstName: 'Adam',
@@ -11,58 +16,40 @@ const tempValues: UserData = {
   password: 'qwe123'
 }
 
-const tempBorrows: Borrow[] = [
-  {
-    id: 1,
-    book: {
-      id: 1,
-      title: 'abc',
-      author: 'asd'
-    },
-    returnDate: new Date('10.10.2010'),
-    isReturned: true
-  },
-  {
-    id: 2,
-    book: {
-      id: 1,
-      title: 'abc',
-      author: 'asd'
-    },
-    returnDate: new Date('10.10.2010'),
-    isReturned: false
-  },
-  {
-    id: 3,
-    book: {
-      id: 2,
-      title: 'bca',
-      author: 'dsa'
-    },
-    returnDate: new Date('10.10.2020'),
-    isReturned: true
-  },
-  {
-    id: 4,
-    book: {
-      id: 3,
-      title: 'cba',
-      author: 'sad'
-    },
-    returnDate: new Date('10.10.2021'),
-    isReturned: false
-  }
-]
+const AccountScreen = (): JSX.Element => {
+  const { t } = useTranslation()
+  const { isLoading, isError, data: borrowsQueryData } = useReservationsQuery(tempValues.id)
+  const { show } = useShowSnackbar()
 
-const AccountScreen = (): JSX.Element => (
-  <Styled.RootContainer>
-    <AccountDataForm
-      userData={tempValues}
-    />
-    <BorrowList
-      borrows={tempBorrows}
-    />
-  </Styled.RootContainer>
-)
+  if (isError) {
+    show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
+  }
+
+  const borrowsData = borrowsQueryData?.items.map((borrow) => ({
+    id: borrow.id,
+    book: {
+      id: borrow.rentalBook.id,
+      title: borrow.rentalBook.details.name,
+      author: borrow.rentalBook.details.author
+    },
+    returnDate: borrow.endTime,
+    isReturned: borrow.returned
+  })) || []
+
+  return (
+    <Styled.RootContainer>
+      <AccountDataForm
+        userData={tempValues}
+      />
+      {isLoading ? (
+        <Styled.Loading size={150} />
+      ) : (
+        <BorrowList
+          borrows={borrowsData}
+        />
+      )}
+    </Styled.RootContainer>
+  )
+}
 
 export { AccountScreen }
