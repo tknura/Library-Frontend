@@ -99,10 +99,6 @@ export const pl = {
         howMany: 'Dostepne ksiazki'
       },
       account: {
-        username: 'Nazwa użytkownika',
-        firstName: 'Imię',
-        lastName: 'Nazwisko',
-        password: 'Hasło',
         save: 'Zapisz',
         cancel: 'Anuluj',
         edit: 'Edytuj',

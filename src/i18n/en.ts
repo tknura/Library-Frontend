@@ -103,10 +103,6 @@ export const en = {
         howMany: 'Available books'
       },
       account: {
-        username: 'User name',
-        firstName: 'First name',
-        lastName: 'Last name',
-        password: 'Password',
         save: 'Save',
         cancel: 'Cancel',
         edit: 'Edit',

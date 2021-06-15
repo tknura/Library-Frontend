@@ -43,38 +43,42 @@ const AccountDataForm = ({
   }
 
   return (
-    mode === Mode.DISPLAY
-      ? (
-        <Styled.AccDataContainer>
-          <Typography variant="h5" gutterBottom>
-            {t('screen.account.accInfo')}
-          </Typography>
-          <Styled.TextField
-            disabled
-            label="E-mail"
-            defaultValue={userData.email}
-          />
-          <Styled.TextField
-            disabled
-            label={t('screen.account.username')}
-            defaultValue={userData.username}
-          />
-          <Styled.TextField
-            disabled
-            label={t('screen.account.firstName')}
-            defaultValue={userData.firstName}
-          />
-          <Styled.TextField
-            disabled
-            label={t('screen.account.lastName')}
-            defaultValue={userData.lastName}
-          />
-          <Styled.TextField
-            disabled
-            type="password"
-            label={t('screen.account.password')}
-            defaultValue={userData.password}
-          />
+    <Styled.AccDataContainer>
+      <Typography variant="h5" gutterBottom>
+        {t('screen.account.accInfo')}
+      </Typography>
+      <Styled.TextField
+        disabled={mode === Mode.DISPLAY}
+        label={t('common.email')}
+        value={data.email}
+        onChange={handleFieldChange('email')}
+      />
+      <Styled.TextField
+        disabled={mode === Mode.DISPLAY}
+        label={t('common.username')}
+        value={data.username}
+        onChange={handleFieldChange('username')}
+      />
+      <Styled.TextField
+        disabled={mode === Mode.DISPLAY}
+        label={t('common.firstName')}
+        value={data.firstName}
+        onChange={handleFieldChange('firstName')}
+      />
+      <Styled.TextField
+        disabled={mode === Mode.DISPLAY}
+        label={t('common.lastName')}
+        value={data.lastName}
+        onChange={handleFieldChange('lastName')}
+      />
+      <Styled.TextField
+        disabled={mode === Mode.DISPLAY}
+        label={t('common.password')}
+        value={data.password}
+        onChange={handleFieldChange('password')}
+      />
+      {mode === Mode.DISPLAY
+        ? (
           <Styled.Button
             variant="contained"
             color="primary"
@@ -82,34 +86,7 @@ const AccountDataForm = ({
           >
             {t('screen.account.edit')}
           </Styled.Button>
-        </Styled.AccDataContainer>
-      )
-      : (
-        <Styled.AccDataContainer>
-          <Typography variant="h5" gutterBottom>
-            {t('screen.account.accInfo')}
-          </Typography>
-          <Styled.TextField
-            label="E-mail"
-            onChange={handleFieldChange('email')}
-          />
-          <Styled.TextField
-            label={t('screen.account.username')}
-            onChange={handleFieldChange('username')}
-          />
-          <Styled.TextField
-            label={t('screen.account.firstName')}
-            onChange={handleFieldChange('firstName')}
-          />
-          <Styled.TextField
-            label={t('screen.account.lastName')}
-            onChange={handleFieldChange('lastName')}
-          />
-          <Styled.TextField
-            label={t('screen.account.password')}
-            type="password"
-            onChange={handleFieldChange('password')}
-          />
+        ) : (
           <Styled.ButtonContainer>
             <Styled.Button
               variant="contained"
@@ -126,8 +103,8 @@ const AccountDataForm = ({
               {t('screen.account.cancel')}
             </Styled.Button>
           </Styled.ButtonContainer>
-        </Styled.AccDataContainer>
-      )
+        )}
+    </Styled.AccDataContainer>
   )
 }
 
