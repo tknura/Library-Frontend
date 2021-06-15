@@ -2,12 +2,12 @@ import TableContainer from '@material-ui/core/TableContainer'
 import styled from 'styled-components'
 
 const BorrowsContainer = styled.div`
-  width: 500px;
-  margin: 40px;
-  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: left;
+  min-width: 500px;
+  margin: 40px;
+  padding: 30px;
   border: 2px solid ${({ theme }) => theme.palette.primary.main};
 `
 

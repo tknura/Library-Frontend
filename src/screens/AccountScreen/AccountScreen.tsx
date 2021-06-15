@@ -1,14 +1,7 @@
-import { AccountDataForm } from 'components/forms/AccountDataForm/AccountDataForm'
+import { AccountDataForm, UserData } from 'components/forms/AccountDataForm/AccountDataForm'
 import { BorrowList } from 'components/data/BorrowList/BorrowList'
+import { Borrow } from 'components/data/BorrowList/BorrowArea'
 import * as Styled from './AccountScreen.styles'
-
-export interface UserData {
-  email: string
-  username: string
-  firstName: string
-  lastName: string
-  password: string
-}
 
 const tempValues: UserData = {
   email: 'abc@gmail.com',
@@ -16,19 +9,6 @@ const tempValues: UserData = {
   firstName: 'Adam',
   lastName: 'Malysz',
   password: 'qwe123'
-}
-
-interface Book {
-  id: number
-  title: string
-  author: string
-}
-
-export interface Borrow {
-  id: number
-  book: Book
-  returnDate: Date
-  isReturned: boolean
 }
 
 const tempBorrows: Borrow[] = [

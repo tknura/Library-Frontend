@@ -2,12 +2,12 @@ import styled from 'styled-components'
 import { Button, TextField } from '@material-ui/core'
 
 const AccDataContainer = styled.div`
-  width: 500px;
-  margin-top: 40px;
-  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: left;
+  min-width: 500px;
+  margin-top: 40px;
+  padding: 30px;
   border: 2px solid ${({ theme }) => theme.palette.primary.main};
 `
 const StyledTextField = styled(TextField)`
@@ -22,7 +22,6 @@ const StyledButton = styled(Button)`
 
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: row;
 `
 
 export {

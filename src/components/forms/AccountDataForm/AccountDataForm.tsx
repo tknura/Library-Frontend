@@ -2,10 +2,17 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Typography from '@material-ui/core/Typography'
 
-import { UserData } from 'screens/AccountScreen/AccountScreen'
 import * as Styled from './AccountDataForm.styles'
 
-interface Props {
+export interface UserData {
+  email: string
+  username: string
+  firstName: string
+  lastName: string
+  password: string
+}
+
+interface AccountDataFormProps {
   userData: UserData
 }
 
@@ -13,7 +20,7 @@ enum Mode { DISPLAY, EDIT }
 
 const AccountDataForm = ({
   userData
-}: Props): JSX.Element => {
+}: AccountDataFormProps): JSX.Element => {
   const { t } = useTranslation()
   const [mode, setMode] = useState<Mode>(Mode.DISPLAY)
   const [data, setData] = useState(userData)

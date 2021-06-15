@@ -6,17 +6,16 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 
-import { Borrow } from 'screens/AccountScreen/AccountScreen'
-import { BorrowArea } from './BorrowArea'
+import { BorrowArea, Borrow } from './BorrowArea'
 import * as Styled from './BorrowList.styles'
 
-interface Props {
+interface BorrowListProps {
   borrows: Borrow[]
 }
 
 const BorrowList = ({
   borrows
-}: Props): JSX.Element => {
+}: BorrowListProps): JSX.Element => {
   const { t } = useTranslation()
   return (
     <Styled.BorrowsContainer>

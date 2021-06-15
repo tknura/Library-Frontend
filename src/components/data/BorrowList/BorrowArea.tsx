@@ -2,26 +2,45 @@ import { useTranslation } from 'react-i18next'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { Link } from 'react-router-dom'
+import { format } from 'date-fns'
 
-import { Borrow } from 'screens/AccountScreen/AccountScreen'
+import { BOOKS_ROUTE } from 'constants/routeNames'
 
-interface Props {
+interface Book {
+  id: number
+  title: string
+  author: string
+}
+
+export interface Borrow {
+  id: number
+  book: Book
+  returnDate: Date
+  isReturned: boolean
+}
+
+interface BorrowAreaProps {
   borrow: Borrow
 }
 
 const BorrowArea = ({
-  borrow
-}: Props): JSX.Element => {
+  borrow: {
+    id,
+    book,
+    returnDate,
+    isReturned
+  }
+}: BorrowAreaProps): JSX.Element => {
   const { t } = useTranslation()
   return (
-    <TableRow key={borrow.id}>
+    <TableRow key={id}>
       <TableCell>
-        <Link to={`/books/${borrow.book.id}`}>
-          {`${borrow.book.author}, ${borrow.book.title}`}
+        <Link to={`/${BOOKS_ROUTE}/${book.id}`}>
+          {`${book.author}, ${book.title}`}
         </Link>
       </TableCell>
-      <TableCell>{`${borrow.returnDate.getDay()}.${borrow.returnDate.getMonth()}.${borrow.returnDate.getFullYear()}`}</TableCell>
-      <TableCell>{borrow.isReturned ? t('screen.account.yes') : t('screen.account.no')}</TableCell>
+      <TableCell>{`${format(returnDate, 'd.M.y')}`}</TableCell>
+      <TableCell>{isReturned ? t('screen.account.yes') : t('screen.account.no')}</TableCell>
     </TableRow>
   )
 }
