@@ -23,6 +23,7 @@ import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { booksColumns } from './ManageBookScreen.constants'
 import * as Styled from './ManageBookScreen.styles'
+import { mapApiBookToBookFormField } from './ManageBooksScreen.utils'
 
 const ManageBooksScreen = (): JSX.Element => {
   const { t } = useTranslation()
@@ -55,6 +56,12 @@ const ManageBooksScreen = (): JSX.Element => {
     setBookModalOpen(true)
   }
 
+  const handleEditButton = (row: any) => {
+    const mappedRow = mapApiBookToBookFormField(row)
+    setBookFormInitialValues(mappedRow)
+    setBookModalOpen(true)
+  }
+
   const handleCloseBookModal = () => {
     setBookModalOpen(false)
   }
@@ -66,7 +73,6 @@ const ManageBooksScreen = (): JSX.Element => {
       title: values.title,
       author: values.author,
       description: values.description,
-      photos: [values.photo],
       publicationDate: format(values.publicationDate, 'yyyy-MM-dd'),
       publisher: values.publisher,
       available: true,
@@ -94,7 +100,7 @@ const ManageBooksScreen = (): JSX.Element => {
                   <TableCell
                     key={column.id}
                     align="left"
-                    style={{ maxWidth: column.maxWidth }}
+                    style={{ minWidth: column.minWidth, maxWidth: column.maxWidth }}
                   >
                     {t(column.labeli18nCode)}
                   </TableCell>
@@ -106,20 +112,24 @@ const ManageBooksScreen = (): JSX.Element => {
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.bookId}>
                   {booksColumns.map(column => {
                     const value = row[column.id]
+                    if (column.id === 'actions') {
+                      return (
+                        <TableCell align="left">
+                          <IconButton>
+                            <DeleteRoundedIcon />
+                          </IconButton>
+                          <IconButton onClick={() => handleEditButton(row)}>
+                            <EditRoundedIcon />
+                          </IconButton>
+                        </TableCell>
+                      )
+                    }
                     return (
                       <TableCell key={column.id} align="left">
                         {value || '-'}
                       </TableCell>
                     )
                   })}
-                  <TableCell align="left">
-                    <IconButton>
-                      <DeleteRoundedIcon />
-                    </IconButton>
-                    <IconButton>
-                      <EditRoundedIcon />
-                    </IconButton>
-                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

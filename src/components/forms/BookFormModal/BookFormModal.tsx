@@ -11,7 +11,6 @@ interface BookFormFields {
   title: string
   author: string
   description: string
-  photo: string
   publicationDate: Date
   publisher: string
 }
@@ -30,7 +29,6 @@ const BookFormModal = ({
     title: '',
     author: '',
     description: '',
-    photo: '',
     publicationDate: new Date(),
     publisher: ''
   },
@@ -115,15 +113,6 @@ const BookFormModal = ({
             helperText={touched.publisher && t(errors.publisher as string)}
             onChange={handleChange}
             label={t('screen.manageBooks.publisher')}
-            variant="outlined"
-          />
-          <Styled.TextField
-            id="photo"
-            value={values.photo}
-            error={touched.photo && !!errors.photo}
-            helperText={touched.photo && t(errors.photo as string)}
-            onChange={handleChange}
-            label={t('screen.manageBooks.photo')}
             variant="outlined"
           />
           <Styled.TextField

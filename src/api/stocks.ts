@@ -9,7 +9,6 @@ interface Book {
   author: string
   available: boolean
   description: string
-  photos: string[]
   publicationDate: string
   publisher: string
 }
@@ -70,3 +69,5 @@ export {
   useUpdateBookMutation,
   useDeleteBookMutation
 }
+
+export type { Book }

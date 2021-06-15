@@ -45,3 +45,4 @@ const useBookQuery = (id: number)
 }
 
 export { useBooksQuery, useBookQuery }
+export type { Book }
