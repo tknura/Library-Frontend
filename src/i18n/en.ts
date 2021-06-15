@@ -109,6 +109,18 @@ export const en = {
       bookList: {
         howMany: 'Available books'
       },
+      account: {
+        save: 'Save',
+        cancel: 'Cancel',
+        edit: 'Edit',
+        accInfo: 'Account information',
+        book: 'Book',
+        returnDate: 'Date of return',
+        isReturned: 'Returned?',
+        yes: 'Yes',
+        no: 'No',
+        borrows: 'Borrow history',
+      },
       manageBooks: {
         id: 'ID',
         title: 'Title',

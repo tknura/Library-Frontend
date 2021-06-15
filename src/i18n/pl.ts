@@ -105,6 +105,18 @@ export const pl = {
       bookList: {
         howMany: 'Dostepne ksiazki'
       },
+      account: {
+        save: 'Zapisz',
+        cancel: 'Anuluj',
+        edit: 'Edytuj',
+        accInfo: 'Informacje o koncie',
+        book: 'Książka',
+        returnDate: 'Data zwrotu',
+        isReturned: 'Zwrócona?',
+        yes: 'Tak',
+        no: 'Nie',
+        borrows: 'Historia wypożyczeń',
+      },
       manageBooks: {
         id: 'ID',
         title: 'Tytuł',

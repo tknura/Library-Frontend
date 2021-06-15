@@ -47,6 +47,8 @@ module.exports = {
     '@typescript-eslint/no-namespace': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'error'
   },
   settings: {
     'import/resolver': {
