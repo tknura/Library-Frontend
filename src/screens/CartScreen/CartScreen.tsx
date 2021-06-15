@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 
 import { ConfirmReservationModal } from 'components/data/ConfirmReservationDialog/ConfirmReservationDialog'
 import { useCartItemsQuery } from 'api/cart'
@@ -9,21 +9,21 @@ import { useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { CartItemArea } from 'components/data/CartItemArea/CartItemArea'
-import { useChangeItemsAmount, useFinishOrder } from 'components/providers/CartProvider'
+import { useFinishOrder } from 'components/providers/CartProvider'
 import * as Styled from './CartScreen.styles'
 
 const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { isLoading, isError, data: cartData } = useCartItemsQuery()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
-  const changeItemsAmount = useChangeItemsAmount()
   const finishOrder = useFinishOrder()
   const [missingBooksData] = useState<string>()
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
 
-  useCallback(() => changeItemsAmount(cartData?.length || 0), [cartData?.length, changeItemsAmount])
+  // useCallback(() => changeItemsAmount(cartData?.length || 0),
+  // [cartData?.length, changeItemsAmount])
 
   if (isError) {
     show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
