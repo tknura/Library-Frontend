@@ -39,7 +39,7 @@ const NavBar = ({
   onManageDrawerOpen: handleManageDrawerOpen,
 }: NavBarProps): JSX.Element => {
   const { t, i18n } = useTranslation()
-  const getCartItemsNumber = useGetAmountOfItems
+  const getCartItemsNumber = useGetAmountOfItems()
 
   return (
     <Styled.AppBar position="sticky">
@@ -74,7 +74,7 @@ const NavBar = ({
             </RestrictedContent>)}
           {!hideCart && (
             <IconButton onClick={handleCartButtonClick}>
-              <Badge badgeContent={cartItemsAmount} color="secondary">
+              <Badge badgeContent={getCartItemsNumber} color="secondary">
                 <Styled.ShoppingCartIcon />
               </Badge>
             </IconButton>
