@@ -1,4 +1,4 @@
-export const booksColumns = [
+export const usersColumns = [
   {
     id: 'email',
     labeli18nCode: 'screen.manageUsers.email',
@@ -17,11 +17,6 @@ export const booksColumns = [
   {
     id: 'lastName',
     labeli18nCode: 'screen.manageUsers.lastName',
-    maxWidth: 150,
-  },
-  {
-    id: 'password',
-    labeli18nCode: 'screen.manageUsers.password',
     maxWidth: 150,
   },
   {

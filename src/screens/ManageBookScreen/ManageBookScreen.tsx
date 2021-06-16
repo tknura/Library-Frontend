@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Table,
   TableContainer,
@@ -29,7 +29,7 @@ const ManageBooksScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { show } = useShowSnackbar()
 
-  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(false)
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
   const [isBookModalOpen, setBookModalOpen] = useState<boolean>(false)
   const [bookFormInitialValues, setBookFormInitialValues] = useState<BookFormFields | null>(null)
   const [bookModalMode, setBookModalMode] = useState<BookModalMode>('CREATE')
@@ -93,10 +93,6 @@ const ManageBooksScreen = (): JSX.Element => {
       available: true,
     })
   }
-
-  useEffect(() => {
-    setQueryEnabled(true)
-  }, [])
 
   return (
     <Styled.RootContainer>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Table,
   TableContainer,
@@ -12,54 +12,81 @@ import {
 } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
-import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded'
 import EditRoundedIcon from '@material-ui/icons/EditRounded'
 
-import { useBooksQuery } from 'api/books'
-// import { useAddBookMutation, useUpdateBookMutation } from 'api/stocks'
+import { useUsersQuery } from 'api/users'
+import { useSignUpUserMutation } from 'api/auth'
 import { UserFormFields, UserFormModal } from 'components/forms/UserFormModal/UserFormModal'
-// import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-// import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
-import { booksColumns } from './ManageUsersScreen.constants'
+import { useShowSnackbar } from 'components/providers/SnackbarProviders'
+import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { UserRole } from 'types/UserRole'
+import { usersColumns } from './ManageUsersScreen.constants'
 import * as Styled from './ManageUsersScreen.styles'
+
+interface User {
+  [key: string]: string | number | UserRole
+  id: number
+  email: string
+  username: string
+  firstName: string
+  lastName: string
+  roles: UserRole
+}
 
 const ManageUsersScreen = (): JSX.Element => {
   const { t } = useTranslation()
-  // const { show } = useShowSnackbar()
+  const { show } = useShowSnackbar()
 
   const [isUserModalOpen, setUserModalOpen] = useState<boolean>(false)
   const [userFormInitialValues, setBookFormInitialValues] = useState<UserFormFields | null>(null)
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
 
-  const { data } = useBooksQuery()
-  // const { mutate: updateUserMutate } = useUpdateBookMutation({
-  //   onSuccess: () => {
-  //     setUserModalOpen(false)
-  //   },
-  //   onError: () => {
-  //     show({ message: t('screen.manageBooks.errors.editBook'), type: SNACKBAR_ERROR })
-  //   },
-  // })
+  const { mutate: addUserMutate } = useSignUpUserMutation({
+    onSuccess: () => {
+      setQueryEnabled(true)
+      setUserModalOpen(false)
+    },
+    onError: () => show({ message: t('screen.manageUsers.errors.addUser'), type: SNACKBAR_ERROR })
+  })
+  const { data } = useUsersQuery({
+    onSuccess: () => setQueryEnabled(false),
+    enabled: isQueryEnabled
+  })
+
+  const users: User[] = useMemo(() => (
+    data?.users.map(user => ({
+      id: user.id,
+      email: user.accountCredentialsDTO.emailAddress,
+      username: user.accountCredentialsDTO.username,
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      roles: user.accountPermissionsDTO.roles.map(role => role.roleName)[0] as UserRole,
+    })) || []
+  ), [data?.users])
 
   const handleAddButton = () => {
     setBookFormInitialValues(null)
     setUserModalOpen(true)
   }
 
-  const handleCloseBookModal = () => {
+  const handleEditButton = (user: typeof users[0]) => {
+    setBookFormInitialValues({
+      ...user,
+      password: '',
+      repeatPassword: '',
+    })
+    setUserModalOpen(true)
+  }
+
+  const handleCloseUserModal = () => {
     setUserModalOpen(false)
   }
 
-  const handleBookFormSubmit = async (values: UserFormFields) => {
-    // await updateUserMutate({
-    //   id: 0,
-    //   title: values.title,
-    //   author: values.author,
-    //   description: values.description,
-    //   photos: [''],
-    //   publicationDate: values.publicationDate,
-    //   publisher: values.publisher,
-    //   available: true,
-    // })
+  const handleUserFormSubmit = async ({ repeatPassword, roles, ...values }: UserFormFields) => {
+    await addUserMutate({
+      ...values,
+      // roles: [roles]
+    })
   }
 
   return (
@@ -79,7 +106,7 @@ const ManageUsersScreen = (): JSX.Element => {
           <Table>
             <TableHead>
               <TableRow>
-                {booksColumns.map(column => (
+                {usersColumns.map(column => (
                   <TableCell
                     key={column.id}
                     align="left"
@@ -91,29 +118,26 @@ const ManageUsersScreen = (): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.content.map(row => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.bookId}>
-                  {booksColumns.map(column => {
-                    const value = row[column.id]
-                    return (
-                      <TableCell key={column.id} align="left">
-                        {value}
-                      </TableCell>
-                    )
-                  })}
-                  <TableCell align="left">
-                    <IconButton>
-                      <DeleteRoundedIcon />
-                    </IconButton>
-                    <IconButton>
-                      <EditRoundedIcon />
-                    </IconButton>
-                  </TableCell>
+              {users.map(row => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                  {usersColumns.map(column => (
+                    <TableCell key={column.id} align="left">
+                      {column.id === 'actions' ? (
+                        <>
+                          <IconButton disabled onClick={() => handleEditButton(row)}>
+                            <EditRoundedIcon />
+                          </IconButton>
+                        </>
+                      ) : (
+                        row[column.id] || '-'
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-          {!data?.content.length && (
+          {data?.users.length && (
             <Styled.NoDataContainer>
               <Typography color="primary">
                 {t('screen.manageBooks.empty')}
@@ -124,8 +148,8 @@ const ManageUsersScreen = (): JSX.Element => {
       </Styled.Paper>
       <UserFormModal
         open={isUserModalOpen}
-        onClose={handleCloseBookModal}
-        onSubmit={handleBookFormSubmit}
+        onClose={handleCloseUserModal}
+        onSubmit={handleUserFormSubmit}
         initialValues={userFormInitialValues !== null ? userFormInitialValues : undefined}
       />
     </Styled.RootContainer>

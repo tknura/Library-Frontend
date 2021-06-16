@@ -167,8 +167,9 @@ export const pl = {
         errors: {
           roles: {
             oneOf: 'Niepoprawna rola.',
-            min: 'Użytkownik musi mieć minimum jedną rolę',
+            required: 'Użytkownik musi mieć rolę',
           },
+          addUser: 'Nie udało się dodać użytkownika, spróbuj ponownie później.',
           editUser: 'Nie udało się zedytować danych użytkownika, spróbuj ponownie później.'
         },
       },

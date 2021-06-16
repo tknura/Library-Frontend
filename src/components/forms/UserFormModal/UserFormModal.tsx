@@ -1,9 +1,10 @@
+import { useEffect } from 'react'
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
 import { CLIENT_ROLE } from 'constants/userRoles'
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 
-import { bookFormSchema } from 'schemas/bookFormSchema'
+import { userFormSchema } from 'schemas/userFormSchema'
 import { UserRole } from 'types/UserRole'
 import * as Styled from './UserFormModal.styles'
 
@@ -13,6 +14,8 @@ interface UserFormFields {
   firstName: string
   lastName: string
   roles: UserRole
+  password: string
+  repeatPassword: string
 }
 
 interface UserFormModalProps extends Omit<ModalProps, 'children' | 'onSubmit'> {
@@ -21,16 +24,20 @@ interface UserFormModalProps extends Omit<ModalProps, 'children' | 'onSubmit'> {
   initialValues?: UserFormFields
 }
 
+const defaultValues = {
+  email: '',
+  username: '',
+  firstName: '',
+  lastName: '',
+  password: '',
+  repeatPassword: '',
+  roles: CLIENT_ROLE,
+}
+
 const UserFormModal = ({
   onClose: handleClose,
   onSubmit: handleSubmit,
-  initialValues = {
-    email: '',
-    username: '',
-    firstName: '',
-    lastName: '',
-    roles: CLIENT_ROLE,
-  },
+  initialValues = defaultValues,
   ...props
 }: UserFormModalProps): JSX.Element => {
   const { t } = useTranslation()
@@ -38,14 +45,23 @@ const UserFormModal = ({
   const {
     handleSubmit: handleFormSubmit,
     handleChange,
+    setValues,
     values,
     errors,
     touched,
   } = useFormik({
     initialValues,
     onSubmit: handleSubmit,
-    validationSchema: bookFormSchema,
+    validationSchema: userFormSchema,
   })
+
+  useEffect(() => {
+    if (initialValues) {
+      setValues(initialValues)
+    } else {
+      setValues(defaultValues)
+    }
+  }, [initialValues, setValues])
 
   return (
     <Modal onClose={handleClose} {...props}>
@@ -80,7 +96,6 @@ const UserFormModal = ({
             error={touched.firstName && !!errors.firstName}
             helperText={touched.firstName && t(errors.firstName as string)}
             onChange={handleChange}
-            required
             label={t('screen.manageUsers.firstName')}
             variant="outlined"
           />
@@ -90,8 +105,29 @@ const UserFormModal = ({
             error={touched.lastName && !!errors.lastName}
             helperText={touched.lastName && t(errors.lastName as string)}
             onChange={handleChange}
-            required
             label={t('screen.manageUsers.lastName')}
+            variant="outlined"
+          />
+          <Styled.TextField
+            id="password"
+            value={values.password}
+            error={touched.password && !!errors.password}
+            helperText={touched.password && t(errors.password as string)}
+            onChange={handleChange}
+            required
+            type="password"
+            label={t('common.password')}
+            variant="outlined"
+          />
+          <Styled.TextField
+            id="repeatPassword"
+            value={values.repeatPassword}
+            error={touched.repeatPassword && !!errors.repeatPassword}
+            helperText={touched.repeatPassword && t(errors.repeatPassword as string)}
+            onChange={handleChange}
+            required
+            type="password"
+            label={t('screen.signUp.repeatPassword')}
             variant="outlined"
           />
           {/* <Styled.Select

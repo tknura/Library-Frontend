@@ -3,12 +3,15 @@ import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
 
+type UserRole = 'CLIENT' | 'MANAGER' | 'EMPLOYEE'
+
 interface SignUpValues {
   email: string
   username: string
   firstName: string
   lastName: string
   password: string
+  roles?: UserRole[]
 }
 
 interface SignInValues {
@@ -19,6 +22,14 @@ interface SignInValues {
 
 interface SignInResponse {
   accessToken: string
+}
+
+const postSignUpUser = async (
+  instance: AxiosInstance,
+  values: SignUpValues
+): Promise<unknown> => {
+  const { data } = await instance.post('/public/register/client', values)
+  return data
 }
 
 const postSignUp = async (
@@ -37,6 +48,12 @@ const postSignIn = async (
   return data
 }
 
+const useSignUpUserMutation = (options: UseMutationOptions<unknown, Error, SignUpValues>)
+: UseMutationResult<unknown, Error, SignUpValues> => {
+  const { fetch } = useFetch()
+  return useMutation('signUp', (values: SignUpValues) => postSignUpUser(fetch, values), options)
+}
+
 const useSignInMutation = (options: UseMutationOptions<SignInResponse, Error, SignInValues>)
 : UseMutationResult<SignInResponse, Error, SignInValues> => {
   const { fetch } = useFetch()
@@ -49,4 +66,4 @@ const useSignUpMutation = (options: UseMutationOptions<unknown, Error, SignUpVal
   return useMutation('signUp', (values: SignUpValues) => postSignUp(fetch, values), options)
 }
 
-export { useSignInMutation, useSignUpMutation }
+export { useSignUpUserMutation, useSignInMutation, useSignUpMutation }
