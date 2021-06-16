@@ -4,46 +4,68 @@ import constate from 'constate'
 import { UserRole } from 'types/UserRole'
 
 interface User {
-  accessToken: string
+  accessToken?: string
   userRole?: UserRole
+  cartId?: number
 }
 
 const useAuthorization = () => {
   const [user, setUser] = useState<User | null>(null)
 
-  const login = (newAccessToken: string, newUserRole?: UserRole) => {
-    setUser({
+  const setToken = (newAccessToken: string) => {
+    setUser(prevUser => ({
+      ...(prevUser || {}),
       accessToken: newAccessToken,
+    }))
+  }
+  const setRole = (newUserRole: UserRole) => {
+    setUser(prevUser => ({
+      ...(prevUser || {}),
       userRole: newUserRole,
-    })
+    }))
+  }
+  const setCartId = (newCartId: number) => {
+    setUser(prevUser => ({
+      ...(prevUser || {}),
+      cartId: newCartId,
+    }))
   }
 
   const logout = () => setUser(null)
 
-  return { login, logout, user }
+  return { setToken, setRole, setCartId, logout, user }
 }
 
 const [
   AuthProvider,
-  useLogin,
+  useSetToken,
+  useSetCartId,
+  useSetRole,
   useLogout,
   useUserRole,
+  useUserCartId,
   useUserLoggedIn,
   useUserAccessToken,
 ] = constate(
   useAuthorization,
-  value => value.login,
+  value => value.setToken,
+  value => value.setCartId,
+  value => value.setRole,
   value => value.logout,
   value => value.user?.userRole,
+  value => value.user?.cartId,
   value => !!value.user?.accessToken,
   value => value.user?.accessToken
 )
 
 export {
   AuthProvider,
-  useLogin,
+  useSetToken,
+  useSetCartId,
+  useSetRole,
   useLogout,
   useUserRole,
+  useUserCartId,
   useUserLoggedIn,
   useUserAccessToken,
 }

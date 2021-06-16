@@ -1,9 +1,10 @@
-import { useQuery, UseQueryResult } from 'react-query'
+import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
 
 interface Book {
+  [key: string]: string | string[] | boolean | number | undefined
   author: string
   bookId: number
   description: string
@@ -21,21 +22,20 @@ interface AllBooksResponse {
   content: Book[]
 }
 
-// TO DO Add response types when the backend is ready
-const getBooks = async (instance: AxiosInstance): Promise<unknown> => {
+const getBooks = async (instance: AxiosInstance): Promise<AllBooksResponse> => {
   const { data } = await instance.get('/public/books/full')
   return data
 }
 
-const getBook = async (instance: AxiosInstance, id: number): Promise<unknown> => {
+const getBook = async (instance: AxiosInstance, id: number): Promise<Book> => {
   const { data } = await instance.get(`/public/books/full/${id}`)
   return data
 }
 
-const useBooksQuery = ()
+const useBooksQuery = (options?: UseQueryOptions<AllBooksResponse, unknown>)
 : UseQueryResult<AllBooksResponse, unknown> => {
   const { fetch } = useFetch()
-  return useQuery('books', () => getBooks(fetch))
+  return useQuery('books', () => getBooks(fetch), options)
 }
 
 const useBookQuery = (id: number)
@@ -45,3 +45,4 @@ const useBookQuery = (id: number)
 }
 
 export { useBooksQuery, useBookQuery }
+export type { Book }

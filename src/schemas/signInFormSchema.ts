@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const signInSchema = yup.object().shape({
+export const signInFormSchema = yup.object().shape({
   usernameOrEmail: yup
     .string()
     .required('screen.signIn.errors.usernameOrEmail.required'),

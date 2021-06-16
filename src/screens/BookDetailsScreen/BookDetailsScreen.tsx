@@ -1,5 +1,6 @@
 import SimpleImageSlider from 'react-simple-image-slider'
 import { useTranslation } from 'react-i18next'
+import { useParams } from 'react-router'
 
 import { BookDescription } from 'components/data/BookDescription/BookDescription'
 import { useBookQuery } from 'api/books'
@@ -7,9 +8,14 @@ import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import * as Styled from './BookDetailsScreen.styles'
 
+interface BookDetailsScreenRouteParams {
+  id: string
+}
+
 const BookDetailsScreen = (): JSX.Element => {
   const { t } = useTranslation()
-  const { isLoading, isError, data: bookData } = useBookQuery(1)
+  const { id } = useParams<BookDetailsScreenRouteParams>()
+  const { isLoading, isError, data: bookData } = useBookQuery(+id)
   const { show } = useShowSnackbar()
   const placeholderPhotos = ['https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png']
 

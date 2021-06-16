@@ -7,11 +7,7 @@ import { BookDetailsScreen } from 'screens/BookDetailsScreen/BookDetailsScreen'
 import { RestrictedRoute } from 'components/navigation/RestrictedRoute/RestrictedRoute'
 import { AccountScreen } from 'screens/AccountScreen/AccountScreen'
 
-interface ShopRoutesProps {
-  url: string
-}
-
-const ShopRoutes = ({ url }: ShopRoutesProps): JSX.Element => (
+const ShopRoutes = (): JSX.Element => (
   <Switch>
     <Route exact path={BOOKS_ROUTE}>
       <BooksScreen />
@@ -25,6 +21,9 @@ const ShopRoutes = ({ url }: ShopRoutesProps): JSX.Element => (
     <RestrictedRoute accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']} path={ACCOUNT_ROUTE}>
       <AccountScreen />
     </RestrictedRoute>
+    <Route exact path="/tempacc">
+      <AccountScreen />
+    </Route>
     <Redirect exact path="*" to={`${BOOKS_ROUTE}`} />
   </Switch>
 )

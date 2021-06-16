@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export const signUpSchema = yup.object().shape({
+export const signUpFormSchema = yup.object().shape({
   username: yup
     .string()
     .required('common.errors.username.required'),
@@ -20,6 +20,6 @@ export const signUpSchema = yup.object().shape({
     .min(8, 'common.errors.password.toShort'),
   repeatPassword: yup
     .string()
-    .required('screen.signUp.errors.repeatPassword.required')
-    .oneOf([yup.ref('password'), ''], 'screen.signUp.errors.repeatPassword.notMatch'),
+    .required('common.errors.repeatPassword.required')
+    .oneOf([yup.ref('password'), ''], 'common.errors.repeatPassword.notMatch'),
 })

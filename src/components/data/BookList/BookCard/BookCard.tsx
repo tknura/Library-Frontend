@@ -34,7 +34,7 @@ const BookCard = ({
   return (
     <Styled.Card>
       <CardActionArea href={`${BOOKS_ROUTE}/${item.id}`}>
-        <Styled.CardMedia image={item.photos[0] || placeholderPhoto} />
+        <Styled.CardMedia image={item?.photos?.length ? item.photos[0] : placeholderPhoto} />
       </CardActionArea>
       <Styled.ContentContainer>
         <CardContent>

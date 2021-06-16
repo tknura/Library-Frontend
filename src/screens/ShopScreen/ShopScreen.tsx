@@ -1,4 +1,4 @@
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 import { NavBar } from 'components/navigation/NavBar/NavBar'
@@ -10,7 +10,6 @@ import { SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import * as Styled from './ShopScreen.styles'
 
 const ShopScreen = (): JSX.Element => {
-  const { url } = useRouteMatch()
   const { t, i18n } = useTranslation()
   const isUserLoggedIn = useUserLoggedIn()
   const logout = useLogout()
@@ -52,9 +51,10 @@ const ShopScreen = (): JSX.Element => {
         onAccountButtonClick={handleAccountButtonClick}
         onLanguageChange={handleLanguageChange}
         onAuthButtonClick={handleAuthButtonClick}
+        hideManageDrawerButton
       />
       <Styled.ContentContainer>
-        <ShopRoutes url={url} />
+        <ShopRoutes />
       </Styled.ContentContainer>
     </Styled.RootContainer>
   )

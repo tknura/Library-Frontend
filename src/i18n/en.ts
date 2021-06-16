@@ -8,6 +8,9 @@ export const en = {
       firstName: 'First Name',
       lastName: 'Last Name',
       phoneNumber: 'Phone number',
+      add: 'Add',
+      save: 'Save',
+      cancel: 'Cancel',
       errors: {
         username: {
           required: 'Username is required',
@@ -38,6 +41,10 @@ export const en = {
       logoutMessage: 'You have been logged out successfully,',
       tabNames: {
         books: 'Books',
+      },
+      manage: {
+        books: 'Books',
+        users: 'Users',
       },
     },
     screen: {
@@ -102,6 +109,55 @@ export const en = {
       bookList: {
         howMany: 'Available books'
       },
+      account: {
+        save: 'Save',
+        cancel: 'Cancel',
+        edit: 'Edit',
+        accInfo: 'Account information',
+        book: 'Book',
+        returnDate: 'Date of return',
+        isReturned: 'Returned?',
+        yes: 'Yes',
+        no: 'No',
+        borrows: 'Borrow history',
+      },
+      manageBooks: {
+        id: 'ID',
+        title: 'Title',
+        description: 'Description',
+        author: 'Author',
+        publisher: 'Publisher',
+        publicationDate: 'Publication Date',
+        numberOfBooks: 'Books amount',
+        numberOfOccupiedBooks: 'Occupied books amount',
+        serialNumber: 'Serial number',
+        actions: 'Actions',
+        addOrEditBook: 'Add/Edit book',
+        photo: 'Photo (link)',
+        empty: 'No books in the system, you can add them by clicking the "Add" button.',
+        errors: {
+          title: {
+            required: 'Title is required'
+          },
+          author: {
+            required: 'Author is required'
+          },
+          description: {
+            required: 'Description is required'
+          },
+          publicationDate: {
+            required: 'Publication date is required'
+          },
+          publisher: {
+            required: 'Publisher is required'
+          },
+          photo: {
+            required: 'Photo is required'
+          },
+          addBook: 'An error occurred during adding book, try again later.',
+          editBook: 'An error occurred during updating book, try again later.',
+        }
+      }
     },
   },
 }
