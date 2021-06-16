@@ -3,18 +3,20 @@ import { useHistory } from 'react-router'
 import { useState } from 'react'
 
 import { ConfirmReservationModal } from 'components/data/ConfirmReservationDialog/ConfirmReservationDialog'
-import { useCartItemsQuery } from 'api/cart'
 import { AUTH_ROUTE } from 'constants/routeNames'
 import { useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { CartItemArea } from 'components/data/CartItemArea/CartItemArea'
-import { useFinishOrder } from 'components/providers/CartProvider'
+import { useChangeCartItems, useFinishOrder, useGetCartItems, useIsError, useIsLoading } from 'components/providers/CartProvider'
 import * as Styled from './CartScreen.styles'
 
 const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
-  const { isLoading, isError, data: cartData } = useCartItemsQuery()
+  const cartItems = useGetCartItems()
+  const isError = useIsError()
+  const isLoading = useIsLoading()
+  const changeItems = useChangeCartItems()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
   const finishOrder = useFinishOrder()
   const [missingBooksData] = useState<string>()
@@ -22,15 +24,13 @@ const CartScreen = (): JSX.Element => {
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
 
-  // useCallback(() => changeItemsAmount(cartData?.length || 0),
-  // [cartData?.length, changeItemsAmount])
-
   if (isError) {
     show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   }
 
   const handleDelete = (id: number) => {
-    // delete cartItem
+    const newCartItems = cartItems?.filter(value => value.itemId !== id)
+    changeItems(newCartItems)
   }
 
   const handleReserve = () => {
@@ -57,7 +57,7 @@ const CartScreen = (): JSX.Element => {
       ) : (
         <>
           <Styled.CartItemsContainer>
-            {cartData?.map(cartItem => (
+            {cartItems?.map(cartItem => (
               <CartItemArea
                 key={cartItem.itemId}
                 cartItem={cartItem}

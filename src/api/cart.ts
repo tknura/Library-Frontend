@@ -1,14 +1,19 @@
-import { useQuery, UseQueryResult } from 'react-query'
+import { useMutation, UseMutationOptions, UseMutationResult, useQuery, UseQueryResult } from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
 
-interface CartItem {
+interface CartItemRequest {
+  id?: number,
+  itemId: number,
+  requestedEndDate: string
+}
+interface CartItemResponse {
   itemId: number,
   title: string,
   author: string,
   photoUrl: string,
-  endDate: Date
+  endDate: string
 }
 
 const getCartItems = async (instance: AxiosInstance): Promise<unknown> => {
@@ -16,21 +21,69 @@ const getCartItems = async (instance: AxiosInstance): Promise<unknown> => {
   return data
 }
 
-const getCartItem = async (instance: AxiosInstance, id: number): Promise<unknown> => {
-  const { data } = await instance.get(`/public/cart/${id}`)
-  return data
-}
-
-const useCartItemsQuery = ()
-: UseQueryResult<CartItem[], unknown> => {
+const useGetCartItemsQuery = ()
+: UseQueryResult<CartItemResponse[], unknown> => {
   const { fetch } = useFetch()
   return useQuery('cart', () => getCartItems(fetch))
 }
 
-const useCartItemQuery = (id: number)
-: UseQueryResult<CartItem, unknown> => {
-  const { fetch } = useFetch()
-  return useQuery(['cart', id], () => getCartItem(fetch, id))
+const postAddCartItem = async (
+  instance: AxiosInstance,
+  values: CartItemRequest
+): Promise<unknown> => {
+  const { data } = await instance.post('/public/cart', values)
+  return data
 }
 
-export { useCartItemsQuery, useCartItemQuery }
+const useAddCartItemMutation = (options: UseMutationOptions<unknown, Error, CartItemRequest>)
+: UseMutationResult<unknown, Error, CartItemRequest> => {
+  const { fetch } = useFetch()
+  return useMutation('cart', (values: CartItemRequest) => postAddCartItem(fetch, values), options)
+}
+
+const deleteCartItem = async (
+  instance: AxiosInstance,
+  values: CartItemRequest
+): Promise<unknown> => {
+  const { data } = await instance.delete('/public/cart', { params: cartId, data: values })
+  return data
+}
+
+const useDeleteCartItemMutation = (options: UseMutationOptions<unknown, Error, CartItemRequest>)
+: UseMutationResult<unknown, Error, CartItemRequest> => {
+  const { fetch } = useFetch()
+  return useMutation('cart', (values: CartItemRequest) => deleteCartItem(fetch, values), options)
+}
+
+const editCartItem = async (
+  instance: AxiosInstance,
+  values: CartItemRequest
+): Promise<unknown> => {
+  const { data } = await instance.patch('/public/cart', { params: cartId, data: values })
+  return data
+}
+
+const useEditCartItemMutation = (options: UseMutationOptions<unknown, Error, CartItemRequest>)
+: UseMutationResult<unknown, Error, CartItemRequest> => {
+  const { fetch } = useFetch()
+  return useMutation('cart', (values: CartItemRequest) => editCartItem(fetch, values), options)
+}
+
+const putSubmitCart = async (instance: AxiosInstance): Promise<unknown> => {
+  const { data } = await instance.put('/public/cart', cartId)
+  return data
+}
+
+const usePutSubmitCartQuery = ()
+: UseQueryResult<CartItemResponse[], unknown> => {
+  const { fetch } = useFetch()
+  return useQuery('cart', () => putSubmitCart(fetch))
+}
+
+export {
+  useGetCartItemsQuery,
+  useAddCartItemMutation,
+  useDeleteCartItemMutation,
+  useEditCartItemMutation,
+  usePutSubmitCartQuery
+}
