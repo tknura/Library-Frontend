@@ -1,7 +1,8 @@
-import { useMutation, UseMutationOptions, UseMutationResult, useQuery, UseQueryResult } from 'react-query'
+import { useMutation, UseMutationOptions, UseMutationResult, useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
+import { useUserCartId } from 'components/providers/AuthProvider'
 
 interface CartItemRequest {
   id?: number,
@@ -16,15 +17,17 @@ interface CartItemResponse {
   endDate: string
 }
 
-const getCartItems = async (instance: AxiosInstance): Promise<unknown> => {
-  const { data } = await instance.get('/public/cart')
+const cartId = useUserCartId
+
+const getCartItems = async (instance: AxiosInstance): Promise<CartItemResponse[]> => {
+  const { data } = await instance.get('/public/cart', { params: cartId })
   return data
 }
 
-const useGetCartItemsQuery = ()
+const useGetCartItemsQuery = (options?: UseQueryOptions<CartItemResponse[], unknown>)
 : UseQueryResult<CartItemResponse[], unknown> => {
   const { fetch } = useFetch()
-  return useQuery('cart', () => getCartItems(fetch))
+  return useQuery('cart', () => getCartItems(fetch), options)
 }
 
 const postAddCartItem = async (
@@ -70,14 +73,14 @@ const useEditCartItemMutation = (options: UseMutationOptions<unknown, Error, Car
 }
 
 const putSubmitCart = async (instance: AxiosInstance): Promise<unknown> => {
-  const { data } = await instance.put('/public/cart', cartId)
+  const { data } = await instance.put('/public/cart', { params: cartId })
   return data
 }
 
-const usePutSubmitCartQuery = ()
-: UseQueryResult<CartItemResponse[], unknown> => {
+const useSubmitCartMutation = (options: UseMutationOptions<unknown, Error, unknown>)
+: UseMutationResult<unknown, Error, unknown> => {
   const { fetch } = useFetch()
-  return useQuery('cart', () => putSubmitCart(fetch))
+  return useMutation('cart', () => putSubmitCart(fetch), options)
 }
 
 export {
@@ -85,5 +88,5 @@ export {
   useAddCartItemMutation,
   useDeleteCartItemMutation,
   useEditCartItemMutation,
-  usePutSubmitCartQuery
+  useSubmitCartMutation
 }

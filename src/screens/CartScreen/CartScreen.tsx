@@ -6,19 +6,28 @@ import { ConfirmReservationModal } from 'components/data/ConfirmReservationDialo
 import { AUTH_ROUTE } from 'constants/routeNames'
 import { useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
+import { useSubmitCart, useGetCartItems, useIsError, useIsLoading, useDeleteCartItem, useEditCartItem } from 'components/providers/CartProvider'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { CartItemArea } from 'components/data/CartItemArea/CartItemArea'
-import { useChangeCartItems, useFinishOrder, useGetCartItems, useIsError, useIsLoading } from 'components/providers/CartProvider'
 import * as Styled from './CartScreen.styles'
+
+interface CartItemResponse {
+  itemId: number,
+  title: string,
+  author: string,
+  photoUrl: string,
+  endDate: string
+}
 
 const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const cartItems = useGetCartItems()
   const isError = useIsError()
   const isLoading = useIsLoading()
-  const changeItems = useChangeCartItems()
+  const finishOrder = useSubmitCart()
+  const deleteItem = useDeleteCartItem()
+  const editItem = useEditCartItem()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
-  const finishOrder = useFinishOrder()
   const [missingBooksData] = useState<string>()
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
@@ -28,9 +37,12 @@ const CartScreen = (): JSX.Element => {
     show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   }
 
-  const handleDelete = (id: number) => {
-    const newCartItems = cartItems?.filter(value => value.itemId !== id)
-    changeItems(newCartItems)
+  const handleDelete = (item: CartItemResponse) => {
+    deleteItem(item)
+  }
+
+  const handleEdit = (item: CartItemResponse) => {
+    editItem(item)
   }
 
   const handleReserve = () => {
@@ -62,6 +74,7 @@ const CartScreen = (): JSX.Element => {
                 key={cartItem.itemId}
                 cartItem={cartItem}
                 onDelete={handleDelete}
+                onEdit={handleEdit}
               />))}
           </Styled.CartItemsContainer>
           <Styled.CartFooterContainer>

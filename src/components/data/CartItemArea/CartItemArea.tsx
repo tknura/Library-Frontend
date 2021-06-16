@@ -7,22 +7,24 @@ import { DeleteForever } from '@material-ui/icons'
 import { DatePicker } from 'components/inputs/DatePicker'
 import * as Styled from './CartItemArea.styles'
 
-interface CartItem {
+interface CartItemResponse {
   itemId: number,
   title: string,
   author: string,
   photoUrl: string,
-  endDate: Date
+  endDate: string
 }
 
 interface CartItemProps {
-  cartItem: CartItem,
-  onDelete: (id: number) => void
+  cartItem: CartItemResponse,
+  onDelete: (item: CartItemResponse) => void
+  onEdit: (item: CartItemResponse) => void
 }
 
 const CartItemArea = ({
   cartItem,
-  onDelete
+  onDelete,
+  onEdit
 }: CartItemProps): JSX.Element => {
   const { t } = useTranslation()
   const [date, setDate] = useState<Date>(new Date())
@@ -34,12 +36,13 @@ const CartItemArea = ({
   const handleChangeDate = (targetDate: MaterialUiPickersDate) => {
     if (targetDate) {
       setDate(targetDate)
-      // patch date
+      cartItem.endDate = date.toString()
+      onEdit(cartItem)
     }
   }
 
   const handleDelete = () => {
-    onDelete(cartItem.itemId)
+    onDelete(cartItem)
   }
 
   const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'

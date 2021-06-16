@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import MenuIcon from '@material-ui/icons/Menu'
 
 import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
-import { useGetAmountOfItems } from 'components/providers/CartProvider'
+import { useGetCartItemsAmount } from 'components/providers/CartProvider'
 import * as Styled from './NavBar.styles'
 
 interface NavBarProps {
@@ -39,7 +39,7 @@ const NavBar = ({
   onManageDrawerOpen: handleManageDrawerOpen,
 }: NavBarProps): JSX.Element => {
   const { t, i18n } = useTranslation()
-  const getCartItemsNumber = useGetAmountOfItems()
+  const getCartItemsNumber = useGetCartItemsAmount()
 
   return (
     <Styled.AppBar position="sticky">
