@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
-import { CLIENT_ROLE } from 'constants/userRoles'
+import { CLIENT_ROLE, EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
 import { FormikHelpers, useFormik } from 'formik'
+import { MenuItem } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
 import { userFormSchema } from 'schemas/userFormSchema'
@@ -46,6 +47,7 @@ const UserFormModal = ({
     handleSubmit: handleFormSubmit,
     handleChange,
     setValues,
+    setFieldValue,
     values,
     errors,
     touched,
@@ -62,6 +64,10 @@ const UserFormModal = ({
       setValues(defaultValues)
     }
   }, [initialValues, setValues])
+
+  const handleRoleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setFieldValue('roles', event.target.value as UserRole)
+  }
 
   return (
     <Modal onClose={handleClose} {...props}>
@@ -130,18 +136,26 @@ const UserFormModal = ({
             label={t('screen.signUp.repeatPassword')}
             variant="outlined"
           />
-          {/* <Styled.Select
+          <Styled.Select
             id="roles"
             value={values.roles}
             error={touched.roles && !!errors.roles}
-            helperText={touched.roles && t(errors.roles as string)}
-            onChange={handleChange}
+            helperText={touched.roles ? t(errors.roles as string) : ''}
+            onChange={handleRoleSelectChange}
             required
-            label={t('screen.manageUsers.roles')}
+            // label={t('screen.manageUsers.roles')}
             variant="outlined"
           >
-            <MenuItems
-          </Styled.Select> */}
+            <MenuItem value={CLIENT_ROLE}>
+              {t(`roles.${[CLIENT_ROLE]}`)}
+            </MenuItem>
+            <MenuItem value={EMPLOYEE_ROLE}>
+              {t(`roles.${[EMPLOYEE_ROLE]}`)}
+            </MenuItem>
+            <MenuItem value={MANAGER_ROLE}>
+              {t(`roles.${[MANAGER_ROLE]}`)}
+            </MenuItem>
+          </Styled.Select>
         </Styled.Form>
       </Styled.ModalContent>
       <Modal.Actions

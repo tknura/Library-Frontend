@@ -1,3 +1,5 @@
+import { CLIENT_ROLE, EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
+
 export const pl = {
   translation: {
     common: {
@@ -174,5 +176,10 @@ export const pl = {
         },
       },
     },
+    roles: {
+      [CLIENT_ROLE]: 'Klient',
+      [MANAGER_ROLE]: 'Manager',
+      [EMPLOYEE_ROLE]: 'Pracownik'
+    }
   },
 }
