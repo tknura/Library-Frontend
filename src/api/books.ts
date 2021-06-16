@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from 'react-query'
+import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
@@ -32,10 +32,10 @@ const getBook = async (instance: AxiosInstance, id: number): Promise<Book> => {
   return data
 }
 
-const useBooksQuery = ()
+const useBooksQuery = (options?: UseQueryOptions<AllBooksResponse, unknown>)
 : UseQueryResult<AllBooksResponse, unknown> => {
   const { fetch } = useFetch()
-  return useQuery('books', () => getBooks(fetch))
+  return useQuery('books', () => getBooks(fetch), options)
 }
 
 const useBookQuery = (id: number)

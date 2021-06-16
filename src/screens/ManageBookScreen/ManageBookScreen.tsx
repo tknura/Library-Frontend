@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Table,
   TableContainer,
@@ -16,11 +16,11 @@ import DeleteRoundedIcon from '@material-ui/icons/DeleteRounded'
 import EditRoundedIcon from '@material-ui/icons/EditRounded'
 import { format } from 'date-fns'
 
-import { useBooksQuery } from 'api/books'
-import { useAddBookMutation, useUpdateBookMutation } from 'api/stocks'
-import { BookFormFields, BookFormModal } from 'components/forms/BookFormModal/BookFormModal'
+import { Book, useBooksQuery } from 'api/books'
+import { useAddBookMutation, useDeleteBookMutation, useUpdateBookMutation } from 'api/stocks'
+import { BookFormFields, BookFormModal, BookModalMode } from 'components/forms/BookFormModal/BookFormModal'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import { booksColumns } from './ManageBookScreen.constants'
 import * as Styled from './ManageBookScreen.styles'
 import { mapApiBookToBookFormField } from './ManageBooksScreen.utils'
@@ -29,34 +29,49 @@ const ManageBooksScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { show } = useShowSnackbar()
 
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(false)
   const [isBookModalOpen, setBookModalOpen] = useState<boolean>(false)
   const [bookFormInitialValues, setBookFormInitialValues] = useState<BookFormFields | null>(null)
-
-  const { data } = useBooksQuery()
+  const [bookModalMode, setBookModalMode] = useState<BookModalMode>('CREATE')
+  const { data } = useBooksQuery({
+    onSuccess: () => setQueryEnabled(false),
+    enabled: isQueryEnabled
+  })
 
   const { mutate: addBookMutate } = useAddBookMutation({
     onSuccess: () => {
+      setQueryEnabled(true)
       setBookModalOpen(false)
     },
-    onError: () => {
-      show({ message: t('screen.manageBooks.errors.addBook'), type: SNACKBAR_ERROR })
-    },
+    onError: () => show({ message: t('screen.manageBooks.errors.addBook'), type: SNACKBAR_ERROR })
   })
   const { mutate: updateBookMutate } = useUpdateBookMutation({
     onSuccess: () => {
+      setQueryEnabled(true)
       setBookModalOpen(false)
     },
-    onError: () => {
-      show({ message: t('screen.manageBooks.errors.editBook'), type: SNACKBAR_ERROR })
+    onError: () => show({ message: t('screen.manageBooks.errors.editBook'), type: SNACKBAR_ERROR })
+  })
+  const { mutate: deleteBookMutate } = useDeleteBookMutation({
+    onSuccess: () => {
+      setQueryEnabled(true)
+      show({ message: t('screen.manageBooks.removedBook'), type: SNACKBAR_SUCCESS })
     },
+    onError: () => show({ message: t('screen.manageBooks.errors.removeBook'), type: SNACKBAR_ERROR })
   })
 
+  const handleDeleteButton = (serialNumber: number) => {
+    deleteBookMutate(serialNumber)
+  }
+
   const handleAddButton = () => {
+    setBookModalMode('CREATE')
     setBookFormInitialValues(null)
     setBookModalOpen(true)
   }
 
-  const handleEditButton = (row: any) => {
+  const handleEditButton = (row: Book) => {
+    setBookModalMode('EDIT')
     const mappedRow = mapApiBookToBookFormField(row)
     setBookFormInitialValues(mappedRow)
     setBookModalOpen(true)
@@ -66,9 +81,9 @@ const ManageBooksScreen = (): JSX.Element => {
     setBookModalOpen(false)
   }
 
-  const handleBookFormSubmit = async (values: BookFormFields) => {
+  const handleBookFormSubmit = (values: BookFormFields) => {
     const mutationHandler = bookFormInitialValues ? updateBookMutate : addBookMutate
-    await mutationHandler({
+    mutationHandler({
       serial_number: values.serialNumber,
       title: values.title,
       author: values.author,
@@ -78,6 +93,10 @@ const ManageBooksScreen = (): JSX.Element => {
       available: true,
     })
   }
+
+  useEffect(() => {
+    setQueryEnabled(true)
+  }, [])
 
   return (
     <Styled.RootContainer>
@@ -110,26 +129,22 @@ const ManageBooksScreen = (): JSX.Element => {
             <TableBody>
               {data?.content.map(row => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.bookId}>
-                  {booksColumns.map(column => {
-                    const value = row[column.id]
-                    if (column.id === 'actions') {
-                      return (
-                        <TableCell align="left">
-                          <IconButton>
+                  {booksColumns.map(column => (
+                    <TableCell key={column.id} align="left">
+                      {column.id === 'actions' ? (
+                        <>
+                          <IconButton onClick={() => handleDeleteButton(row.serialNumber)}>
                             <DeleteRoundedIcon />
                           </IconButton>
                           <IconButton onClick={() => handleEditButton(row)}>
                             <EditRoundedIcon />
                           </IconButton>
-                        </TableCell>
-                      )
-                    }
-                    return (
-                      <TableCell key={column.id} align="left">
-                        {value || '-'}
-                      </TableCell>
-                    )
-                  })}
+                        </>
+                      ) : (
+                        row[column.id] || '-'
+                      )}
+                    </TableCell>
+                  ))}
                 </TableRow>
               ))}
             </TableBody>
@@ -148,6 +163,7 @@ const ManageBooksScreen = (): JSX.Element => {
         onClose={handleCloseBookModal}
         onSubmit={handleBookFormSubmit}
         initialValues={bookFormInitialValues !== null ? bookFormInitialValues : undefined}
+        mode={bookModalMode}
       />
     </Styled.RootContainer>
   )

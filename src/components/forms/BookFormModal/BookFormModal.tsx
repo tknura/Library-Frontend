@@ -1,6 +1,7 @@
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
 import { FormikHelpers, useFormik } from 'formik'
+import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { bookFormSchema } from 'schemas/bookFormSchema'
@@ -15,23 +16,29 @@ interface BookFormFields {
   publisher: string
 }
 
+type BookModalMode = 'EDIT' | 'CREATE'
+
 interface BookFormModalProps extends Omit<ModalProps, 'children' | 'onSubmit'> {
+  mode: BookModalMode
   onClose: () => void
   onSubmit: (values: BookFormFields, helpers: FormikHelpers<BookFormFields>) => void
   initialValues?: BookFormFields
 }
 
+const defaultValues = {
+  serialNumber: 0,
+  title: '',
+  author: '',
+  description: '',
+  publicationDate: new Date(),
+  publisher: ''
+}
+
 const BookFormModal = ({
+  mode = 'CREATE',
   onClose: handleClose,
   onSubmit: handleSubmit,
-  initialValues = {
-    serialNumber: 0,
-    title: '',
-    author: '',
-    description: '',
-    publicationDate: new Date(),
-    publisher: ''
-  },
+  initialValues = defaultValues,
   ...props
 }: BookFormModalProps): JSX.Element => {
   const { t } = useTranslation()
@@ -40,6 +47,7 @@ const BookFormModal = ({
     handleSubmit: handleFormSubmit,
     handleChange,
     setFieldValue,
+    setValues,
     values,
     errors,
     touched,
@@ -55,6 +63,20 @@ const BookFormModal = ({
     }
   }
 
+  useEffect(() => {
+    if (initialValues) {
+      setValues(initialValues)
+    } else {
+      setValues(defaultValues)
+    }
+  }, [initialValues, setValues])
+
+  const serialNumberHelperText = useMemo(() => (
+    touched.serialNumber && !!errors.serialNumber ? (
+      t(errors.serialNumber as string)
+    ) : (t('screen.manageBooks.serialNumberHelper'))
+  ), [errors.serialNumber, t, touched.serialNumber])
+
   return (
     <Modal onClose={handleClose} {...props}>
       <Modal.Title>
@@ -66,12 +88,13 @@ const BookFormModal = ({
             id="serialNumber"
             value={values.serialNumber}
             error={touched.serialNumber && !!errors.serialNumber}
-            helperText={touched.serialNumber && t(errors.serialNumber as string)}
+            helperText={serialNumberHelperText}
             onChange={handleChange}
             required
             type="number"
             label={t('screen.manageBooks.serialNumber')}
             variant="outlined"
+            disabled={mode === 'EDIT'}
             InputProps={{
               inputProps: {
                 min: 0
@@ -137,4 +160,4 @@ const BookFormModal = ({
 }
 
 export { BookFormModal }
-export type { BookFormFields }
+export type { BookFormFields, BookModalMode }

@@ -131,6 +131,8 @@ export const pl = {
         addOrEditBook: 'Dodaj/Edytuj książkę',
         photo: 'Zdjęcie (link)',
         empty: 'Brak książek w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
+        removedBook: 'Książka została usunięta poprawnie.',
+        serialNumberHelper: 'Numer seryjny nie może później zostać zmieniony!',
         errors: {
           serialNumber: {
             required: 'Numer seryjny jest wymagany',
@@ -150,6 +152,7 @@ export const pl = {
           },
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
+          removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
         }
       },
       manageUsers: {
