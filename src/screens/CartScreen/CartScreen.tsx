@@ -6,7 +6,7 @@ import { ConfirmReservationModal } from 'components/data/ConfirmReservationDialo
 import { AUTH_ROUTE } from 'constants/routeNames'
 import { useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-import { useSubmitCart, useGetCartItems, useIsError, useIsLoading, useDeleteCartItem, useEditCartItem } from 'components/providers/CartProvider'
+import { useSubmitCart, useGetCartItems, useIsError, useIsLoading, useDeleteCartItem, useEditCartItem, useMissingBooksError } from 'components/providers/CartProvider'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { CartItemArea } from 'components/data/CartItemArea/CartItemArea'
 import * as Styled from './CartScreen.styles'
@@ -27,8 +27,9 @@ const CartScreen = (): JSX.Element => {
   const finishOrder = useSubmitCart()
   const deleteItem = useDeleteCartItem()
   const editItem = useEditCartItem()
+  const missingBooksError = useMissingBooksError()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
-  const [missingBooksData] = useState<string>()
+  const [missingBooks, setMissingBooks] = useState<string | undefined>()
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
@@ -58,8 +59,11 @@ const CartScreen = (): JSX.Element => {
   }
 
   const handleConfirmReservationModal = () => {
-    setModalConfirmationOpen(false)
     finishOrder()
+    setMissingBooks(missingBooksError)
+    if (!missingBooksError) {
+      setModalConfirmationOpen(false)
+    }
   }
 
   return (
@@ -90,7 +94,7 @@ const CartScreen = (): JSX.Element => {
             </Styled.ReservationButton>
             <ConfirmReservationModal
               open={modalConfirmationOpen}
-              missingBooks={missingBooksData}
+              missingBooks={missingBooks}
               onConfirm={handleConfirmReservationModal}
               onCancel={handleCancelConfirmationModal}
             />

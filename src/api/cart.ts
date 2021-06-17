@@ -77,8 +77,8 @@ const putSubmitCart = async (instance: AxiosInstance): Promise<unknown> => {
   return data
 }
 
-const useSubmitCartMutation = (options: UseMutationOptions<unknown, Error, unknown>)
-: UseMutationResult<unknown, Error, unknown> => {
+const useSubmitCartMutation = (options: UseMutationOptions<unknown, string, unknown>)
+: UseMutationResult<unknown, string, unknown> => {
   const { fetch } = useFetch()
   return useMutation('cart', () => putSubmitCart(fetch), options)
 }

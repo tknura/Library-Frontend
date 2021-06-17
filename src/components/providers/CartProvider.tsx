@@ -27,6 +27,7 @@ const useCart = () => {
   const isLoggedIn = useUserLoggedIn()
   const cartId = useUserCartId()
   const { isLoading, isError, data: cartData } = useGetCartItemsQuery({ enabled: isLoggedIn })
+  const [missingBooksError, setMissingBooksError] = useState<string | undefined>()
 
   const { mutate: submitCartMutate } = useSubmitCartMutation({
     onSuccess: () => {
@@ -34,8 +35,12 @@ const useCart = () => {
         cartItems: cartData,
         cartIterator: cartData?.length
       })
+      setMissingBooksError(undefined)
     },
-    onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
+    onError: (missingBooks: string) => {
+      setMissingBooksError(missingBooks)
+      show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
+    }
   })
 
   const { mutate: addCartItemMutate } = useAddCartItemMutation({
@@ -149,7 +154,8 @@ const useCart = () => {
     finishOrder,
     cart,
     isError,
-    isLoading
+    isLoading,
+    missingBooksError
   }
 }
 
@@ -162,7 +168,8 @@ const [
   useGetCartItems,
   useGetCartItemsAmount,
   useIsError,
-  useIsLoading
+  useIsLoading,
+  useMissingBooksError
 ] = constate(
   useCart,
   value => value.addItem,
@@ -172,7 +179,8 @@ const [
   value => value.cart?.cartItems,
   value => value.cart?.cartIterator,
   value => value.isError,
-  value => value.isLoading
+  value => value.isLoading,
+  value => value.missingBooksError
 )
 
 export {
@@ -184,5 +192,6 @@ export {
   useGetCartItems,
   useGetCartItemsAmount,
   useIsLoading,
-  useIsError
+  useIsError,
+  useMissingBooksError
 }
