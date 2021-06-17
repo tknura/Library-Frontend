@@ -45,7 +45,7 @@ const useCart = () => {
         cartIterator: cartData?.length
       })
     },
-    onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
+    onError: () => show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   })
 
   const { mutate: deleteCartItemMutate } = useDeleteCartItemMutation({
@@ -55,7 +55,7 @@ const useCart = () => {
         cartIterator: cartData?.length
       })
     },
-    onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
+    onError: () => show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   })
 
   const { mutate: editCartItemMutate } = useEditCartItemMutation({
@@ -65,7 +65,7 @@ const useCart = () => {
         cartIterator: cartData?.length
       })
     },
-    onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
+    onError: () => show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   })
 
   useEffect(() => {
