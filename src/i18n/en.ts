@@ -157,7 +157,21 @@ export const en = {
           addBook: 'An error occurred during adding book, try again later.',
           editBook: 'An error occurred during updating book, try again later.',
         }
-      }
+      },
+      manageReservations: {
+        id: 'ID',
+        title: 'Title',
+        author: 'Author',
+        publisher: 'Publisher',
+        publicationDate: 'Publication Date',
+        endTime: 'End Time',
+        actions: 'Actions',
+        empty: 'No pending reservations in the system.',
+        errors: {
+          acceptReservation: 'An error occured during accepting the reservation, try again later.',
+          rejectReservation: 'An error occured during rejecting the reservation, try again later.',
+        }
+      },
     },
   },
 }
