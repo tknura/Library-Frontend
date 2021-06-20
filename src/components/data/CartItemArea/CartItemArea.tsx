@@ -7,7 +7,7 @@ import { DeleteForever } from '@material-ui/icons'
 import { DatePicker } from 'components/inputs/DatePicker'
 import * as Styled from './CartItemArea.styles'
 
-interface CartItemResponse {
+interface CartItem {
   itemId: number,
   title: string,
   author: string,
@@ -16,9 +16,9 @@ interface CartItemResponse {
 }
 
 interface CartItemProps {
-  cartItem: CartItemResponse,
-  onDelete: (item: CartItemResponse) => void
-  onEdit: (item: CartItemResponse) => void
+  cartItem: CartItem,
+  onDelete: (item: CartItem) => void
+  onEdit: (item: CartItem) => void
 }
 
 const CartItemArea = ({
@@ -83,3 +83,4 @@ const CartItemArea = ({
 }
 
 export { CartItemArea }
+export type { CartItem }

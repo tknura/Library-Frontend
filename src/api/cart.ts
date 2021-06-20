@@ -16,6 +16,11 @@ interface CartItemResponse {
   endDate: string
 }
 
+interface CartItemData {
+  cartId: number,
+  cartItem: CartItemRequest
+}
+
 const getCartItems = async (
   instance: AxiosInstance,
   cartId: number
@@ -30,7 +35,7 @@ const useGetCartItemsQuery = (
 )
 : UseQueryResult<CartItemResponse[], unknown> => {
   const { fetch } = useFetch()
-  return useQuery('cart', () => getCartItems(fetch, cartId), options)
+  return useQuery(['cart', cartId], () => getCartItems(fetch, cartId), options)
 }
 
 const postAddCartItem = async (
@@ -43,12 +48,14 @@ const postAddCartItem = async (
 }
 
 const useAddCartItemMutation = (
-  cartId: number,
-  options: UseMutationOptions<unknown, Error, CartItemRequest>
+  options: UseMutationOptions<unknown, Error, CartItemData>
 )
-: UseMutationResult<unknown, Error, CartItemRequest> => {
+: UseMutationResult<unknown, Error, CartItemData> => {
   const { fetch } = useFetch()
-  return useMutation('cart', (values: CartItemRequest) => postAddCartItem(fetch, cartId, values), options)
+  return useMutation(
+    'addItemToCart',
+    (values: CartItemData) => postAddCartItem(fetch, values.cartId, values.cartItem), options
+  )
 }
 
 const deleteCartItem = async (
@@ -61,12 +68,14 @@ const deleteCartItem = async (
 }
 
 const useDeleteCartItemMutation = (
-  cartId: number,
-  options: UseMutationOptions<unknown, Error, CartItemRequest>
+  options: UseMutationOptions<unknown, Error, CartItemData>
 )
-: UseMutationResult<unknown, Error, CartItemRequest> => {
+: UseMutationResult<unknown, Error, CartItemData> => {
   const { fetch } = useFetch()
-  return useMutation('cart', (values: CartItemRequest) => deleteCartItem(fetch, cartId, values), options)
+  return useMutation(
+    'deleteItemFromCart',
+    (values: CartItemData) => deleteCartItem(fetch, values.cartId, values.cartItem), options
+  )
 }
 
 const editCartItem = async (
@@ -79,12 +88,14 @@ const editCartItem = async (
 }
 
 const useEditCartItemMutation = (
-  cartId: number,
-  options: UseMutationOptions<unknown, Error, CartItemRequest>
+  options: UseMutationOptions<unknown, Error, CartItemData>
 )
-: UseMutationResult<unknown, Error, CartItemRequest> => {
+: UseMutationResult<unknown, Error, CartItemData> => {
   const { fetch } = useFetch()
-  return useMutation('cart', (values: CartItemRequest) => editCartItem(fetch, cartId, values), options)
+  return useMutation(
+    'editItemInCart',
+    (values: CartItemData) => editCartItem(fetch, values.cartId, values.cartItem), options
+  )
 }
 
 const putSubmitCart = async (instance: AxiosInstance, cartId: number): Promise<unknown> => {
@@ -93,12 +104,11 @@ const putSubmitCart = async (instance: AxiosInstance, cartId: number): Promise<u
 }
 
 const useSubmitCartMutation = (
-  cartId: number,
-  options: UseMutationOptions<unknown, string, unknown>
+  options: UseMutationOptions<unknown, string, number>
 )
-: UseMutationResult<unknown, string, unknown> => {
+: UseMutationResult<unknown, string, number> => {
   const { fetch } = useFetch()
-  return useMutation('cart', () => putSubmitCart(fetch, cartId), options)
+  return useMutation('submitCart', (cartId: number) => putSubmitCart(fetch, cartId), options)
 }
 
 export {

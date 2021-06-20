@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react'
 import constate from 'constate'
 
-import { useAddCartItemMutation, useDeleteCartItemMutation, useEditCartItemMutation, useGetCartItemsQuery, useSubmitCartMutation } from 'api/cart'
+import {
+  useAddCartItemMutation,
+  useDeleteCartItemMutation,
+  useEditCartItemMutation,
+  useGetCartItemsQuery,
+  useSubmitCartMutation
+} from 'api/cart'
 import { useTranslation } from 'react-i18next'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { useUserCartId, useUserLoggedIn } from './AuthProvider'
 import { useShowSnackbar } from './SnackbarProviders'
 
-interface CartItemResponse {
+interface CartItem {
   itemId: number,
   title: string,
   author: string,
@@ -16,7 +22,7 @@ interface CartItemResponse {
 }
 
 interface Cart {
-  cartItems?: CartItemResponse[],
+  cartItems?: CartItem[],
   cartIterator?: number
 }
 
@@ -26,49 +32,46 @@ const useCart = () => {
   const [cart, setCart] = useState<Cart>()
   const isLoggedIn = useUserLoggedIn()
   const cartId = useUserCartId()
-  const { isLoading, isError, data: cartData } = useGetCartItemsQuery({ enabled: isLoggedIn })
-  const [missingBooksError, setMissingBooksError] = useState<string | undefined>()
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(isLoggedIn && !!cartId)
+  const {
+    isLoading,
+    isError,
+    data: cartData
+  } = useGetCartItemsQuery(
+    cartId as number, {
+      onSuccess: () => setQueryEnabled(false),
+      enabled: isQueryEnabled
+    }
+  )
+  const [missingBooksError, setMissingBooksError] = useState<string | null>()
 
   const { mutate: submitCartMutate } = useSubmitCartMutation({
     onSuccess: () => {
-      setCart({
-        cartItems: cartData,
-        cartIterator: cartData?.length
-      })
-      setMissingBooksError(undefined)
+      setQueryEnabled(true)
+      setMissingBooksError(null)
     },
     onError: (missingBooks: string) => {
       setMissingBooksError(missingBooks)
-      show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
     }
   })
 
   const { mutate: addCartItemMutate } = useAddCartItemMutation({
     onSuccess: () => {
-      setCart({
-        cartItems: cartData,
-        cartIterator: cartData?.length
-      })
+      setQueryEnabled(true)
     },
     onError: () => show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   })
 
   const { mutate: deleteCartItemMutate } = useDeleteCartItemMutation({
     onSuccess: () => {
-      setCart({
-        cartItems: cartData,
-        cartIterator: cartData?.length
-      })
+      setQueryEnabled(true)
     },
     onError: () => show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   })
 
   const { mutate: editCartItemMutate } = useEditCartItemMutation({
     onSuccess: () => {
-      setCart({
-        cartItems: cartData,
-        cartIterator: cartData?.length
-      })
+      setQueryEnabled(true)
     },
     onError: () => show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   })
@@ -81,20 +84,25 @@ const useCart = () => {
   }, [cartData])
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && cartId) {
       cart?.cartItems?.forEach(item => addCartItemMutate({
-        itemId: item.itemId,
-        requestedEndDate: item.endDate
+        cartId,
+        cartItem: {
+          itemId: item.itemId,
+          requestedEndDate: item.endDate
+        }
       }))
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn])
+  }, [addCartItemMutate, cart?.cartItems, cartId, isLoggedIn])
 
-  const editItem = (item: CartItemResponse) => {
-    if (isLoggedIn) {
+  const editItem = (item: CartItem) => {
+    if (isLoggedIn && cartId) {
       editCartItemMutate({
-        itemId: item.itemId,
-        requestedEndDate: item.endDate
+        cartId,
+        cartItem: {
+          itemId: item.itemId,
+          requestedEndDate: item.endDate
+        }
       })
     } else {
       const newItems = cart?.cartItems
@@ -110,11 +118,14 @@ const useCart = () => {
     }
   }
 
-  const deleteItem = (item: CartItemResponse) => {
-    if (isLoggedIn) {
+  const deleteItem = (item: CartItem) => {
+    if (isLoggedIn && cartId) {
       deleteCartItemMutate({
-        itemId: item.itemId,
-        requestedEndDate: item.endDate
+        cartId,
+        cartItem: {
+          itemId: item.itemId,
+          requestedEndDate: item.endDate
+        }
       })
     } else {
       const newItems = cart?.cartItems?.filter(cartItem => cartItem.itemId !== item.itemId)
@@ -125,14 +136,17 @@ const useCart = () => {
     }
   }
 
-  const addItem = (item: CartItemResponse) => {
-    if (isLoggedIn) {
+  const addItem = (item: CartItem) => {
+    if (isLoggedIn && cartId) {
       addCartItemMutate({
-        itemId: item.itemId,
-        requestedEndDate: item.endDate
+        cartId,
+        cartItem: {
+          itemId: item.itemId,
+          requestedEndDate: item.endDate
+        }
       })
-    } else {
-      const newItems = cart?.cartItems?.concat(item)
+    } else if (cart?.cartItems) {
+      const newItems = [...cart?.cartItems, item]
       setCart({
         cartItems: newItems,
         cartIterator: newItems?.length
@@ -141,10 +155,12 @@ const useCart = () => {
   }
 
   const finishOrder = () => {
-    setCart({
-      cartIterator: 0
-    })
-    submitCartMutate(cartId)
+    if (isLoggedIn && cartId) {
+      setCart({
+        cartIterator: 0
+      })
+      submitCartMutate(cartId)
+    }
   }
 
   return {

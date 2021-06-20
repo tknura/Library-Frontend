@@ -8,16 +8,8 @@ import { useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { useSubmitCart, useGetCartItems, useIsError, useIsLoading, useDeleteCartItem, useEditCartItem, useMissingBooksError } from 'components/providers/CartProvider'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
-import { CartItemArea } from 'components/data/CartItemArea/CartItemArea'
+import { CartItem, CartItemArea } from 'components/data/CartItemArea/CartItemArea'
 import * as Styled from './CartScreen.styles'
-
-interface CartItemResponse {
-  itemId: number,
-  title: string,
-  author: string,
-  photoUrl: string,
-  endDate: string
-}
 
 const CartScreen = (): JSX.Element => {
   const { t } = useTranslation()
@@ -29,7 +21,6 @@ const CartScreen = (): JSX.Element => {
   const editItem = useEditCartItem()
   const missingBooksError = useMissingBooksError()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
-  const [missingBooks, setMissingBooks] = useState<string | undefined>()
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
@@ -38,11 +29,11 @@ const CartScreen = (): JSX.Element => {
     show({ message: t('screen.cart.errorMessage'), type: SNACKBAR_ERROR })
   }
 
-  const handleDelete = (item: CartItemResponse) => {
+  const handleDelete = (item: CartItem) => {
     deleteItem(item)
   }
 
-  const handleEdit = (item: CartItemResponse) => {
+  const handleEdit = (item: CartItem) => {
     editItem(item)
   }
 
@@ -60,7 +51,6 @@ const CartScreen = (): JSX.Element => {
 
   const handleConfirmReservationModal = () => {
     finishOrder()
-    setMissingBooks(missingBooksError)
     if (!missingBooksError) {
       setModalConfirmationOpen(false)
     }
@@ -94,7 +84,7 @@ const CartScreen = (): JSX.Element => {
             </Styled.ReservationButton>
             <ConfirmReservationModal
               open={modalConfirmationOpen}
-              missingBooks={missingBooks}
+              missingBooks={missingBooksError}
               onConfirm={handleConfirmReservationModal}
               onCancel={handleCancelConfirmationModal}
             />

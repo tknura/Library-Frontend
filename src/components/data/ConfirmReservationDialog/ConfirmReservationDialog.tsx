@@ -7,7 +7,7 @@ import * as Styled from './ConfirmReservationDialog.styles'
 
 interface ConfirmReservationModalProps {
   open: boolean,
-  missingBooks?: string,
+  missingBooks?: string | null,
   onConfirm: () => void,
   onCancel: () => void
 }
