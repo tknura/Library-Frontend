@@ -2,7 +2,6 @@ import { useMutation, UseMutationOptions, UseMutationResult, useQuery, UseQueryO
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
-import { useUserCartId } from 'components/providers/AuthProvider'
 
 interface CartItemRequest {
   id?: number,
@@ -17,70 +16,89 @@ interface CartItemResponse {
   endDate: string
 }
 
-const cartId = useUserCartId
-
-const getCartItems = async (instance: AxiosInstance): Promise<CartItemResponse[]> => {
+const getCartItems = async (
+  instance: AxiosInstance,
+  cartId: number
+): Promise<CartItemResponse[]> => {
   const { data } = await instance.get('/public/cart', { params: cartId })
   return data
 }
 
-const useGetCartItemsQuery = (options?: UseQueryOptions<CartItemResponse[], unknown>)
+const useGetCartItemsQuery = (
+  cartId: number,
+  options?: UseQueryOptions<CartItemResponse[], unknown>
+)
 : UseQueryResult<CartItemResponse[], unknown> => {
   const { fetch } = useFetch()
-  return useQuery('cart', () => getCartItems(fetch), options)
+  return useQuery('cart', () => getCartItems(fetch, cartId), options)
 }
 
 const postAddCartItem = async (
   instance: AxiosInstance,
+  cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
-  const { data } = await instance.post('/public/cart', values)
+  const { data } = await instance.post('/public/cart', values, { params: cartId })
   return data
 }
 
-const useAddCartItemMutation = (options: UseMutationOptions<unknown, Error, CartItemRequest>)
+const useAddCartItemMutation = (
+  cartId: number,
+  options: UseMutationOptions<unknown, Error, CartItemRequest>
+)
 : UseMutationResult<unknown, Error, CartItemRequest> => {
   const { fetch } = useFetch()
-  return useMutation('cart', (values: CartItemRequest) => postAddCartItem(fetch, values), options)
+  return useMutation('cart', (values: CartItemRequest) => postAddCartItem(fetch, cartId, values), options)
 }
 
 const deleteCartItem = async (
   instance: AxiosInstance,
+  cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
   const { data } = await instance.delete('/public/cart', { params: cartId, data: values })
   return data
 }
 
-const useDeleteCartItemMutation = (options: UseMutationOptions<unknown, Error, CartItemRequest>)
+const useDeleteCartItemMutation = (
+  cartId: number,
+  options: UseMutationOptions<unknown, Error, CartItemRequest>
+)
 : UseMutationResult<unknown, Error, CartItemRequest> => {
   const { fetch } = useFetch()
-  return useMutation('cart', (values: CartItemRequest) => deleteCartItem(fetch, values), options)
+  return useMutation('cart', (values: CartItemRequest) => deleteCartItem(fetch, cartId, values), options)
 }
 
 const editCartItem = async (
   instance: AxiosInstance,
+  cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
   const { data } = await instance.patch('/public/cart', { params: cartId, data: values })
   return data
 }
 
-const useEditCartItemMutation = (options: UseMutationOptions<unknown, Error, CartItemRequest>)
+const useEditCartItemMutation = (
+  cartId: number,
+  options: UseMutationOptions<unknown, Error, CartItemRequest>
+)
 : UseMutationResult<unknown, Error, CartItemRequest> => {
   const { fetch } = useFetch()
-  return useMutation('cart', (values: CartItemRequest) => editCartItem(fetch, values), options)
+  return useMutation('cart', (values: CartItemRequest) => editCartItem(fetch, cartId, values), options)
 }
 
-const putSubmitCart = async (instance: AxiosInstance): Promise<unknown> => {
+const putSubmitCart = async (instance: AxiosInstance, cartId: number): Promise<unknown> => {
   const { data } = await instance.put('/public/cart', { params: cartId })
   return data
 }
 
-const useSubmitCartMutation = (options: UseMutationOptions<unknown, string, unknown>)
+const useSubmitCartMutation = (
+  cartId: number,
+  options: UseMutationOptions<unknown, string, unknown>
+)
 : UseMutationResult<unknown, string, unknown> => {
   const { fetch } = useFetch()
-  return useMutation('cart', () => putSubmitCart(fetch), options)
+  return useMutation('cart', () => putSubmitCart(fetch, cartId), options)
 }
 
 export {
