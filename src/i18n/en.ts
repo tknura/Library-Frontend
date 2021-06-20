@@ -166,6 +166,8 @@ export const en = {
         publicationDate: 'Publication Date',
         endTime: 'End Time',
         actions: 'Actions',
+        acceptedReservation: 'Reservation has been accepted.',
+        rejectedReservation: 'Reservation has been rejected.',
         empty: 'No pending reservations in the system.',
         errors: {
           acceptReservation: 'An error occured during accepting the reservation, try again later.',

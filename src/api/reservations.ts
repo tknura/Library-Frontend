@@ -1,4 +1,11 @@
-import { useMutation, UseMutationOptions, UseMutationResult, useQuery, UseQueryResult } from 'react-query'
+import {
+  useMutation,
+  UseMutationOptions,
+  UseMutationResult,
+  useQuery,
+  UseQueryOptions,
+  UseQueryResult
+} from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
@@ -26,6 +33,7 @@ interface RentalBook {
 }
 
 interface Reservation {
+  [key: string]: string | string[] | boolean | number | undefined | RentalBook | Date
   id: number
   rentalBook: RentalBook
   endTime: Date
@@ -47,43 +55,47 @@ const useReservationsQuery = (clientId: number)
   return useQuery(['reservations', clientId], () => getReservations(fetch, clientId))
 }
 
-const getPendingReservations = async (instance: AxiosInstance): Promise<unknown> => {
+const getPendingReservations = async (instance: AxiosInstance): Promise<ReservationsResponse> => {
   const { data } = await instance.get('/reservations/pending')
   return data
 }
 
-const usePendingReservationsQuery = ()
+const usePendingReservationsQuery = (options?: UseQueryOptions<ReservationsResponse, unknown>)
 : UseQueryResult<ReservationsResponse, unknown> => {
   const { fetch } = useFetch()
-  return useQuery(['reservations'], () => getPendingReservations(fetch))
+  return useQuery('pendingReservations', () => getPendingReservations(fetch), options)
 }
 
 const postAcceptReservation = async (
   instance: AxiosInstance,
-  id: number
+  reservationID: number
 ): Promise<ReservationsResponse> => {
-  const { data } = await instance.post('/reservations/accept', id)
+  const { data } = await instance.post('/reservations/accept', { params: reservationID })
   return data
 }
 
-const useAcceptReservation = (options: UseMutationOptions<ReservationsResponse, Error, number>)
+const useAcceptReservation = (
+  options: UseMutationOptions<ReservationsResponse, Error, number>
+)
 : UseMutationResult<ReservationsResponse, Error, number> => {
   const { fetch } = useFetch()
-  return useMutation('reservations', (id: number) => postAcceptReservation(fetch, id), options)
+  return useMutation('acceptReservation', (id: number) => postAcceptReservation(fetch, id), options)
 }
 
 const postRejectReservation = async (
   instance: AxiosInstance,
-  id: number
+  reservationID: number
 ): Promise<ReservationsResponse> => {
-  const { data } = await instance.post('/reservations/reject', id)
+  const { data } = await instance.post('/reservations/reject', { params: reservationID })
   return data
 }
 
-const useRejectReservation = (options: UseMutationOptions<ReservationsResponse, Error, number>)
+const useRejectReservation = (
+  options: UseMutationOptions<ReservationsResponse, Error, number>
+)
 : UseMutationResult<ReservationsResponse, Error, number> => {
   const { fetch } = useFetch()
-  return useMutation('reservations', (id: number) => postRejectReservation(fetch, id), options)
+  return useMutation('rejectReservation', (id: number) => postRejectReservation(fetch, id), options)
 }
 
 export {

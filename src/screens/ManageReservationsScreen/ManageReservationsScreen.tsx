@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Button,
   IconButton,
@@ -14,7 +15,7 @@ import { useAcceptReservation, usePendingReservationsQuery, useRejectReservation
 import { useTranslation } from 'react-i18next'
 
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import { reservationsColumns } from './ManageReservationsScreen.constants'
 import * as Styled from './ManageReservationsScreen.styles'
 
@@ -22,13 +23,25 @@ const ManageReservationsScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { show } = useShowSnackbar()
 
-  const { data } = usePendingReservationsQuery()
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
+  const { data } = usePendingReservationsQuery({
+    onSuccess: () => setQueryEnabled(false),
+    enabled: isQueryEnabled
+  })
 
   const { mutate: acceptReservationMutate } = useAcceptReservation({
+    onSuccess: () => {
+      setQueryEnabled(true)
+      show({ message: t('screen.manageReservations.acceptedReservation'), type: SNACKBAR_SUCCESS })
+    },
     onError: () => show({ message: t('screen.manageReservations.errors.acceptReservation'), type: SNACKBAR_ERROR })
   })
 
   const { mutate: rejectReservationMutate } = useRejectReservation({
+    onSuccess: () => {
+      setQueryEnabled(true)
+      show({ message: t('screen.manageReservations.rejectedReservation'), type: SNACKBAR_SUCCESS })
+    },
     onError: () => show({ message: t('screen.manageReservations.errors.rejectReservation'), type: SNACKBAR_ERROR })
   })
 
@@ -87,7 +100,7 @@ const ManageReservationsScreen = (): JSX.Element => {
                           </IconButton>
                         </>
                       ) : (
-                        row.id || '-'
+                        row[column.id] || '-'
                       )}
                     </TableCell>
                   ))}
