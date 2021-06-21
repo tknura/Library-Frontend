@@ -48,6 +48,7 @@ export const pl = {
       manage: {
         books: 'Książki',
         users: 'Użytkownicy',
+        reservations: 'Rezerwacje'
       },
     },
     screen: {

@@ -45,6 +45,7 @@ export const en = {
       manage: {
         books: 'Books',
         users: 'Users',
+        reservations: 'Reservations'
       },
     },
     screen: {

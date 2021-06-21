@@ -9,3 +9,4 @@ export const ACCOUNT_ROUTE = '/account'
 // MANAGE ROUTES
 export const MANAGE_BOOKS_ROUTE = '/manage/books'
 export const MANAGE_USERS_ROUTE = '/manage/users'
+export const MANAGE_RESERVATIONS_ROUTE = '/manage/reservations'
