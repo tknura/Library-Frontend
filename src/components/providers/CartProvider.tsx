@@ -106,11 +106,7 @@ const useCart = () => {
       })
     } else {
       const newItems = cart?.cartItems
-      newItems?.forEach(cartItem => {
-        if (cartItem.itemId === item.itemId) {
-          cartItem = item
-        }
-      })
+      newItems?.map(cartItem => cartItem.itemId === item.itemId ? item : cartItem)
       setCart({
         cartItems: newItems,
         cartIterator: newItems?.length
