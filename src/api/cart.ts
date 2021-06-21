@@ -4,7 +4,6 @@ import { AxiosInstance } from 'axios'
 import { useFetch } from 'components/providers/FetchProvider'
 
 interface CartItemRequest {
-  id?: number,
   itemId: number,
   requestedEndDate: string
 }
