@@ -83,7 +83,7 @@ const editCartItem = async (
   cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
-  const { data } = await instance.patch('/cart/update', { params: { cartId }, data: values })
+  const { data } = await instance.patch('/cart/update', values, { params: { cartId } })
   return data
 }
 
@@ -99,7 +99,7 @@ const useEditCartItemMutation = (
 }
 
 const putSubmitCart = async (instance: AxiosInstance, cartId: number): Promise<unknown> => {
-  const { data } = await instance.put('/cart/submit', { params: { cartId } })
+  const { data } = await instance.put('/cart/submit', null, { params: { cartId } })
   return data
 }
 

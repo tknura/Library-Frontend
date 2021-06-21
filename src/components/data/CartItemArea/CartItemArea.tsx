@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { IconButton } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
+import { format } from 'date-fns'
 
 import { DatePicker } from 'components/inputs/DatePicker'
 import * as Styled from './CartItemArea.styles'
@@ -36,7 +37,7 @@ const CartItemArea = ({
   const handleChangeDate = (targetDate: MaterialUiPickersDate) => {
     if (targetDate) {
       setDate(targetDate)
-      cartItem.endDate = date.toString()
+      cartItem.endDate = format(date, 'yyyy-MM-dd')
       onEdit(cartItem)
     }
   }

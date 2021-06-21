@@ -25,7 +25,7 @@ const AccountScreen = (): JSX.Element => {
     show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
   }
 
-  const borrowsData = borrowsQueryData?.items.map((borrow) => ({
+  const borrowsData = borrowsQueryData?.map((borrow) => ({
     id: borrow.id,
     book: {
       id: borrow.rentalBook.id,

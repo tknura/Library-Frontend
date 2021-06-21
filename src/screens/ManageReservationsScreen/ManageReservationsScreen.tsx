@@ -86,7 +86,7 @@ const ManageReservationsScreen = (): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.items?.map(row => (
+              {data?.map(row => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {reservationsColumns.map(column => (
                     <TableCell key={column.id} align="left">
@@ -108,7 +108,7 @@ const ManageReservationsScreen = (): JSX.Element => {
               ))}
             </TableBody>
           </Table>
-          {!data?.items?.length && (
+          {!data?.length && (
             <Styled.NoDataContainer>
               <Typography color="primary">
                 {t('screen.manageReservations.empty')}
