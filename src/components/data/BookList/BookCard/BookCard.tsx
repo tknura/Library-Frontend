@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router'
 
 import { BOOKS_ROUTE } from 'constants/routeNames'
 import * as Styled from './BookCard.styles'
@@ -29,11 +30,15 @@ const BookCard = ({
   onButtonClick: handleButtonClick,
 }: BookCardProps): JSX.Element => {
   const { t } = useTranslation()
+  const history = useHistory()
   const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'
 
+  const handleRedirect = () => {
+    history.push(`${BOOKS_ROUTE}/${item.id}`)
+  }
   return (
     <Styled.Card>
-      <CardActionArea href={`${BOOKS_ROUTE}/${item.id}`}>
+      <CardActionArea onClick={handleRedirect}>
         <Styled.CardMedia image={item?.photos?.length ? item.photos[0] : placeholderPhoto} />
       </CardActionArea>
       <Styled.ContentContainer>

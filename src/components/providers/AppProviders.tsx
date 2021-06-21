@@ -20,19 +20,19 @@ const AppProviders = (
 ): JSX.Element => (
   <AuthProvider>
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <FetchProvider>
-          <StylesProvider injectFirst>
-            <MuiThemeProvider theme={theme}>
-              <ThemeProvider theme={theme}>
-                <SnackbarProvider>
+      <FetchProvider>
+        <StylesProvider injectFirst>
+          <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
+              <SnackbarProvider>
+                <CartProvider>
                   {children}
-                </SnackbarProvider>
-              </ThemeProvider>
-            </MuiThemeProvider>
-          </StylesProvider>
-        </FetchProvider>
-      </CartProvider>
+                </CartProvider>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </MuiThemeProvider>
+        </StylesProvider>
+      </FetchProvider>
     </QueryClientProvider>
   </AuthProvider>
 )
