@@ -4,6 +4,7 @@ import { Card, CardActions, CardMedia, Fab, Typography } from '@material-ui/core
 const StyledCard = styled(Card)`
   position: relative;
   min-width: 200px;
+  max-width: 400px;
 `
 
 const StyledCardMedia = styled(CardMedia)`

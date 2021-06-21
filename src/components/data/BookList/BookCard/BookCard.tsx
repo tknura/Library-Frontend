@@ -8,7 +8,9 @@ import {
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
+import { format } from 'date-fns'
 
+import { useAddCartItem } from 'components/providers/CartProvider'
 import { BOOKS_ROUTE } from 'constants/routeNames'
 import * as Styled from './BookCard.styles'
 
@@ -22,20 +24,31 @@ interface Book {
 
 interface BookCardProps {
   item: Book
-  onButtonClick: () => void
 }
 
 const BookCard = ({
   item,
-  onButtonClick: handleButtonClick,
 }: BookCardProps): JSX.Element => {
   const { t } = useTranslation()
   const history = useHistory()
+  const addToCart = useAddCartItem()
   const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'
 
   const handleRedirect = () => {
     history.push(`${BOOKS_ROUTE}/${item.id}`)
   }
+
+  const handleAddToCart = () => {
+    const photo = item?.photos?.length ? item.photos[0] : placeholderPhoto
+    addToCart({
+      itemId: item.id,
+      title: item.title,
+      author: item.author,
+      photoUrl: photo,
+      endDate: format(new Date(), 'yyyy-MM-dd')
+    })
+  }
+
   return (
     <Styled.Card>
       <CardActionArea onClick={handleRedirect}>
@@ -60,7 +73,7 @@ const BookCard = ({
           <Fab
             size="small"
             color="secondary"
-            onClick={handleButtonClick}
+            onClick={handleAddToCart}
           >
             <AddShoppingCartIcon />
           </Fab>

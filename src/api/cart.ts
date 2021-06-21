@@ -25,7 +25,7 @@ const getCartItems = async (
   instance: AxiosInstance,
   cartId: number
 ): Promise<CartItemResponse[]> => {
-  const { data } = await instance.get('/public/cart', { params: cartId })
+  const { data } = await instance.get('/cart/get', { params: { cartId } })
   return data
 }
 
@@ -43,7 +43,7 @@ const postAddCartItem = async (
   cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
-  const { data } = await instance.post('/public/cart', values, { params: cartId })
+  const { data } = await instance.post('/cart/add', values, { params: { cartId } })
   return data
 }
 
@@ -63,7 +63,7 @@ const deleteCartItem = async (
   cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
-  const { data } = await instance.delete('/public/cart', { params: cartId, data: values })
+  const { data } = await instance.delete('/cart/delete', { params: { cartId }, data: values })
   return data
 }
 
@@ -83,7 +83,7 @@ const editCartItem = async (
   cartId: number,
   values: CartItemRequest
 ): Promise<unknown> => {
-  const { data } = await instance.patch('/public/cart', { params: cartId, data: values })
+  const { data } = await instance.patch('/cart/update', { params: { cartId }, data: values })
   return data
 }
 
@@ -99,7 +99,7 @@ const useEditCartItemMutation = (
 }
 
 const putSubmitCart = async (instance: AxiosInstance, cartId: number): Promise<unknown> => {
-  const { data } = await instance.put('/public/cart', { params: cartId })
+  const { data } = await instance.put('/cart/submit', { params: { cartId } })
   return data
 }
 

@@ -93,7 +93,8 @@ const useCart = () => {
         }
       }))
     }
-  }, [addCartItemMutate, cart?.cartItems, cartId, isLoggedIn])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cartId])
 
   const editItem = (item: CartItem) => {
     if (isLoggedIn && cartId) {
@@ -133,20 +134,22 @@ const useCart = () => {
   }
 
   const addItem = (item: CartItem) => {
-    if (isLoggedIn && cartId) {
-      addCartItemMutate({
-        cartId,
-        cartItem: {
-          itemId: item.itemId,
-          requestedEndDate: item.endDate
-        }
-      })
-    } else if (cart?.cartItems) {
-      const newItems = [...cart?.cartItems, item]
-      setCart({
-        cartItems: newItems,
-        cartIterator: newItems?.length
-      })
+    if (!cart?.cartItems?.some(cartItem => cartItem.itemId === item.itemId)) {
+      if (isLoggedIn && cartId) {
+        addCartItemMutate({
+          cartId,
+          cartItem: {
+            itemId: item.itemId,
+            requestedEndDate: item.endDate
+          }
+        })
+      } else {
+        const newItems = [...(cart?.cartItems || []), item]
+        setCart({
+          cartItems: newItems,
+          cartIterator: newItems?.length
+        })
+      }
     }
   }
 
