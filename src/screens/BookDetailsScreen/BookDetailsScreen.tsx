@@ -43,7 +43,7 @@ const BookDetailsScreen = (): JSX.Element => {
           <BookDescription
             title={bookData?.name}
             author={bookData?.author}
-            available={bookData?.isOccupied}
+            available={!!bookData?.numberOfBooks}
             publisher={bookData?.publisher}
             publicationDate={new Date()}
             description={bookData?.description}
