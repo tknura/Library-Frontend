@@ -7,7 +7,7 @@ import { useLogout, useUserLoggedIn } from 'components/providers/AuthProvider'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { ManageRoutes } from 'components/routes/ManageRoutes'
 import { ManageDrawer } from 'components/navigation/ManageDrawer/ManageDrawer'
-import { AUTH_ROUTE, MANAGE_BOOKS_ROUTE, MANAGE_USERS_ROUTE } from 'constants/routeNames'
+import { AUTH_ROUTE, MANAGE_BOOKS_ROUTE, MANAGE_RESERVATIONS_ROUTE, MANAGE_USERS_ROUTE } from 'constants/routeNames'
 import { SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import * as Styled from './ManageScreen.styles'
 
@@ -49,6 +49,10 @@ const ManageScreen = (): JSX.Element => {
     history.push(MANAGE_USERS_ROUTE)
   }
 
+  const handleRedirectToReservations = () => {
+    history.push(MANAGE_RESERVATIONS_ROUTE)
+  }
+
   return (
     <Styled.RootContainer>
       <NavBar
@@ -67,6 +71,7 @@ const ManageScreen = (): JSX.Element => {
         onDrawerClose={handleDrawerClose}
         onBookButtonClick={handleRedirectToBooks}
         onUsersButtonClick={handleRedirectToUsers}
+        onReservationsButtonClick={handleRedirectToReservations}
       />
       <Styled.ContentContainer>
         <ManageRoutes />
