@@ -13,6 +13,7 @@ export const pl = {
       add: 'Dodaj',
       save: 'Zapisz',
       cancel: 'Anuluj',
+      printRaport: 'Drukuj raport',
       errors: {
         username: {
           required: 'Nazwa użytkownika jest wymagana',
@@ -47,6 +48,7 @@ export const pl = {
       manage: {
         books: 'Książki',
         users: 'Użytkownicy',
+        reservations: 'Rezerwacje'
       },
     },
     screen: {
@@ -155,6 +157,22 @@ export const pl = {
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
           removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
+        }
+      },
+      manageReservations: {
+        id: 'ID',
+        title: 'Tytuł',
+        author: 'Autor',
+        publisher: 'Wydawca',
+        publicationDate: 'Data publikacji',
+        endTime: 'Koniec rezerwacji',
+        actions: 'Akcje',
+        acceptedReservation: 'Rezerwacja została zatwierdzona poprawnie.',
+        rejectedReservation: 'Rezerwacja została odrzucona poprawnie.',
+        empty: 'Brak rezerwacji do zatwierdzenia w systemie.',
+        errors: {
+          acceptReservation: 'Nie udało się zatwierdzić rezerwacji, spróbuj ponownie później.',
+          rejectReservation: 'Nie udało się odrzucić rezerwacji, spróbuj ponownie później.',
         }
       },
       manageUsers: {
