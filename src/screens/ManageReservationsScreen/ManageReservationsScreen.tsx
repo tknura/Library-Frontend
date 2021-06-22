@@ -19,6 +19,16 @@ import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
 import { reservationsColumns } from './ManageReservationsScreen.constants'
 import * as Styled from './ManageReservationsScreen.styles'
 
+interface ReservationToPrint {
+  [key: string]: string | string[] | boolean | number | undefined
+  id: number,
+  name: string,
+  author: string,
+  publisher: string,
+  publicationDate: string,
+  endTime: string,
+}
+
 const ManageReservationsScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { show } = useShowSnackbar()
@@ -57,6 +67,15 @@ const ManageReservationsScreen = (): JSX.Element => {
     rejectReservationMutate(id)
   }
 
+  const reservationsToPrint: ReservationToPrint[] = data?.map(reservation => ({
+    id: reservation.id,
+    name: reservation.rentalBook.details.name,
+    author: reservation.rentalBook.details.author,
+    publisher: reservation.rentalBook.details.publisher,
+    publicationDate: reservation.rentalBook.details.publicationDate,
+    endTime: reservation.endTime
+  })) || []
+
   return (
     <Styled.RootContainer>
       <Styled.ActionsContainer>
@@ -86,7 +105,7 @@ const ManageReservationsScreen = (): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data?.map(row => (
+              {reservationsToPrint?.map(row => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {reservationsColumns.map(column => (
                     <TableCell key={column.id} align="left">

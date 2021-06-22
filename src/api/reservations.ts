@@ -33,7 +33,7 @@ interface RentalBook {
 }
 
 interface Reservation {
-  [key: string]: string | string[] | boolean | number | undefined | RentalBook | Date
+  [key: string]: string | string[] | boolean | number | undefined | RentalBook
   id: number
   rentalBook: RentalBook
   endTime: string

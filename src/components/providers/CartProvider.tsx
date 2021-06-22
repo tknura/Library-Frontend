@@ -32,7 +32,7 @@ const useCart = () => {
   const [cart, setCart] = useState<Cart>()
   const isLoggedIn = useUserLoggedIn()
   const cartId = useUserCartId()
-  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(isLoggedIn && !!cartId)
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(false)
   const {
     isLoading,
     isError,
@@ -85,6 +85,7 @@ const useCart = () => {
 
   useEffect(() => {
     if (isLoggedIn && cartId) {
+      setQueryEnabled(true)
       cart?.cartItems?.forEach(item => {
         if (!cartData?.some(cartItem => cartItem.itemId === item.itemId)) {
           addCartItemMutate({
