@@ -7,7 +7,10 @@ import {
 } from '@material-ui/core'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import { useTranslation } from 'react-i18next'
+import { useHistory } from 'react-router'
+import { format } from 'date-fns'
 
+import { useAddCartItem } from 'components/providers/CartProvider'
 import { BOOKS_ROUTE } from 'constants/routeNames'
 import * as Styled from './BookCard.styles'
 
@@ -21,19 +24,35 @@ interface Book {
 
 interface BookCardProps {
   item: Book
-  onButtonClick: () => void
 }
 
 const BookCard = ({
   item,
-  onButtonClick: handleButtonClick,
 }: BookCardProps): JSX.Element => {
   const { t } = useTranslation()
+  const history = useHistory()
+  const addToCart = useAddCartItem()
   const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'
+
+  const handleRedirect = () => {
+    history.push(`${BOOKS_ROUTE}/${item.id}`)
+  }
+
+  const handleAddToCart = () => {
+    const photo = item?.photos?.length ? item.photos[0] : placeholderPhoto
+    const todayDate = new Date()
+    addToCart({
+      itemId: item.id,
+      title: item.title,
+      author: item.author,
+      photoUrl: photo,
+      endDate: format(new Date().setDate(todayDate.getDate() + 1), 'yyyy-MM-dd')
+    })
+  }
 
   return (
     <Styled.Card>
-      <CardActionArea href={`${BOOKS_ROUTE}/${item.id}`}>
+      <CardActionArea onClick={handleRedirect}>
         <Styled.CardMedia image={item?.photos?.length ? item.photos[0] : placeholderPhoto} />
       </CardActionArea>
       <Styled.ContentContainer>
@@ -55,7 +74,8 @@ const BookCard = ({
           <Fab
             size="small"
             color="secondary"
-            onClick={handleButtonClick}
+            onClick={handleAddToCart}
+            disabled={!item.howMany}
           >
             <AddShoppingCartIcon />
           </Fab>

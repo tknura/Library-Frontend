@@ -89,6 +89,7 @@ export const en = {
         errorMessage: 'Error on fetching cart data',
         login: 'Log in',
         reservationDatePickerLabel: 'Reservation date',
+        empty: 'Cart is empty!'
       },
       cartConfirmationModal: {
         title: 'Do you want to confirm your reservation?',

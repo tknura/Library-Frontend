@@ -1,7 +1,7 @@
 export const reservationsColumns = [
   {
-    id: 'serialNumber',
-    labeli18nCode: 'screen.manageReservations.serialNumber',
+    id: 'id',
+    labeli18nCode: 'screen.manageReservations.id',
     minWidth: 50,
     maxWidth: 200,
   },

@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
-
 import { useTranslation } from 'react-i18next'
+
 import * as Styled from './BookDescription.styles'
 
 interface Props {
@@ -9,8 +9,9 @@ interface Props {
   available?: boolean,
   publisher?: string,
   publicationDate?: Date,
-  description?: string
-  buttonEnabled: boolean
+  description?: string,
+  buttonEnabled: boolean,
+  onAddToCart: () => void
 }
 
 const BookDescription = ({
@@ -20,9 +21,15 @@ const BookDescription = ({
   publisher,
   publicationDate,
   description,
-  buttonEnabled
+  buttonEnabled,
+  onAddToCart
 }: Props): JSX.Element => {
   const { t } = useTranslation()
+
+  const handleAddToCart = () => {
+    onAddToCart()
+  }
+
   return (
     <Styled.DescriptionContainer>
       <Styled.TextContainer elevation={0}>
@@ -55,6 +62,7 @@ const BookDescription = ({
         variant="contained"
         color="primary"
         disabled={!buttonEnabled}
+        onClick={handleAddToCart}
       >
         {t('screen.details.addToCart')}
       </Styled.AddToCartButton>
