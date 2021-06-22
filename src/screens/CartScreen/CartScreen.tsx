@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useHistory } from 'react-router'
 import { useState } from 'react'
+import { Typography } from '@material-ui/core'
 
 import { ConfirmReservationModal } from 'components/data/ConfirmReservationDialog/ConfirmReservationDialog'
 import { AUTH_ROUTE } from 'constants/routeNames'
@@ -21,6 +22,7 @@ const CartScreen = (): JSX.Element => {
   const editItem = useEditCartItem()
   const missingBooksError = useMissingBooksError()
   const [modalConfirmationOpen, setModalConfirmationOpen] = useState<boolean>(false)
+  const [invalidDate, setInvalidDate] = useState<boolean>(false)
   const { show } = useShowSnackbar()
   const isLoggedIn = useUserLoggedIn()
   const history = useHistory()
@@ -35,6 +37,7 @@ const CartScreen = (): JSX.Element => {
 
   const handleEdit = (item: CartItem) => {
     editItem(item)
+    setInvalidDate(false)
   }
 
   const handleReserve = () => {
@@ -63,20 +66,28 @@ const CartScreen = (): JSX.Element => {
       ) : (
         <>
           <Styled.CartItemsContainer>
-            {cartItems?.map(cartItem => (
-              <CartItemArea
-                key={cartItem.itemId}
-                cartItem={cartItem}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-              />))}
+            {cartItems ? (
+              cartItems.map(cartItem => (
+                <CartItemArea
+                  key={cartItem.itemId}
+                  cartItem={cartItem}
+                  onDelete={handleDelete}
+                  onEdit={handleEdit}
+                />))
+            ) : (
+              <Styled.NoDataContainer>
+                <Typography color="primary">
+                  {t('screen.cart.empty')}
+                </Typography>
+              </Styled.NoDataContainer>
+            )}
           </Styled.CartItemsContainer>
           <Styled.CartFooterContainer>
             <Styled.ReservationButton
               variant="contained"
               color="primary"
               onClick={handleReserve}
-              disabled={isLoggedIn && isError}
+              disabled={isLoggedIn && isError && !invalidDate}
             >
               {isLoggedIn
                 ? t('screen.cart.order')

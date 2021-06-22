@@ -85,16 +85,24 @@ const useCart = () => {
 
   useEffect(() => {
     if (isLoggedIn && cartId) {
-      cart?.cartItems?.forEach(item => addCartItemMutate({
-        cartId,
-        cartItem: {
-          itemId: item.itemId,
-          requestedEndDate: item.endDate
+      cart?.cartItems?.forEach(item => {
+        if (!cartData?.some(cartItem => cartItem.itemId === item.itemId)) {
+          addCartItemMutate({
+            cartId,
+            cartItem: {
+              itemId: item.itemId,
+              requestedEndDate: item.endDate
+            }
+          })
         }
-      }))
+      })
+      setCart({
+        cartItems: cartData,
+        cartIterator: cartData?.length
+      })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cartId])
+  }, [isLoggedIn, cartId])
 
   const editItem = (item: CartItem) => {
     if (isLoggedIn && cartId) {

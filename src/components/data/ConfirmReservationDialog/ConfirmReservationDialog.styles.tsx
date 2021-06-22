@@ -3,11 +3,13 @@ import styled from 'styled-components'
 
 const ModalContainer = styled(Paper)`
 ${({ theme }) => `
-  top: 50%;
-  left: 50%;
+  top:50%; 
+  left:50%; 
+  transform:translate(-50%, -50%); 
 
-  position: 'absolute';
-  width: 400;
+  position: absolute;
+  max-width: 600px;
+  max-height: 400px;
   border: 2px solid ${theme.palette.accents.main};
   `}
 `
@@ -26,7 +28,6 @@ const ModalButtonsContainer = styled.div`
 const ChoiceButton = styled(Button)`
   padding: 10px 15px;
   margin: 15px 25px;
-  margin-left: 85%;
 `
 
 export {

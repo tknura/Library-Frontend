@@ -88,6 +88,7 @@ export const pl = {
         errorMessage: 'Błąd przy wczytywaniu danych koszyka',
         login: 'Zaloguj się',
         reservationDatePickerLabel: 'Data rezerwacji',
+        empty: 'Koszyk jest pusty!'
       },
       cartConfirmationModal: {
         title: 'Czy chcesz potwierdzić rezerwację?',

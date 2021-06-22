@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { IconButton } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
-import { format } from 'date-fns'
+import { format, isValid } from 'date-fns'
 
 import { DatePicker } from 'components/inputs/DatePicker'
 import * as Styled from './CartItemArea.styles'
@@ -25,17 +25,17 @@ interface CartItemProps {
 const CartItemArea = ({
   cartItem,
   onDelete,
-  onEdit
+  onEdit,
 }: CartItemProps): JSX.Element => {
-  const { t } = useTranslation()
-  const [date, setDate] = useState<Date>(new Date())
-
   const todayDate = new Date()
   const minDate = new Date().setDate(todayDate.getDate() + 1)
   const maxDate = new Date().setMonth(todayDate.getMonth() + 1)
 
+  const { t } = useTranslation()
+  const [date, setDate] = useState<number | Date>(minDate)
+
   const handleChangeDate = (targetDate: MaterialUiPickersDate) => {
-    if (targetDate) {
+    if (isValid(targetDate) && targetDate) {
       setDate(targetDate)
       cartItem.endDate = format(date, 'yyyy-MM-dd')
       onEdit(cartItem)
@@ -75,6 +75,7 @@ const CartItemArea = ({
               onChange={handleChangeDate}
               minDate={minDate}
               maxDate={maxDate}
+              InputProps={{ readOnly: true }}
             />
           </Styled.Text>
         </Styled.ReservationDateContainer>

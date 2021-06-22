@@ -40,12 +40,13 @@ const BookCard = ({
 
   const handleAddToCart = () => {
     const photo = item?.photos?.length ? item.photos[0] : placeholderPhoto
+    const todayDate = new Date()
     addToCart({
       itemId: item.id,
       title: item.title,
       author: item.author,
       photoUrl: photo,
-      endDate: format(new Date(), 'yyyy-MM-dd')
+      endDate: format(new Date().setDate(todayDate.getDate() + 1), 'yyyy-MM-dd')
     })
   }
 
@@ -74,6 +75,7 @@ const BookCard = ({
             size="small"
             color="secondary"
             onClick={handleAddToCart}
+            disabled={!item.howMany}
           >
             <AddShoppingCartIcon />
           </Fab>
