@@ -13,6 +13,7 @@ import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { useTranslation } from 'react-i18next'
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
+import fileDownload from 'js-file-download'
 
 import { useAllReservationsQuery, usePrintReservationsQuery } from 'api/reservations'
 import { DatePicker } from 'components/inputs/DatePicker'
@@ -39,8 +40,7 @@ const AllReservationsScreen = (): JSX.Element => {
   const [isQueryEnabled, setQueryEnabled] = useState<boolean>(false)
   const { data: reportData } = usePrintReservationsQuery(
     format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'), {
-      onSuccess: () => setQueryEnabled(false),
-      enabled: isQueryEnabled
+      enabled: isQueryEnabled,
     }
   )
   const [reservationsToPrint, setReservationsToPrint] = useState<ReservationToPrint[]>()
@@ -58,17 +58,19 @@ const AllReservationsScreen = (): JSX.Element => {
   }, [data])
 
   useEffect(() => {
-    if (reportData) {
-      const blob = new Blob([reportData], { type: 'application/pdf' })
-      const url = window.URL || window.webkitURL
-      const link = url.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.setAttribute('download', 'report.pdf')
-      a.setAttribute('href', link)
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
+    if (reportData && isQueryEnabled) {
+      setQueryEnabled(false)
+      const binary = atob(reportData)
+      const len = binary.length
+      const buffer = new ArrayBuffer(len)
+      const view = new Uint8Array(buffer)
+      for (let i = 0; i < len; i += 1) {
+        view[i] = binary.charCodeAt(i)
+      }
+      const blob = new Blob([view], { type: 'application/pdf' })
+      fileDownload(blob, 'report.pdf')
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reportData])
 
   const handlePrintButton = () => {
