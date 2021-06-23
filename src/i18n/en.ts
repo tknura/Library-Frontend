@@ -45,7 +45,8 @@ export const en = {
       manage: {
         books: 'Books',
         users: 'Users',
-        reservations: 'Reservations'
+        manageReservations: 'Pending Reservations',
+        allReservations: 'Reservations'
       },
     },
     screen: {
@@ -159,6 +160,19 @@ export const en = {
           addBook: 'An error occurred during adding book, try again later.',
           editBook: 'An error occurred during updating book, try again later.',
         }
+      },
+      allReservations: {
+        id: 'ID',
+        title: 'Title',
+        author: 'Author',
+        publisher: 'Publisher',
+        publicationDate: 'Publication Date',
+        endTime: 'End Time',
+        status: 'Status',
+        empty: 'No reservations in the system.',
+        startDate: 'Report from',
+        endDate: 'Report to',
+        printRaport: 'Drukuj report'
       },
       manageReservations: {
         id: 'ID',

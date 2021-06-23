@@ -20,6 +20,14 @@ interface CartItemData {
   cartItem: CartItemRequest
 }
 
+interface CartSubmitError {
+  status: string,
+  message: string,
+  timestamp: string,
+  errorCause: string,
+  hints: string
+}
+
 const getCartItems = async (
   instance: AxiosInstance,
   cartId: number
@@ -103,9 +111,9 @@ const putSubmitCart = async (instance: AxiosInstance, cartId: number): Promise<u
 }
 
 const useSubmitCartMutation = (
-  options: UseMutationOptions<unknown, string, number>
+  options: UseMutationOptions<unknown, CartSubmitError, number>
 )
-: UseMutationResult<unknown, string, number> => {
+: UseMutationResult<unknown, CartSubmitError, number> => {
   const { fetch } = useFetch()
   return useMutation('submitCart', (cartId: number) => putSubmitCart(fetch, cartId), options)
 }
