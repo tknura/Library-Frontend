@@ -35,7 +35,7 @@ interface RentalBook {
 interface Reservation {
   [key: string]: string | string[] | boolean | number | undefined | RentalBook
   id: number
-  rentalBook: RentalBook
+  rentalBook?: RentalBook
   endTime: string
   returned: boolean
   status: string

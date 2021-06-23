@@ -66,10 +66,10 @@ const ManageReservationsScreen = (): JSX.Element => {
   useEffect(() => {
     setReservationsToPrint(data?.map(reservation => ({
       id: reservation.id,
-      name: reservation.rentalBook.details.name,
-      author: reservation.rentalBook.details.author,
-      publisher: reservation.rentalBook.details.publisher,
-      publicationDate: reservation.rentalBook.details.publicationDate,
+      name: reservation.rentalBook?.details.name || '-',
+      author: reservation.rentalBook?.details.author || '-',
+      publisher: reservation.rentalBook?.details.publisher || '-',
+      publicationDate: reservation.rentalBook?.details.publicationDate || '-',
       endTime: reservation.endTime
     })) || [])
   }, [data])
@@ -102,7 +102,10 @@ const ManageReservationsScreen = (): JSX.Element => {
                           <IconButton onClick={() => handleRejectButton(row.id)}>
                             <BlockRounded />
                           </IconButton>
-                          <IconButton onClick={() => handleAcceptButton(row.id)}>
+                          <IconButton
+                            disabled={row.name === '-' && row.author === '-' && row.publisher === '-'}
+                            onClick={() => handleAcceptButton(row.id)}
+                          >
                             <CheckCircleOutlineRounded />
                           </IconButton>
                         </>
