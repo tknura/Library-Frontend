@@ -14,12 +14,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import PersonIcon from '@material-ui/icons/Person'
 import DateRangeIcon from '@material-ui/icons/DateRange'
+import EventAvailableIcon from '@material-ui/icons/EventAvailable'
 
 interface ManageDrawerProps extends DrawerProps {
   onDrawerClose: () => void
   onBookButtonClick?: () => void
   onUsersButtonClick?: () => void
-  onReservationsButtonClick?: () => void
+  onManageReservationsButtonClick?: () => void
+  onAllReservationsButtonClick?: () => void
 }
 
 const ManageDrawer = ({
@@ -27,7 +29,8 @@ const ManageDrawer = ({
   onDrawerClose: handleDrawerClose,
   onBookButtonClick: handleBookButtonClick,
   onUsersButtonClick: handleUsersButtonClick,
-  onReservationsButtonClick: handleReservationsButtonClick
+  onManageReservationsButtonClick: handleManageReservationsButtonClick,
+  onAllReservationsButtonClick: handleAllReservationsButtonClick
 }: ManageDrawerProps): JSX.Element => {
   const { t } = useTranslation()
   const theme = useTheme()
@@ -52,9 +55,13 @@ const ManageDrawer = ({
           <ListItemIcon><PersonIcon /></ListItemIcon>
           <ListItemText primary={t('navigation.manage.users')} />
         </ListItem>
-        <ListItem button onClick={handleReservationsButtonClick}>
+        <ListItem button onClick={handleManageReservationsButtonClick}>
           <ListItemIcon><DateRangeIcon /></ListItemIcon>
-          <ListItemText primary={t('navigation.manage.reservations')} />
+          <ListItemText primary={t('navigation.manage.manageReservations')} />
+        </ListItem>
+        <ListItem button onClick={handleAllReservationsButtonClick}>
+          <ListItemIcon><EventAvailableIcon /></ListItemIcon>
+          <ListItemText primary={t('navigation.manage.allReservations')} />
         </ListItem>
       </List>
     </Drawer>

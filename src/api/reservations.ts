@@ -38,6 +38,7 @@ interface Reservation {
   rentalBook: RentalBook
   endTime: string
   returned: boolean
+  status: string
 }
 
 const getReservations = async (
@@ -52,6 +53,17 @@ const useReservationsQuery = (clientId: number)
 : UseQueryResult<Reservation[], unknown> => {
   const { fetch } = useFetch()
   return useQuery(['reservations', clientId], () => getReservations(fetch, clientId))
+}
+
+const getAllReservations = async (instance: AxiosInstance): Promise<Reservation[]> => {
+  const { data } = await instance.get('/reservations/all')
+  return data
+}
+
+const useAllReservationsQuery = (options?: UseQueryOptions<Reservation[], unknown>)
+: UseQueryResult<Reservation[], unknown> => {
+  const { fetch } = useFetch()
+  return useQuery('allReservations', () => getAllReservations(fetch), options)
 }
 
 const getPendingReservations = async (instance: AxiosInstance): Promise<Reservation[]> => {
@@ -97,9 +109,30 @@ const useRejectReservation = (
   return useMutation('rejectReservation', (id: number) => postRejectReservation(fetch, id), options)
 }
 
+const printReservations = async (
+  instance: AxiosInstance,
+  startDate: string,
+  endDate: string
+): Promise<string> => {
+  const { data } = await instance.get('/reservations/report', { params: { startDate, endDate } })
+  return data
+}
+
+const usePrintReservationsQuery = (
+  startDate: string,
+  endDate: string,
+  options?: UseQueryOptions<string, unknown>
+)
+: UseQueryResult<string, unknown> => {
+  const { fetch } = useFetch()
+  return useQuery(['printReservations', startDate, endDate], () => printReservations(fetch, startDate, endDate), options)
+}
+
 export {
   useReservationsQuery,
+  useAllReservationsQuery,
   usePendingReservationsQuery,
   useAcceptReservation,
-  useRejectReservation
+  useRejectReservation,
+  usePrintReservationsQuery
 }

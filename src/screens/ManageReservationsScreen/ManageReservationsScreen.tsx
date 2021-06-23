@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
-  Button,
   IconButton,
   Table,
   TableBody,
@@ -10,7 +9,7 @@ import {
   TableRow,
   Typography
 } from '@material-ui/core'
-import { BlockRounded, CheckCircleOutlineRounded, Print } from '@material-ui/icons'
+import { BlockRounded, CheckCircleOutlineRounded } from '@material-ui/icons'
 import { useAcceptReservation, usePendingReservationsQuery, useRejectReservation } from 'api/reservations'
 import { useTranslation } from 'react-i18next'
 
@@ -34,6 +33,7 @@ const ManageReservationsScreen = (): JSX.Element => {
   const { show } = useShowSnackbar()
 
   const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
+  const [reservationsToPrint, setReservationsToPrint] = useState<ReservationToPrint[]>()
   const { data } = usePendingReservationsQuery({
     onSuccess: () => setQueryEnabled(false),
     enabled: isQueryEnabled
@@ -55,10 +55,6 @@ const ManageReservationsScreen = (): JSX.Element => {
     onError: () => show({ message: t('screen.manageReservations.errors.rejectReservation'), type: SNACKBAR_ERROR })
   })
 
-  const handlePrintButton = () => {
-    // print
-  }
-
   const handleAcceptButton = (id: number) => {
     acceptReservationMutate(id)
   }
@@ -67,27 +63,19 @@ const ManageReservationsScreen = (): JSX.Element => {
     rejectReservationMutate(id)
   }
 
-  const reservationsToPrint: ReservationToPrint[] = data?.map(reservation => ({
-    id: reservation.id,
-    name: reservation.rentalBook.details.name,
-    author: reservation.rentalBook.details.author,
-    publisher: reservation.rentalBook.details.publisher,
-    publicationDate: reservation.rentalBook.details.publicationDate,
-    endTime: reservation.endTime
-  })) || []
+  useEffect(() => {
+    setReservationsToPrint(data?.map(reservation => ({
+      id: reservation.id,
+      name: reservation.rentalBook.details.name,
+      author: reservation.rentalBook.details.author,
+      publisher: reservation.rentalBook.details.publisher,
+      publicationDate: reservation.rentalBook.details.publicationDate,
+      endTime: reservation.endTime
+    })) || [])
+  }, [data])
 
   return (
     <Styled.RootContainer>
-      <Styled.ActionsContainer>
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<Print />}
-          onClick={handlePrintButton}
-        >
-          {t('common.printRaport')}
-        </Button>
-      </Styled.ActionsContainer>
       <Styled.Paper>
         <TableContainer>
           <Table>

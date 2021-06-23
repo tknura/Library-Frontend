@@ -50,8 +50,8 @@ const useCart = () => {
       setQueryEnabled(true)
       setMissingBooksError(null)
     },
-    onError: (missingBooks: string) => {
-      setMissingBooksError(missingBooks)
+    onError: (error) => {
+      setMissingBooksError(error.message)
     }
   })
 
