@@ -12,7 +12,7 @@ const BookList = ({
 }: BookListProps): JSX.Element => (
   <Styled.RootGrid container spacing={2}>
     {items?.map(item => (
-      <Grid key={item.id} item xs={12} sm={6} md={3} xl="auto">
+      <Grid key={item.id} item xs={12} sm={6} md={3} xl="auto" lg="auto">
         <BookCard item={item} />
       </Grid>
     ))}
