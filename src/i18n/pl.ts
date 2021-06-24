@@ -47,6 +47,7 @@ export const pl = {
       manage: {
         books: 'Książki',
         users: 'Użytkownicy',
+        deliveries: 'Dostawy',
         manageReservations: 'Rezerwacje Oczekujące',
         allReservations: 'Rezerwacje'
       },
@@ -159,6 +160,12 @@ export const pl = {
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
           removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
         }
+      },
+      manageDeliveries: {
+        deliveryArticle: 'Artykuł dostawy',
+        quantity: 'Ilość',
+        requestDate: 'Data zamówienia',
+        expectedDelivery: 'Przewidywana data dostawy',
       },
       allReservations: {
         id: 'ID',
