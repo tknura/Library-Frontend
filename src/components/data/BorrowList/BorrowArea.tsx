@@ -2,7 +2,6 @@ import { useTranslation } from 'react-i18next'
 import TableRow from '@material-ui/core/TableRow'
 import TableCell from '@material-ui/core/TableCell'
 import { Link } from 'react-router-dom'
-import { format } from 'date-fns'
 
 import { BOOKS_ROUTE } from 'constants/routeNames'
 
@@ -15,7 +14,7 @@ interface Book {
 export interface Borrow {
   id: number
   book: Book
-  returnDate: Date
+  returnDate: string
   isReturned: boolean
 }
 
@@ -39,7 +38,7 @@ const BorrowArea = ({
           {`${book.author}, ${book.title}`}
         </Link>
       </TableCell>
-      <TableCell>{`${format(returnDate, 'd.M.y')}`}</TableCell>
+      <TableCell>{returnDate}</TableCell>
       <TableCell>{isReturned ? t('screen.account.yes') : t('screen.account.no')}</TableCell>
     </TableRow>
   )

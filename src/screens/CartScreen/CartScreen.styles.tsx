@@ -26,10 +26,16 @@ const Loading = styled(CircularProgress)`
   left: 50%;
   margin: -75px;
 `
+const NoDataContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+`
 
 export {
   CartItemsContainer,
   CartFooterContainer,
   ReservationButton,
-  Loading
+  Loading,
+  NoDataContainer
 }

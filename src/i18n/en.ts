@@ -45,7 +45,8 @@ export const en = {
       manage: {
         books: 'Books',
         users: 'Users',
-        deliveries: 'Deliveries',
+        manageReservations: 'Pending Reservations',
+        allReservations: 'Reservations'
       },
     },
     screen: {
@@ -89,6 +90,7 @@ export const en = {
         errorMessage: 'Error on fetching cart data',
         login: 'Log in',
         reservationDatePickerLabel: 'Reservation date',
+        empty: 'Cart is empty!'
       },
       cartConfirmationModal: {
         title: 'Do you want to confirm your reservation?',
@@ -159,12 +161,35 @@ export const en = {
           editBook: 'An error occurred during updating book, try again later.',
         }
       },
-      manageDeliveries: {
-        deliveryArticle: 'Delivery article',
-        quantity: 'Quantity',
-        requestDate: 'Delivery request date',
-        expectedDelivery: 'Expected delivery date',
-      }
+      allReservations: {
+        id: 'ID',
+        title: 'Title',
+        author: 'Author',
+        publisher: 'Publisher',
+        publicationDate: 'Publication Date',
+        endTime: 'End Time',
+        status: 'Status',
+        empty: 'No reservations in the system.',
+        startDate: 'Report from',
+        endDate: 'Report to',
+        printRaport: 'Drukuj report'
+      },
+      manageReservations: {
+        id: 'ID',
+        title: 'Title',
+        author: 'Author',
+        publisher: 'Publisher',
+        publicationDate: 'Publication Date',
+        endTime: 'End Time',
+        actions: 'Actions',
+        acceptedReservation: 'Reservation has been accepted.',
+        rejectedReservation: 'Reservation has been rejected.',
+        empty: 'No pending reservations in the system.',
+        errors: {
+          acceptReservation: 'An error occured during accepting the reservation, try again later.',
+          rejectReservation: 'An error occured during rejecting the reservation, try again later.',
+        }
+      },
     },
   },
 }

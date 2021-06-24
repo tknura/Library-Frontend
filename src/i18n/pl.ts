@@ -47,7 +47,8 @@ export const pl = {
       manage: {
         books: 'Książki',
         users: 'Użytkownicy',
-        deliveries: 'Dostawy',
+        manageReservations: 'Rezerwacje Oczekujące',
+        allReservations: 'Rezerwacje'
       },
     },
     screen: {
@@ -87,6 +88,7 @@ export const pl = {
         errorMessage: 'Błąd przy wczytywaniu danych koszyka',
         login: 'Zaloguj się',
         reservationDatePickerLabel: 'Data rezerwacji',
+        empty: 'Koszyk jest pusty!'
       },
       cartConfirmationModal: {
         title: 'Czy chcesz potwierdzić rezerwację?',
@@ -156,13 +158,36 @@ export const pl = {
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
           removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
-        },
+        }
       },
-      manageDeliveries: {
-        deliveryArticle: 'Artykuł dostawy',
-        quantity: 'Ilość',
-        requestDate: 'Data zamówienia',
-        expectedDelivery: 'Przewidywana data dostawy',
+      allReservations: {
+        id: 'ID',
+        title: 'Tytuł',
+        author: 'Autor',
+        publisher: 'Wydawca',
+        publicationDate: 'Data publikacji',
+        endTime: 'Koniec rezerwacji',
+        status: 'Status',
+        empty: 'Brak rezerwacji w systemie.',
+        startDate: 'Raport od',
+        endDate: 'Raport do',
+        printRaport: 'Drukuj raport',
+      },
+      manageReservations: {
+        id: 'ID',
+        title: 'Tytuł',
+        author: 'Autor',
+        publisher: 'Wydawca',
+        publicationDate: 'Data publikacji',
+        endTime: 'Koniec rezerwacji',
+        actions: 'Akcje',
+        acceptedReservation: 'Rezerwacja została zatwierdzona poprawnie.',
+        rejectedReservation: 'Rezerwacja została odrzucona poprawnie.',
+        empty: 'Brak rezerwacji do zatwierdzenia w systemie.',
+        errors: {
+          acceptReservation: 'Nie udało się zatwierdzić rezerwacji, spróbuj ponownie później.',
+          rejectReservation: 'Nie udało się odrzucić rezerwacji, spróbuj ponownie później.',
+        }
       },
       manageUsers: {
         editUser: 'Edytuj użytkownika',

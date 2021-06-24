@@ -30,7 +30,6 @@ const BooksScreen = (): JSX.Element => {
       ) : (
         <BookList
           items={data}
-          onItemButtonClick={() => null}
         />
       )}
     </div>

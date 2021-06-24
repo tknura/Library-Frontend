@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { IconButton } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
+import { format, isValid } from 'date-fns'
 
 import { DatePicker } from 'components/inputs/DatePicker'
 import * as Styled from './CartItemArea.styles'
@@ -12,34 +13,37 @@ interface CartItem {
   title: string,
   author: string,
   photoUrl: string,
-  endDate: Date
+  endDate: string
 }
 
 interface CartItemProps {
   cartItem: CartItem,
-  onDelete: (id: number) => void
+  onDelete: (item: CartItem) => void
+  onEdit: (item: CartItem) => void
 }
 
 const CartItemArea = ({
   cartItem,
-  onDelete
+  onDelete,
+  onEdit,
 }: CartItemProps): JSX.Element => {
-  const { t } = useTranslation()
-  const [date, setDate] = useState<Date>(new Date())
-
   const todayDate = new Date()
   const minDate = new Date().setDate(todayDate.getDate() + 1)
   const maxDate = new Date().setMonth(todayDate.getMonth() + 1)
 
+  const { t } = useTranslation()
+  const [date, setDate] = useState<number | Date>(minDate)
+
   const handleChangeDate = (targetDate: MaterialUiPickersDate) => {
-    if (targetDate) {
+    if (isValid(targetDate) && targetDate) {
       setDate(targetDate)
-      // patch date
+      cartItem.endDate = format(date, 'yyyy-MM-dd')
+      onEdit(cartItem)
     }
   }
 
   const handleDelete = () => {
-    onDelete(cartItem.itemId)
+    onDelete(cartItem)
   }
 
   const placeholderPhoto = 'https://altimadental.pl/wp-content/uploads/2015/01/default-placeholder.png'
@@ -71,6 +75,7 @@ const CartItemArea = ({
               onChange={handleChangeDate}
               minDate={minDate}
               maxDate={maxDate}
+              InputProps={{ readOnly: true }}
             />
           </Styled.Text>
         </Styled.ReservationDateContainer>
@@ -80,3 +85,4 @@ const CartItemArea = ({
 }
 
 export { CartItemArea }
+export type { CartItem }
