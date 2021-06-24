@@ -47,6 +47,7 @@ export const pl = {
       manage: {
         books: 'Książki',
         users: 'Użytkownicy',
+        deliveries: 'Dostawy',
       },
     },
     screen: {
@@ -155,7 +156,13 @@ export const pl = {
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
           removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
-        }
+        },
+      },
+      manageDeliveries: {
+        deliveryArticle: 'Artykuł dostawy',
+        quantity: 'Ilość',
+        requestDate: 'Data zamówienia',
+        expectedDelivery: 'Przewidywana data dostawy',
       },
       manageUsers: {
         editUser: 'Edytuj użytkownika',

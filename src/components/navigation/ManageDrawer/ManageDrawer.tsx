@@ -13,11 +13,13 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import MenuBookIcon from '@material-ui/icons/MenuBook'
 import PersonIcon from '@material-ui/icons/Person'
+import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 
 interface ManageDrawerProps extends DrawerProps {
   onDrawerClose: () => void
   onBookButtonClick?: () => void
   onUsersButtonClick?: () => void
+  onDeliveriesButtonClick?: () => void
 }
 
 const ManageDrawer = ({
@@ -25,6 +27,7 @@ const ManageDrawer = ({
   onDrawerClose: handleDrawerClose,
   onBookButtonClick: handleBookButtonClick,
   onUsersButtonClick: handleUsersButtonClick,
+  onDeliveriesButtonClick: handleDeliveriesButtonClick,
 }: ManageDrawerProps): JSX.Element => {
   const { t } = useTranslation()
   const theme = useTheme()
@@ -48,6 +51,10 @@ const ManageDrawer = ({
         <ListItem button onClick={handleUsersButtonClick}>
           <ListItemIcon><PersonIcon /></ListItemIcon>
           <ListItemText primary={t('navigation.manage.users')} />
+        </ListItem>
+        <ListItem button onClick={handleDeliveriesButtonClick}>
+          <ListItemIcon><LocalShippingIcon /></ListItemIcon>
+          <ListItemText primary={t('navigation.manage.deliveries')} />
         </ListItem>
       </List>
     </Drawer>

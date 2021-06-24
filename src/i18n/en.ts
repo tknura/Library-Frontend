@@ -45,6 +45,7 @@ export const en = {
       manage: {
         books: 'Books',
         users: 'Users',
+        deliveries: 'Deliveries',
       },
     },
     screen: {
@@ -157,6 +158,12 @@ export const en = {
           addBook: 'An error occurred during adding book, try again later.',
           editBook: 'An error occurred during updating book, try again later.',
         }
+      },
+      manageDeliveries: {
+        deliveryArticle: 'Delivery article',
+        quantity: 'Quantity',
+        requestDate: 'Delivery request date',
+        expectedDelivery: 'Expected delivery date',
       }
     },
   },
