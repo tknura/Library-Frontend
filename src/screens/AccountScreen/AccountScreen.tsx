@@ -28,9 +28,9 @@ const AccountScreen = (): JSX.Element => {
   const borrowsData = borrowsQueryData?.map((borrow) => ({
     id: borrow.id,
     book: {
-      id: borrow.rentalBook.id,
-      title: borrow.rentalBook.details.name,
-      author: borrow.rentalBook.details.author
+      id: borrow.rentalBook?.id || 0,
+      title: borrow.rentalBook?.details.name || '-',
+      author: borrow.rentalBook?.details.author || '-'
     },
     returnDate: borrow.endTime,
     isReturned: borrow.returned

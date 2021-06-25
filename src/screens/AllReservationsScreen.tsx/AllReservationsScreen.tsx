@@ -48,10 +48,10 @@ const AllReservationsScreen = (): JSX.Element => {
   useEffect(() => {
     setReservationsToPrint(data?.map(reservation => ({
       id: reservation.id,
-      name: reservation.rentalBook.details.name,
-      author: reservation.rentalBook.details.author,
-      publisher: reservation.rentalBook.details.publisher,
-      publicationDate: reservation.rentalBook.details.publicationDate,
+      name: reservation.rentalBook?.details.name || '-',
+      author: reservation.rentalBook?.details.author || '-',
+      publisher: reservation.rentalBook?.details.publisher || '-',
+      publicationDate: reservation.rentalBook?.details.publicationDate || '-',
       endTime: reservation.endTime,
       status: reservation.status
     })) || [])
