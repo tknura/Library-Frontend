@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Table,
   TableContainer,
@@ -11,14 +12,50 @@ import {
 import { useTranslation } from 'react-i18next'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 
-import { useDeliveriesQuery } from 'api/deliveries'
+import { useDeliveriesQuery, useDeliveryMutation } from 'api/deliveries'
+import { DeliveryFormFields, DeliveryFormModal } from 'components/forms/DeliveryFormModal/DeliveryFormModal'
+import { useShowSnackbar } from 'components/providers/SnackbarProviders'
+import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
 import { ManageDeliveriesArea } from './ManageDeliveryArea'
 import * as Styled from './ManageDeliveriesScreen.styles'
 
 const ManageDeliveriesScreen = (): JSX.Element => {
   const { t } = useTranslation()
+  const { show } = useShowSnackbar()
 
-  const { data } = useDeliveriesQuery()
+  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
+  const [isDeliveryModalOpen, setDeliveryModalOpen] = useState<boolean>(false)
+  const [deliveryFormInitialValues,
+    setDeliveryFormInitialValues] = useState<DeliveryFormFields | null>(null)
+  const { data } = useDeliveriesQuery({
+    onSuccess: () => setQueryEnabled(false),
+    enabled: isQueryEnabled
+  })
+
+  const { mutate: addDeliveryMutate } = useDeliveryMutation({
+    onSuccess: () => {
+      setQueryEnabled(true)
+      setDeliveryModalOpen(false)
+    },
+    onError: () => show({ message: t('screen.manageDeliveries.errors.addDelivery'), type: SNACKBAR_ERROR })
+  })
+
+  const handleAddButton = () => {
+    setDeliveryFormInitialValues(null)
+    setDeliveryModalOpen(true)
+  }
+
+  const handleCloseDeliveryModal = () => {
+    setDeliveryModalOpen(false)
+  }
+
+  const handleDeliveryFormSubmit = (values: DeliveryFormFields) => {
+    const mutationHandler = addDeliveryMutate
+    mutationHandler({
+      deliveryArticles: values.deliveryArticles,
+      expectedDeliveryDate: values.expectedDeliveryDate
+    })
+  }
 
   return (
     <Styled.RootContainer>
@@ -27,7 +64,7 @@ const ManageDeliveriesScreen = (): JSX.Element => {
           variant="contained"
           color="secondary"
           startIcon={<AddRoundedIcon />}
-          disabled
+          onClick={handleAddButton}
         >
           {t('common.add')}
         </Button>
@@ -41,7 +78,6 @@ const ManageDeliveriesScreen = (): JSX.Element => {
                 <TableCell>{t('screen.manageDeliveries.quantity')}</TableCell>
                 <TableCell>{t('screen.manageDeliveries.requestDate')}</TableCell>
                 <TableCell>{t('screen.manageDeliveries.expectedDelivery')}</TableCell>
-                <TableCell>{t('screen.manageBooks.actions')}</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,6 +98,12 @@ const ManageDeliveriesScreen = (): JSX.Element => {
           )}
         </TableContainer>
       </Styled.Paper>
+      <DeliveryFormModal
+        open={isDeliveryModalOpen}
+        onClose={handleCloseDeliveryModal}
+        onSubmit={handleDeliveryFormSubmit}
+        initialValues={deliveryFormInitialValues !== null ? deliveryFormInitialValues : undefined}
+      />
     </Styled.RootContainer>
   )
 }

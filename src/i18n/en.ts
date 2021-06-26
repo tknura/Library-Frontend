@@ -167,6 +167,21 @@ export const en = {
         quantity: 'Quantity',
         requestDate: 'Delivery request date',
         expectedDelivery: 'Expected delivery date',
+        addDelivery: 'Register new delivery',
+        errors: {
+          amount: {
+            required: 'Amount is required',
+            min: 'Amount must be higher than 0'
+          },
+          articleDetailId: {
+            required: 'Delivery article id is required',
+            min: 'Delivery article id must be higher than 0'
+          },
+          expectedDeliveryDate: {
+            required: 'Expected delivery date is required'
+          },
+          addDelivery: 'Ann error occurred during adding delivery, try again later',
+        }
       },
       allReservations: {
         id: 'ID',
