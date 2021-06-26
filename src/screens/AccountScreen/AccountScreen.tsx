@@ -1,27 +1,29 @@
 import { useTranslation } from 'react-i18next'
 
-import { AccountDataForm, UserData } from 'components/forms/AccountDataForm/AccountDataForm'
+import { AccountDataForm } from 'components/forms/AccountDataForm/AccountDataForm'
 import { BorrowList } from 'components/data/BorrowList/BorrowList'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
+import { useUsersMetaQuery, useUserQuery } from 'api/users'
 import { useReservationsQuery } from 'api/reservations'
 import * as Styled from './AccountScreen.styles'
 
-const tempValues: UserData = {
-  id: 1,
-  email: 'abc@gmail.com',
-  username: 'malyszex123',
-  firstName: 'Adam',
-  lastName: 'Malysz',
-  password: 'qwe123'
-}
-
 const AccountScreen = (): JSX.Element => {
   const { t } = useTranslation()
-  const { isLoading, isError, data: borrowsQueryData } = useReservationsQuery(tempValues.id)
+  const { data: userMeta } = useUsersMetaQuery()
+  const userId = userMeta?.userId || 0
+  const {
+    isLoading: borrowLoading,
+    isError: borrowError,
+    data: borrowsQueryData } = useReservationsQuery(userId)
+  const {
+    isLoading: userLoading,
+    isError: userError,
+    data: userQueryData } = useUserQuery(userId)
+
   const { show } = useShowSnackbar()
 
-  if (isError) {
+  if (userError || borrowError) {
     show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
   }
 
@@ -36,12 +38,24 @@ const AccountScreen = (): JSX.Element => {
     isReturned: borrow.returned
   })) || []
 
+  const userData = {
+    email: userQueryData?.accountCredentialsDTO.emailAddress || '',
+    username: userQueryData?.accountCredentialsDTO.username || '',
+    firstName: userQueryData?.firstName || '',
+    lastName: userQueryData?.lastName || '',
+    password: userQueryData?.accountCredentialsDTO.password || ''
+  }
+
   return (
     <Styled.RootContainer>
-      <AccountDataForm
-        userData={tempValues}
-      />
-      {isLoading ? (
+      {userLoading ? (
+        <Styled.Loading size={150} />
+      ) : (
+        <AccountDataForm
+          userData={userData}
+        />
+      )}
+      {borrowLoading ? (
         <Styled.Loading size={150} />
       ) : (
         <BorrowList
