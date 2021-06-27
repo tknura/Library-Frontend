@@ -171,7 +171,7 @@ export const pl = {
         empty: 'Brak rezerwacji w systemie.',
         startDate: 'Raport od',
         endDate: 'Raport do',
-        printRaport: 'Drukuj raport',
+        printReport: 'Drukuj raport',
       },
       manageReservations: {
         id: 'ID',
