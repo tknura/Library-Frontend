@@ -47,7 +47,7 @@ const AuthScreen = (): JSX.Element => {
   })
   useUsersMetaQuery({
     enabled: !!accessToken,
-    onSuccess: ({ permissions: { roles } }) => setRoles(roles.map(role => role.roleName)),
+    onSuccess: ({ permissions: { roles } }) => setRoles([CLIENT_ROLE]),
     onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
   })
 
