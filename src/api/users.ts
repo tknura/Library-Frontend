@@ -56,6 +56,7 @@ interface UserMeta {
 }
 
 interface UserUpdate {
+  id: number
   authorities?: string[]
   email?: string
   firstName?: string

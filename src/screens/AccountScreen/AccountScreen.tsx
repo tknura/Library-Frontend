@@ -4,7 +4,7 @@ import { AccountDataForm } from 'components/forms/AccountDataForm/AccountDataFor
 import { BorrowList } from 'components/data/BorrowList/BorrowList'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
-import { useUsersMetaQuery, useUserQuery } from 'api/users'
+import { useUsersMetaQuery, useUsersQuery } from 'api/users'
 import { useReservationsQuery } from 'api/reservations'
 import * as Styled from './AccountScreen.styles'
 
@@ -19,7 +19,9 @@ const AccountScreen = (): JSX.Element => {
   const {
     isLoading: userLoading,
     isError: userError,
-    data: userQueryData } = useUserQuery(userId)
+    data: usersQueryData } = useUsersQuery()
+
+  const userQueryData = usersQueryData?.users.filter(user => user.id === userId)[0]
 
   const { show } = useShowSnackbar()
 
@@ -39,6 +41,7 @@ const AccountScreen = (): JSX.Element => {
   })) || []
 
   const userData = {
+    id: userQueryData?.id || 0,
     email: userQueryData?.accountCredentialsDTO.emailAddress || '',
     username: userQueryData?.accountCredentialsDTO.username || '',
     firstName: userQueryData?.firstName || '',

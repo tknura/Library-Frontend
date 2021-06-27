@@ -34,8 +34,10 @@ const AccountDataForm = ({
   }
 
   const handleSave = () => {
+    const response = { id: data.id,
+      ...Object.fromEntries(Object.entries(data).filter(field => field[1])) }
     const mutationHandler = mutate
-    mutationHandler(data)
+    mutationHandler(response)
   }
 
   const handleCancel = () => {
@@ -78,7 +80,7 @@ const AccountDataForm = ({
       <Styled.TextField
         disabled={mode === Mode.DISPLAY}
         label={t('common.password')}
-        value={data.password}
+        defaultValue=""
         onChange={handleFieldChange('password')}
       />
       {mode === Mode.DISPLAY
