@@ -4,4 +4,8 @@ interface Response {
   timestamp: string
 }
 
-export type { Response }
+interface Error extends Response {
+  errorCause: string
+}
+
+export type { Response, Error }

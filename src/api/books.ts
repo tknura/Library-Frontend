@@ -23,7 +23,7 @@ interface AllBooksResponse {
 }
 
 const getBooks = async (instance: AxiosInstance): Promise<AllBooksResponse> => {
-  const { data } = await instance.get('/public/books/full')
+  const { data } = await instance.get('/public/books/full', { params: { unpaged: true } })
   return data
 }
 

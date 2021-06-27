@@ -1,4 +1,4 @@
-import { Paper } from '@material-ui/core'
+import { Button, Paper } from '@material-ui/core'
 import styled from 'styled-components'
 
 const RootContainer = styled.div`
@@ -14,8 +14,18 @@ const StyledPaper = styled(Paper)`
 
 const ActionsContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-bottom: 20px;
+`
+
+const SerialNumberContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const StyledButton = styled(Button)`
+  margin-left: 10px;
+  margin-right: 10px;
 `
 
 const NoDataContainer = styled.div`
@@ -28,5 +38,7 @@ export {
   RootContainer,
   StyledPaper as Paper,
   ActionsContainer,
-  NoDataContainer
+  NoDataContainer,
+  SerialNumberContainer,
+  StyledButton as Button
 }

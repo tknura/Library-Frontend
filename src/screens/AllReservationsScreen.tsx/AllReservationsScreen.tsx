@@ -16,7 +16,6 @@ import { format } from 'date-fns'
 import fileDownload from 'js-file-download'
 
 import { useAllReservationsQuery, useReservationsReportQuery } from 'api/reservations'
-import { DatePicker } from 'components/inputs/DatePicker'
 import { reservationsColumns } from './AllReservationsScreen.constants'
 import * as Styled from './AllReservationsScreen.styles'
 
@@ -91,14 +90,16 @@ const AllReservationsScreen = (): JSX.Element => {
   return (
     <Styled.RootContainer>
       <Styled.ActionsContainer>
-        <DatePicker
+        <Styled.DatePicker
+          id="startDate"
           label={t('screen.allReservations.startDate')}
           value={startDate}
           onChange={handleChangeStartDate}
           maxDate={endDate}
           InputProps={{ readOnly: true }}
         />
-        <DatePicker
+        <Styled.DatePicker
+          id="endDate"
           label={t('screen.allReservations.endDate')}
           value={endDate}
           onChange={handleChangeEndDate}

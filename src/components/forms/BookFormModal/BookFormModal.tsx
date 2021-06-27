@@ -16,10 +16,7 @@ interface BookFormFields {
   publisher: string
 }
 
-type BookModalMode = 'EDIT' | 'CREATE'
-
 interface BookFormModalProps extends Omit<ModalProps, 'children' | 'onSubmit'> {
-  mode: BookModalMode
   onClose: () => void
   onSubmit: (values: BookFormFields, helpers: FormikHelpers<BookFormFields>) => void
   initialValues?: BookFormFields
@@ -35,7 +32,6 @@ const defaultValues = {
 }
 
 const BookFormModal = ({
-  mode = 'CREATE',
   onClose: handleClose,
   onSubmit: handleSubmit,
   initialValues = defaultValues,
@@ -51,6 +47,7 @@ const BookFormModal = ({
     values,
     errors,
     touched,
+    resetForm,
   } = useFormik({
     initialValues,
     onSubmit: handleSubmit,
@@ -64,12 +61,9 @@ const BookFormModal = ({
   }
 
   useEffect(() => {
-    if (initialValues) {
-      setValues(initialValues)
-    } else {
-      setValues(defaultValues)
-    }
-  }, [initialValues, setValues])
+    resetForm()
+    setValues(initialValues)
+  }, [initialValues, resetForm, setValues])
 
   const serialNumberHelperText = useMemo(() => (
     touched.serialNumber && !!errors.serialNumber ? (
@@ -94,7 +88,7 @@ const BookFormModal = ({
             type="number"
             label={t('screen.manageBooks.serialNumber')}
             variant="outlined"
-            disabled={mode === 'EDIT'}
+            disabled={initialValues !== defaultValues}
             InputProps={{
               inputProps: {
                 min: 0
@@ -160,4 +154,4 @@ const BookFormModal = ({
 }
 
 export { BookFormModal }
-export type { BookFormFields, BookModalMode }
+export type { BookFormFields }
