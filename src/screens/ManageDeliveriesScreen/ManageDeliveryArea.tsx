@@ -16,7 +16,7 @@ const ManageDeliveriesArea = ({
   const { data } = useDeliveryQuery(id)
 
   return (
-    <div>
+    <>
       {data?.deliveryArticles.map((row) => (
         <TableRow hover role="checkbox" tabIndex={-1} key={data?.id}>
           <TableCell>{`${row.name}, ${row.author}`}</TableCell>
@@ -25,7 +25,7 @@ const ManageDeliveriesArea = ({
           <TableCell>{format(new Date(data?.expectedDeliveryDate), 'd.M.y')}</TableCell>
         </TableRow>
       ))}
-    </div>
+    </>
   )
 }
 
