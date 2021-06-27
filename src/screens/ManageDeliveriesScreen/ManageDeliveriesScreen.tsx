@@ -49,7 +49,7 @@ const ManageDeliveriesScreen = (): JSX.Element => {
   const handleDeliveryFormSubmit = (values: DeliveryFormFields) => {
     addDeliveryMutate({
       deliveryArticles: values.deliveryArticles,
-      expectedDeliveryDate: values.expectedDeliveryDate.toString()
+      expectedDeliveryDate: values.expectedDeliveryDate.toISOString()
     })
   }
 
