@@ -103,7 +103,7 @@ const ManageReservationsScreen = (): JSX.Element => {
                             <BlockRounded />
                           </IconButton>
                           <IconButton
-                            disabled={row.name === '-' && row.author === '-' && row.publisher === '-'}
+                            disabled={!row.name && !row.author && !row.publisherr}
                             onClick={() => handleAcceptButton(row.id)}
                           >
                             <CheckCircleOutlineRounded />
