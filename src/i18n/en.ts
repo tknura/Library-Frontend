@@ -172,7 +172,7 @@ export const en = {
         empty: 'No reservations in the system.',
         startDate: 'Report from',
         endDate: 'Report to',
-        printRaport: 'Drukuj report'
+        printReport: 'Print report'
       },
       manageReservations: {
         id: 'ID',

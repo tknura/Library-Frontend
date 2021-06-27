@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import {
   IconButton,
   Table,
@@ -19,12 +19,12 @@ import { reservationsColumns } from './ManageReservationsScreen.constants'
 import * as Styled from './ManageReservationsScreen.styles'
 
 interface ReservationToPrint {
-  [key: string]: string | string[] | boolean | number | undefined
+  [key: string]: string | string[] | boolean | number | undefined | null
   id: number,
-  name: string,
-  author: string,
-  publisher: string,
-  publicationDate: string,
+  name: string | null,
+  author: string | null,
+  publisher: string | null,
+  publicationDate: string | null,
   endTime: string,
 }
 
@@ -33,7 +33,6 @@ const ManageReservationsScreen = (): JSX.Element => {
   const { show } = useShowSnackbar()
 
   const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
-  const [reservationsToPrint, setReservationsToPrint] = useState<ReservationToPrint[]>()
   const { data } = usePendingReservationsQuery({
     onSuccess: () => setQueryEnabled(false),
     enabled: isQueryEnabled
@@ -63,16 +62,17 @@ const ManageReservationsScreen = (): JSX.Element => {
     rejectReservationMutate(id)
   }
 
-  useEffect(() => {
-    setReservationsToPrint(data?.map(reservation => ({
+  const reservationsToPrint: ReservationToPrint[] = useMemo(() => (
+    (data?.map(reservation => ({
       id: reservation.id,
-      name: reservation.rentalBook?.details.name || '-',
-      author: reservation.rentalBook?.details.author || '-',
-      publisher: reservation.rentalBook?.details.publisher || '-',
-      publicationDate: reservation.rentalBook?.details.publicationDate || '-',
-      endTime: reservation.endTime
+      name: reservation.rentalBook?.details.name || null,
+      author: reservation.rentalBook?.details.author || null,
+      publisher: reservation.rentalBook?.details.publisher || null,
+      publicationDate: reservation.rentalBook?.details.publicationDate || null,
+      endTime: reservation.endTime,
+      status: reservation.status
     })) || [])
-  }, [data])
+  ), [data])
 
   return (
     <Styled.RootContainer>
@@ -103,7 +103,7 @@ const ManageReservationsScreen = (): JSX.Element => {
                             <BlockRounded />
                           </IconButton>
                           <IconButton
-                            disabled={row.name === '-' && row.author === '-' && row.publisher === '-'}
+                            disabled={!row.name && !row.author && !row.publisherr}
                             onClick={() => handleAcceptButton(row.id)}
                           >
                             <CheckCircleOutlineRounded />
