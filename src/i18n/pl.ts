@@ -47,6 +47,7 @@ export const pl = {
       manage: {
         books: 'Książki',
         users: 'Użytkownicy',
+        deliveries: 'Dostawy',
         manageReservations: 'Rezerwacje Oczekujące',
         allReservations: 'Rezerwacje'
       },
@@ -158,6 +159,28 @@ export const pl = {
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
           removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
+        }
+      },
+      manageDeliveries: {
+        deliveryArticle: 'Artykuł dostawy',
+        articleDetailId: 'Identyfikator artykułu dostawy',
+        quantity: 'Ilość',
+        requestDate: 'Data zamówienia',
+        expectedDelivery: 'Przewidywana data dostawy',
+        addDelivery: 'Zarejestruj nową dostawę',
+        errors: {
+          amount: {
+            required: 'Ilość jest wymagana',
+            min: 'Ilość musi być liczbą dodatnią'
+          },
+          articleDetailId: {
+            required: 'Identyfikator artykułu dostawy jest wymagany',
+            min: 'Identyfikator artykułu dostawy musi być liczbą dodatnią'
+          },
+          expectedDeliveryDate: {
+            required: 'Przewidywana data dostawy jest wymagana'
+          },
+          addDelivery: 'Nie udało się dodać dostawy, spróbuj ponownie później.',
         }
       },
       allReservations: {

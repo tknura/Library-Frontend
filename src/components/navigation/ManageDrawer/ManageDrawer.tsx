@@ -15,6 +15,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook'
 import PersonIcon from '@material-ui/icons/Person'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable'
+import LocalShippingIcon from '@material-ui/icons/LocalShipping'
 
 import { MANAGER_ROLE } from 'constants/userRoles'
 import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
@@ -23,6 +24,7 @@ interface ManageDrawerProps extends DrawerProps {
   onDrawerClose: () => void
   onBookButtonClick?: () => void
   onUsersButtonClick?: () => void
+  onDeliveriesButtonClick?: () => void
   onManageReservationsButtonClick?: () => void
   onAllReservationsButtonClick?: () => void
 }
@@ -32,6 +34,7 @@ const ManageDrawer = ({
   onDrawerClose: handleDrawerClose,
   onBookButtonClick: handleBookButtonClick,
   onUsersButtonClick: handleUsersButtonClick,
+  onDeliveriesButtonClick: handleDeliveriesButtonClick,
   onManageReservationsButtonClick: handleManageReservationsButtonClick,
   onAllReservationsButtonClick: handleAllReservationsButtonClick
 }: ManageDrawerProps): JSX.Element => {
@@ -60,6 +63,10 @@ const ManageDrawer = ({
             <ListItemText primary={t('navigation.manage.users')} />
           </ListItem>
         </RestrictedContent>
+        <ListItem button onClick={handleDeliveriesButtonClick}>
+          <ListItemIcon><LocalShippingIcon /></ListItemIcon>
+          <ListItemText primary={t('navigation.manage.deliveries')} />
+        </ListItem>
         <ListItem button onClick={handleManageReservationsButtonClick}>
           <ListItemIcon><DateRangeIcon /></ListItemIcon>
           <ListItemText primary={t('navigation.manage.manageReservations')} />

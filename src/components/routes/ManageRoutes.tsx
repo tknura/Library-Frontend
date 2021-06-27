@@ -3,11 +3,13 @@ import { Redirect, Switch } from 'react-router-dom'
 import { ALL_RESERVATIONS_ROUTE,
   MANAGE_BOOKS_ROUTE,
   MANAGE_RESERVATIONS_ROUTE,
-  MANAGE_USERS_ROUTE
+  MANAGE_USERS_ROUTE,
+  MANAGE_DELIVERIES_ROUTE
 } from 'constants/routeNames'
 import { RestrictedRoute } from 'components/navigation/RestrictedRoute/RestrictedRoute'
 import { ManageBooksScreen } from 'screens/ManageBookScreen/ManageBookScreen'
 import { ManageUsersScreen } from 'screens/ManageUsersScreen/ManageUsersScreen'
+import { ManageDeliveriesScreen } from 'screens/ManageDeliveriesScreen/ManageDeliveriesScreen'
 import { ManageReservationsScreen } from 'screens/ManageReservationsScreen/ManageReservationsScreen'
 import { AllReservationsScreen } from 'screens/AllReservationsScreen.tsx/AllReservationsScreen'
 import { EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
@@ -27,6 +29,13 @@ const ManageRoutes = (): JSX.Element => (
       exact
     >
       <ManageUsersScreen />
+    </RestrictedRoute>
+    <RestrictedRoute
+      accessRoles={[EMPLOYEE_ROLE, MANAGER_ROLE]}
+      path={MANAGE_DELIVERIES_ROUTE}
+      exact
+    >
+      <ManageDeliveriesScreen />
     </RestrictedRoute>
     <RestrictedRoute
       accessRoles={[EMPLOYEE_ROLE, MANAGER_ROLE]}
