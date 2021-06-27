@@ -132,15 +132,9 @@ const useUsersMetaQuery = (options?: UseQueryOptions<UserMeta, unknown>)
 const useUpdateUserMutation = (options: UseMutationOptions<Response, Error, UserUpdate>)
 : UseMutationResult<Response, Error, UserUpdate> => {
   const { fetch } = useFetch()
-  return useMutation('userUpdate', (values: UserUpdate) => updateUser(fetch, values), options)
-}
-
-const useUpdateUserMutation = (options: UseMutationOptions<Response, Error, UserUpdateValues>)
-: UseMutationResult<Response, Error, UserUpdateValues> => {
-  const { fetch } = useFetch()
   return useMutation(
     'userUpdate',
-    (values: UserUpdateValues) => updateUser(fetch, values),
+    (values: UserUpdate) => updateUser(fetch, values),
     options
   )
 }
