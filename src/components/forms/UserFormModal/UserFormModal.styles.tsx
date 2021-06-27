@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
 import { Modal } from 'components/utillity/Modal/Modal'
-import { Select } from 'components/inputs/Select'
+import { RoleSelect } from 'components/inputs/RoleSelect'
 
 const Form = styled.form`
   display: flex;
@@ -17,7 +17,7 @@ const StyledTextField = styled(TextField)`
   margin-top: 20px;
 `
 
-const StyledSelect = styled(Select)`
+const StyledSelect = styled(RoleSelect)`
   margin-top: 20px;
 `
 

@@ -67,6 +67,11 @@ interface UserUpdate {
   username?: string
 }
 
+interface RoleValues {
+  roleName: UserRole
+  userId: number
+}
+
 const getUser = async (instance: AxiosInstance, userId: number): Promise<User> => {
   const { data } = await instance.get(`/users/${userId}`)
   return data
@@ -96,6 +101,22 @@ const useUserQuery = (userId: number, options?: UseQueryOptions<User, unknown>)
   return useQuery(['user', userId], () => getUser(fetch, userId), options)
 }
 
+const addUserRole = async (
+  instance: AxiosInstance,
+  values: RoleValues
+): Promise<Response> => {
+  const { data } = await instance.patch('/users/role/add', values)
+  return data
+}
+
+const deleteUserRole = async (
+  instance: AxiosInstance,
+  values: RoleValues
+): Promise<Response> => {
+  const { data } = await instance.delete('/users/role/delete', { data: values })
+  return data
+}
+
 const useUsersQuery = (options?: UseQueryOptions<UsersResponse, unknown>)
 : UseQueryResult<UsersResponse, unknown> => {
   const { fetch } = useFetch()
@@ -114,10 +135,42 @@ const useUpdateUserMutation = (options: UseMutationOptions<Response, Error, User
   return useMutation('userUpdate', (values: UserUpdate) => updateUser(fetch, values), options)
 }
 
+const useUpdateUserMutation = (options: UseMutationOptions<Response, Error, UserUpdateValues>)
+: UseMutationResult<Response, Error, UserUpdateValues> => {
+  const { fetch } = useFetch()
+  return useMutation(
+    'userUpdate',
+    (values: UserUpdateValues) => updateUser(fetch, values),
+    options
+  )
+}
+
+const useAddUserRoleMutation = (options: UseMutationOptions<Response, Error, RoleValues>)
+: UseMutationResult<Response, Error, RoleValues> => {
+  const { fetch } = useFetch()
+  return useMutation(
+    'userAddRole',
+    (values: RoleValues) => addUserRole(fetch, values),
+    options
+  )
+}
+
+const useDeleteUserRoleMutation = (options: UseMutationOptions<Response, Error, RoleValues>)
+: UseMutationResult<Response, Error, RoleValues> => {
+  const { fetch } = useFetch()
+  return useMutation(
+    'userDeleteRole',
+    (values: RoleValues) => deleteUserRole(fetch, values),
+    options
+  )
+}
+
 export {
   useUserQuery,
   useUsersQuery,
   useUsersMetaQuery,
-  useUpdateUserMutation
+  useUpdateUserMutation,
+  useAddUserRoleMutation,
+  useDeleteUserRoleMutation
 }
 export type { User, UserUpdate }

@@ -12,39 +12,40 @@ import { ManageUsersScreen } from 'screens/ManageUsersScreen/ManageUsersScreen'
 import { ManageDeliveriesScreen } from 'screens/ManageDeliveriesScreen/ManageDeliveriesScreen'
 import { ManageReservationsScreen } from 'screens/ManageReservationsScreen/ManageReservationsScreen'
 import { AllReservationsScreen } from 'screens/AllReservationsScreen.tsx/AllReservationsScreen'
+import { EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
 
 const ManageRoutes = (): JSX.Element => (
   <Switch>
     <RestrictedRoute
-      accessRoles={['EMPLOYEE', 'MANAGER']}
+      accessRoles={[EMPLOYEE_ROLE, MANAGER_ROLE]}
       path={MANAGE_BOOKS_ROUTE}
       exact
     >
       <ManageBooksScreen />
     </RestrictedRoute>
     <RestrictedRoute
-      accessRoles={['EMPLOYEE', 'MANAGER']}
+      accessRoles={[MANAGER_ROLE]}
       path={MANAGE_USERS_ROUTE}
       exact
     >
       <ManageUsersScreen />
     </RestrictedRoute>
     <RestrictedRoute
-      accessRoles={['EMPLOYEE', 'MANAGER']}
+      accessRoles={[EMPLOYEE_ROLE, MANAGER_ROLE]}
       path={MANAGE_DELIVERIES_ROUTE}
       exact
     >
       <ManageDeliveriesScreen />
     </RestrictedRoute>
     <RestrictedRoute
-      accessRoles={['EMPLOYEE', 'MANAGER']}
+      accessRoles={[EMPLOYEE_ROLE, MANAGER_ROLE]}
       path={MANAGE_RESERVATIONS_ROUTE}
       exact
     >
       <ManageReservationsScreen />
     </RestrictedRoute>
     <RestrictedRoute
-      accessRoles={['EMPLOYEE', 'MANAGER']}
+      accessRoles={[EMPLOYEE_ROLE, MANAGER_ROLE]}
       path={ALL_RESERVATIONS_ROUTE}
       exact
     >

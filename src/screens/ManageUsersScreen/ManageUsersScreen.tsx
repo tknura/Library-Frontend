@@ -10,12 +10,18 @@ import {
   IconButton,
   Typography
 } from '@material-ui/core'
+import { useQueryClient } from 'react-query'
 import { useTranslation } from 'react-i18next'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import EditRoundedIcon from '@material-ui/icons/EditRounded'
 
-import { useUsersQuery } from 'api/users'
+import {
+  useAddUserRoleMutation,
+  useDeleteUserRoleMutation,
+  useUsersQuery
+} from 'api/users'
 import { useSignUpUserMutation } from 'api/auth'
+import { UserRoleFormFields, UserRoleFormModal } from 'components/forms/UserRoleFormModal/UserRoleFormModal'
 import { UserFormFields, UserFormModal } from 'components/forms/UserFormModal/UserFormModal'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
@@ -24,34 +30,50 @@ import { usersColumns } from './ManageUsersScreen.constants'
 import * as Styled from './ManageUsersScreen.styles'
 
 interface User {
-  [key: string]: string | number | UserRole
+  [key: string]: string | number | UserRole[]
   id: number
   email: string
   username: string
   firstName: string
   lastName: string
-  roles: UserRole
+  roles: UserRole[]
 }
 
 const ManageUsersScreen = (): JSX.Element => {
   const { t } = useTranslation()
   const { show } = useShowSnackbar()
+  const queryClient = useQueryClient()
 
   const [isUserModalOpen, setUserModalOpen] = useState<boolean>(false)
-  const [userFormInitialValues, setBookFormInitialValues] = useState<UserFormFields | null>(null)
-  const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
+  const [isUserRoleModalOpen, setUserRoleModalOpen] = useState<boolean>(false)
+  const [
+    userRoleFormInitialValues,
+    setUserRoleFormInitialValues
+  ] = useState<UserRoleFormFields | null>(null)
 
   const { mutate: addUserMutate } = useSignUpUserMutation({
     onSuccess: () => {
-      setQueryEnabled(true)
+      queryClient.invalidateQueries('users')
       setUserModalOpen(false)
     },
     onError: () => show({ message: t('screen.manageUsers.errors.addUser'), type: SNACKBAR_ERROR })
   })
-  const { data } = useUsersQuery({
-    onSuccess: () => setQueryEnabled(false),
-    enabled: isQueryEnabled
+  const { mutate: addUserRoleMutate } = useAddUserRoleMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+      setUserRoleModalOpen(false)
+    },
+    onError: () => show({ message: t('screen.manageUsers.errors.editUser'), type: SNACKBAR_ERROR })
   })
+  const { mutate: deleteUserRoleMutate } = useDeleteUserRoleMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries('users')
+      setUserRoleModalOpen(false)
+    },
+    onError: () => show({ message: t('screen.manageUsers.errors.editUser'), type: SNACKBAR_ERROR })
+  })
+
+  const { data } = useUsersQuery()
 
   const users: User[] = useMemo(() => (
     data?.users.map(user => ({
@@ -60,33 +82,68 @@ const ManageUsersScreen = (): JSX.Element => {
       username: user.accountCredentialsDTO.username,
       firstName: user.firstName || '',
       lastName: user.lastName || '',
-      roles: user.accountPermissionsDTO.roles.map(role => role.roleName)[0] as UserRole,
+      roles: user.accountPermissionsDTO.roles.map(role => role.roleName),
     })) || []
   ), [data?.users])
 
   const handleAddButton = () => {
-    setBookFormInitialValues(null)
     setUserModalOpen(true)
   }
 
   const handleEditButton = (user: typeof users[0]) => {
-    setBookFormInitialValues({
-      ...user,
-      password: '',
-      repeatPassword: '',
+    setUserRoleFormInitialValues({
+      userId: user.id,
+      role: user.roles[0],
     })
-    setUserModalOpen(true)
+    setUserRoleModalOpen(true)
   }
 
   const handleCloseUserModal = () => {
     setUserModalOpen(false)
   }
 
-  const handleUserFormSubmit = async ({ repeatPassword, roles, ...values }: UserFormFields) => {
+  const handleCloseUserRoleModal = () => {
+    setUserRoleModalOpen(false)
+  }
+
+  const handleUserFormSubmit = async ({
+    repeatPassword,
+    password,
+    roles,
+    ...values
+  }: UserFormFields) => {
     await addUserMutate({
       ...values,
-      // roles: [roles]
+      password,
+      roles: [roles],
     })
+  }
+
+  const handleUserRoleFormSubmit = async (
+    userId: number,
+    role: UserRole,
+    previousRole: UserRole
+  ) => {
+    if (previousRole !== role) {
+      await deleteUserRoleMutate({
+        userId,
+        roleName: previousRole,
+      })
+      await addUserRoleMutate({
+        userId,
+        roleName: role,
+      })
+    }
+  }
+
+  const getCellValue = (row: typeof users[0], column: typeof usersColumns[0]) => {
+    if (row[column.id] && row[column.id] !== 0) {
+      if (Array.isArray(row[column.id])) {
+        return (row[column.id] as []).join(', ')
+      }
+      return row[column.id]
+    }
+    return '-'
   }
 
   return (
@@ -124,12 +181,12 @@ const ManageUsersScreen = (): JSX.Element => {
                     <TableCell key={column.id} align="left">
                       {column.id === 'actions' ? (
                         <>
-                          <IconButton disabled onClick={() => handleEditButton(row)}>
+                          <IconButton onClick={() => handleEditButton(row)}>
                             <EditRoundedIcon />
                           </IconButton>
                         </>
                       ) : (
-                        row[column.id] || '-'
+                        getCellValue(row, column)
                       )}
                     </TableCell>
                   ))}
@@ -137,7 +194,7 @@ const ManageUsersScreen = (): JSX.Element => {
               ))}
             </TableBody>
           </Table>
-          {data?.users.length && (
+          {!data?.users.length && (
             <Styled.NoDataContainer>
               <Typography color="primary">
                 {t('screen.manageBooks.empty')}
@@ -150,7 +207,12 @@ const ManageUsersScreen = (): JSX.Element => {
         open={isUserModalOpen}
         onClose={handleCloseUserModal}
         onSubmit={handleUserFormSubmit}
-        initialValues={userFormInitialValues !== null ? userFormInitialValues : undefined}
+      />
+      <UserRoleFormModal
+        open={isUserRoleModalOpen}
+        onClose={handleCloseUserRoleModal}
+        onSubmit={handleUserRoleFormSubmit}
+        initialValues={userRoleFormInitialValues || undefined}
       />
     </Styled.RootContainer>
   )
