@@ -5,24 +5,24 @@ import { useFetch } from 'components/providers/FetchProvider'
 
 interface DeliveryArticle {
   articleDetailId: number
-  author: string,
+  author: string
   deliveryArticleId: number
   name: string
-  publicationDate: Date
+  publicationDate: string
   publisher: number
   quantity: number
 }
 
 interface Delivery {
   deliveryArticles: DeliveryArticle[]
-  deliveryRequestDate: Date
-  expectedDeliveryDate: Date
+  deliveryRequestDate: string
+  expectedDeliveryDate: string
   id: number
 }
 
 interface DeliveryBasic {
-  deliveryRequestDate: Date
-  expectedDeliveryDate: Date
+  deliveryRequestDate: string
+  expectedDeliveryDate: string
   id: number
   quantity: number
 }
@@ -34,7 +34,7 @@ interface DeliveryArticleBasic {
 
 interface NewDeliveryValues {
   deliveryArticles: DeliveryArticleBasic[]
-  expectedDeliveryDate: Date
+  expectedDeliveryDate: string
 }
 
 const postDelivery = async (
