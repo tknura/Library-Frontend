@@ -1,6 +1,8 @@
 import { AxiosInstance } from 'axios'
-import { useFetch } from 'components/providers/FetchProvider'
 import { useMutation, UseMutationOptions, UseMutationResult } from 'react-query'
+
+import { useFetch } from 'components/providers/FetchProvider'
+import { Error } from './common'
 
 interface Book {
   // eslint-disable-next-line camelcase
@@ -37,6 +39,22 @@ const deleteBook = async (
   return data
 }
 
+const freeBook = async (
+  instance: AxiosInstance,
+  serialNumber: number
+): Promise<unknown> => {
+  const { data } = await instance.patch('/secured/books/free', null, { params: { serialNumber } })
+  return data
+}
+
+const occupyBook = async (
+  instance: AxiosInstance,
+  serialNumber: number
+): Promise<unknown> => {
+  const { data } = await instance.patch('/secured/books/occupy', null, { params: { serialNumber } })
+  return data
+}
+
 const useAddBookMutation = (options: UseMutationOptions<unknown, Error, Book>)
 : UseMutationResult<unknown, Error, Book> => {
   const { fetch } = useFetch()
@@ -64,10 +82,30 @@ const useDeleteBookMutation = (options: UseMutationOptions<unknown, Error, numbe
   )
 }
 
+const useFreeBookMutation = (options: UseMutationOptions<unknown, Error, number>)
+: UseMutationResult<unknown, Error, number> => {
+  const { fetch } = useFetch()
+  return useMutation(
+    'freeBook',
+    (serialNumber: number) => freeBook(fetch, serialNumber), options
+  )
+}
+
+const useOccupyBookMutation = (options: UseMutationOptions<unknown, Error, number>)
+: UseMutationResult<unknown, Error, number> => {
+  const { fetch } = useFetch()
+  return useMutation(
+    'occupyBook',
+    (serialNumber: number) => occupyBook(fetch, serialNumber), options
+  )
+}
+
 export {
   useAddBookMutation,
   useUpdateBookMutation,
-  useDeleteBookMutation
+  useDeleteBookMutation,
+  useFreeBookMutation,
+  useOccupyBookMutation,
 }
 
 export type { Book }

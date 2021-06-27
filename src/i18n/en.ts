@@ -134,6 +134,10 @@ export const en = {
         serialNumber: 'Serial number',
         actions: 'Actions',
         addOrEditBook: 'Add/Edit book',
+        editBook: 'Edit book',
+        deleteBook: 'Delete book',
+        bringOutBook: 'Bring out',
+        returnBook: 'Accept return',
         photo: 'Photo (link)',
         empty: 'No books in the system, you can add them by clicking the "Add" button.',
         removedBook: 'Book was removed successfully.',
@@ -159,6 +163,9 @@ export const en = {
           },
           addBook: 'An error occurred during adding book, try again later.',
           editBook: 'An error occurred during updating book, try again later.',
+          removeBook: 'Failed to remove the book, try again later.',
+          bringOutBook: 'The book with the specified serial number does not exist or is not able to be bring out.',
+          returnBook: 'The book with the given serial number does not exist or is not able to be returned.'
         }
       },
       manageDeliveries: {

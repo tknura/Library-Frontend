@@ -1,8 +1,8 @@
-import Modal from '@material-ui/core/Modal'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Typography } from '@material-ui/core'
 
+import { Modal } from 'components/utillity/Modal/Modal'
 import * as Styled from './ConfirmReservationDialog.styles'
 
 interface ConfirmReservationModalProps {
@@ -27,10 +27,10 @@ const ConfirmReservationModal = ({
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <Styled.ModalContainer>
-        <Typography variant="h4">
-          {t('screen.cartConfirmationModal.title')}
-        </Typography>
+      <Modal.Title>
+        {t('screen.cartConfirmationModal.title')}
+      </Modal.Title>
+      <Modal.Content>
         <Styled.ModalDataContainer>
           <Typography>
             {missingBooks
@@ -39,23 +39,11 @@ const ConfirmReservationModal = ({
           </Typography>
           {!!missingBooks && <Typography>{missingBooks}</Typography>}
         </Styled.ModalDataContainer>
-        <Styled.ModalButtonsContainer>
-          <Styled.ChoiceButton
-            variant="contained"
-            color="primary"
-            onClick={handleConfirm}
-          >
-            {t('screen.cartConfirmationModal.confirm')}
-          </Styled.ChoiceButton>
-          <Styled.ChoiceButton
-            variant="contained"
-            color="primary"
-            onClick={handleCancel}
-          >
-            {t('screen.cartConfirmationModal.cancel')}
-          </Styled.ChoiceButton>
-        </Styled.ModalButtonsContainer>
-      </Styled.ModalContainer>
+      </Modal.Content>
+      <Modal.Actions
+        onCancel={handleCancel}
+        onSave={handleConfirm}
+      />
     </Modal>
   )
 }
