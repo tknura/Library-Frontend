@@ -16,6 +16,9 @@ import PersonIcon from '@material-ui/icons/Person'
 import DateRangeIcon from '@material-ui/icons/DateRange'
 import EventAvailableIcon from '@material-ui/icons/EventAvailable'
 
+import { MANAGER_ROLE } from 'constants/userRoles'
+import { RestrictedContent } from 'components/navigation/RestrictedContent/RestrictedContent'
+
 interface ManageDrawerProps extends DrawerProps {
   onDrawerClose: () => void
   onBookButtonClick?: () => void
@@ -51,10 +54,12 @@ const ManageDrawer = ({
           <ListItemIcon><MenuBookIcon /></ListItemIcon>
           <ListItemText primary={t('navigation.manage.books')} />
         </ListItem>
-        <ListItem button onClick={handleUsersButtonClick}>
-          <ListItemIcon><PersonIcon /></ListItemIcon>
-          <ListItemText primary={t('navigation.manage.users')} />
-        </ListItem>
+        <RestrictedContent accessRoles={[MANAGER_ROLE]}>
+          <ListItem button onClick={handleUsersButtonClick}>
+            <ListItemIcon><PersonIcon /></ListItemIcon>
+            <ListItemText primary={t('navigation.manage.users')} />
+          </ListItem>
+        </RestrictedContent>
         <ListItem button onClick={handleManageReservationsButtonClick}>
           <ListItemIcon><DateRangeIcon /></ListItemIcon>
           <ListItemText primary={t('navigation.manage.manageReservations')} />
