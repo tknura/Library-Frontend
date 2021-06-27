@@ -21,9 +21,6 @@ const ShopRoutes = (): JSX.Element => (
     <RestrictedRoute accessRoles={['CLIENT', 'EMPLOYEE', 'MANAGER']} path={ACCOUNT_ROUTE}>
       <AccountScreen />
     </RestrictedRoute>
-    <Route exact path="/tempacc">
-      <AccountScreen />
-    </Route>
     <Redirect exact path="*" to={`${BOOKS_ROUTE}`} />
   </Switch>
 )

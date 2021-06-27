@@ -55,7 +55,8 @@ interface UserMeta {
   userId: number
 }
 
-interface UserUpdateValues {
+interface UserUpdate {
+  id: number
   authorities?: string[]
   email?: string
   firstName?: string
@@ -71,6 +72,11 @@ interface RoleValues {
   userId: number
 }
 
+const getUser = async (instance: AxiosInstance, userId: number): Promise<User> => {
+  const { data } = await instance.get(`/users/${userId}`)
+  return data
+}
+
 const getUsers = async (instance: AxiosInstance): Promise<UsersResponse> => {
   const { data } = await instance.get('/users/all')
   return data
@@ -83,10 +89,16 @@ const getUserMeta = async (instance: AxiosInstance): Promise<UserMeta> => {
 
 const updateUser = async (
   instance: AxiosInstance,
-  values: UserUpdateValues
+  values: UserUpdate
 ): Promise<Response> => {
   const { data } = await instance.put('/users/update', values)
   return data
+}
+
+const useUserQuery = (userId: number, options?: UseQueryOptions<User, unknown>)
+: UseQueryResult<User, unknown> => {
+  const { fetch } = useFetch()
+  return useQuery(['user', userId], () => getUser(fetch, userId), options)
 }
 
 const addUserRole = async (
@@ -115,6 +127,12 @@ const useUsersMetaQuery = (options?: UseQueryOptions<UserMeta, unknown>)
 : UseQueryResult<UserMeta, unknown> => {
   const { fetch } = useFetch()
   return useQuery('usersMeta', () => getUserMeta(fetch), options)
+}
+
+const useUpdateUserMutation = (options: UseMutationOptions<Response, Error, UserUpdate>)
+: UseMutationResult<Response, Error, UserUpdate> => {
+  const { fetch } = useFetch()
+  return useMutation('userUpdate', (values: UserUpdate) => updateUser(fetch, values), options)
 }
 
 const useUpdateUserMutation = (options: UseMutationOptions<Response, Error, UserUpdateValues>)
@@ -148,10 +166,11 @@ const useDeleteUserRoleMutation = (options: UseMutationOptions<Response, Error, 
 }
 
 export {
+  useUserQuery,
   useUsersQuery,
   useUsersMetaQuery,
   useUpdateUserMutation,
   useAddUserRoleMutation,
   useDeleteUserRoleMutation
 }
-export type { User }
+export type { User, UserUpdate }
