@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Redirect, useLocation } from 'react-router-dom'
 
 import { useUserLoggedIn } from 'components/providers/AuthProvider'
-import { useHasRole } from 'hooks/useHasRole'
+import { useHasRoles } from 'hooks/useHasRole'
 import { UserRole } from 'types/UserRole'
 
 interface RestrictedRouteProps {
@@ -13,7 +13,7 @@ interface RestrictedRouteProps {
 
 const RestrictedRoute: React.FC<RestrictedRouteProps> = ({ accessRoles, children, ...rest }) => {
   const location = useLocation()
-  const isAllowed = useHasRole(accessRoles)
+  const isAllowed = useHasRoles(accessRoles)
   const isLoggedIn = useUserLoggedIn()
   const redirectPath = {
     pathname: '/auth',

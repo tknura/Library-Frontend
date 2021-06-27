@@ -28,3 +28,4 @@ const Select = ({
 )
 
 export { Select }
+export type { SelectProps }
