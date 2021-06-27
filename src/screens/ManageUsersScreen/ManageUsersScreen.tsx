@@ -136,6 +136,16 @@ const ManageUsersScreen = (): JSX.Element => {
     }
   }
 
+  const getCellValue = (row: typeof users[0], column: typeof usersColumns[0]) => {
+    if (row[column.id] && row[column.id] !== 0) {
+      if (Array.isArray(row[column.id])) {
+        return (row[column.id] as []).join(', ')
+      }
+      return row[column.id]
+    }
+    return '-'
+  }
+
   return (
     <Styled.RootContainer>
       <Styled.ActionsContainer>
@@ -176,7 +186,7 @@ const ManageUsersScreen = (): JSX.Element => {
                           </IconButton>
                         </>
                       ) : (
-                        row[column.id] || '-'
+                        getCellValue(row, column)
                       )}
                     </TableCell>
                   ))}
