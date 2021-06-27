@@ -11,22 +11,22 @@ import {
 import { Print } from '@material-ui/icons'
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { useTranslation } from 'react-i18next'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { format } from 'date-fns'
 import fileDownload from 'js-file-download'
 
-import { useAllReservationsQuery, usePrintReservationsQuery } from 'api/reservations'
+import { useAllReservationsQuery, useReservationsReportQuery } from 'api/reservations'
 import { DatePicker } from 'components/inputs/DatePicker'
 import { reservationsColumns } from './AllReservationsScreen.constants'
 import * as Styled from './AllReservationsScreen.styles'
 
 interface ReservationToPrint {
-  [key: string]: string | string[] | boolean | number | undefined
+  [key: string]: string | string[] | boolean | number | undefined | null
   id: number,
-  name: string,
-  author: string,
-  publisher: string,
-  publicationDate: string,
+  name: string | null,
+  author: string | null,
+  publisher: string | null,
+  publicationDate: string | null,
   endTime: string,
   status: string
 }
@@ -38,24 +38,23 @@ const AllReservationsScreen = (): JSX.Element => {
   const [endDate, setEndDate] = useState<number | Date>(todayDate)
   const { data } = useAllReservationsQuery()
   const [isQueryEnabled, setQueryEnabled] = useState<boolean>(false)
-  const { data: reportData } = usePrintReservationsQuery(
+  const { data: reportData } = useReservationsReportQuery(
     format(startDate, 'yyyy-MM-dd'), format(endDate, 'yyyy-MM-dd'), {
       enabled: isQueryEnabled,
     }
   )
-  const [reservationsToPrint, setReservationsToPrint] = useState<ReservationToPrint[]>()
 
-  useEffect(() => {
-    setReservationsToPrint(data?.map(reservation => ({
+  const reservationsToPrint: ReservationToPrint[] = useMemo(() => (
+    (data?.map(reservation => ({
       id: reservation.id,
-      name: reservation.rentalBook.details.name,
-      author: reservation.rentalBook.details.author,
-      publisher: reservation.rentalBook.details.publisher,
-      publicationDate: reservation.rentalBook.details.publicationDate,
+      name: reservation.rentalBook?.details.name || null,
+      author: reservation.rentalBook?.details.author || null,
+      publisher: reservation.rentalBook?.details.publisher || null,
+      publicationDate: reservation.rentalBook?.details.publicationDate || null,
       endTime: reservation.endTime,
       status: reservation.status
     })) || [])
-  }, [data])
+  ), [data])
 
   useEffect(() => {
     if (reportData && isQueryEnabled) {
@@ -113,7 +112,7 @@ const AllReservationsScreen = (): JSX.Element => {
           startIcon={<Print />}
           onClick={handlePrintButton}
         >
-          {t('screen.allReservations.printRaport')}
+          {t('screen.allReservations.printReport')}
         </Button>
       </Styled.ActionsContainer>
       <Styled.Paper>

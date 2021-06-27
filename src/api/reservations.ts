@@ -35,7 +35,7 @@ interface RentalBook {
 interface Reservation {
   [key: string]: string | string[] | boolean | number | undefined | RentalBook
   id: number
-  rentalBook: RentalBook
+  rentalBook?: RentalBook
   endTime: string
   returned: boolean
   status: string
@@ -109,7 +109,7 @@ const useRejectReservation = (
   return useMutation('rejectReservation', (id: number) => postRejectReservation(fetch, id), options)
 }
 
-const printReservations = async (
+const getReservationsReport = async (
   instance: AxiosInstance,
   startDate: string,
   endDate: string
@@ -118,14 +118,14 @@ const printReservations = async (
   return data
 }
 
-const usePrintReservationsQuery = (
+const useReservationsReportQuery = (
   startDate: string,
   endDate: string,
   options?: UseQueryOptions<string, unknown>
 )
 : UseQueryResult<string, unknown> => {
   const { fetch } = useFetch()
-  return useQuery(['printReservations', startDate, endDate], () => printReservations(fetch, startDate, endDate), options)
+  return useQuery(['reservationsReport', startDate, endDate], () => getReservationsReport(fetch, startDate, endDate), options)
 }
 
 export {
@@ -134,5 +134,5 @@ export {
   usePendingReservationsQuery,
   useAcceptReservation,
   useRejectReservation,
-  usePrintReservationsQuery
+  useReservationsReportQuery
 }

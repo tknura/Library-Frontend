@@ -1,4 +1,4 @@
-import { useMutation, UseMutationOptions, UseMutationResult, useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
+import { useMutation, UseMutationOptions, UseMutationResult } from 'react-query'
 import { AxiosInstance } from 'axios'
 
 import { useFetch } from 'components/providers/FetchProvider'
@@ -24,39 +24,11 @@ interface SignInResponse {
   accessToken: string
 }
 
-interface CartMeta {
-  cartId: number
-  itemsNumber: number
-}
-
-interface Role {
-  id: number
-  roleName: 'CLIENT' | 'MANAGER' | 'EMPLOYEE'
-}
-
-interface UserMetaPersmissions {
-  id: number
-  roles: Role[]
-}
-
-interface UserMeta {
-  permissions: UserMetaPersmissions
-  userId: number
-}
-
-type Meta = UserMeta & CartMeta
-
-const getMeta = async (instance: AxiosInstance): Promise<Meta> => {
-  const { data: cartData } = await instance.get('/cart/meta')
-  const { data: userData } = await instance.get('/users/meta')
-  return { ...cartData, ...userData }
-}
-
 const postSignUpUser = async (
   instance: AxiosInstance,
   values: SignUpValues
 ): Promise<unknown> => {
-  const { data } = await instance.post('/public/register/client', values)
+  const { data } = await instance.post('/public/register/user', values)
   return data
 }
 
@@ -74,12 +46,6 @@ const postSignIn = async (
 ): Promise<SignInResponse> => {
   const { data } = await instance.post('/public/auth', values)
   return data
-}
-
-const useMetaQuery = (options?: UseQueryOptions<Meta, unknown>)
-: UseQueryResult<Meta, unknown> => {
-  const { fetch } = useFetch()
-  return useQuery('meta', () => getMeta(fetch))
 }
 
 const useSignUpUserMutation = (options: UseMutationOptions<unknown, Error, SignUpValues>)
@@ -104,5 +70,4 @@ export {
   useSignUpUserMutation,
   useSignInMutation,
   useSignUpMutation,
-  useMetaQuery
 }

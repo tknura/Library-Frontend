@@ -1,3 +1,5 @@
+import { CLIENT_ROLE, EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
+
 export const en = {
   translation: {
     common: {
@@ -7,7 +9,6 @@ export const en = {
       password: 'Password',
       firstName: 'First Name',
       lastName: 'Last Name',
-      phoneNumber: 'Phone number',
       add: 'Add',
       save: 'Save',
       cancel: 'Cancel',
@@ -19,19 +20,19 @@ export const en = {
           required: 'E-mail address is required.',
           format: 'E-mail address format is incorrect.',
         },
-        password: {
-          required: 'Password is required',
-          toShort: 'The password should be at least 8 characters long.',
-        },
         firstName: {
           required: 'First name is required.',
         },
         lastName: {
           required: 'Last name is required.',
         },
-        phoneNumber: {
-          required: 'Phone number is required.',
-          format: 'The phone number is in incorrect format.',
+        password: {
+          required: 'Password is required',
+          toShort: 'The password should be at least 8 characters long.',
+        },
+        repeatPassword: {
+          notMatch: 'The passwords do not match.',
+          required: 'Password repetition is required.',
         },
       },
     },
@@ -76,10 +77,6 @@ export const en = {
           signUp: 'Sign up',
         },
         errors: {
-          repeatPassword: {
-            notMatch: 'The passwords do not match.',
-            required: 'Password repetition is required.',
-          },
           generic: 'An unknown error occurred during signing up.',
         },
       },
@@ -139,6 +136,8 @@ export const en = {
         addOrEditBook: 'Add/Edit book',
         photo: 'Photo (link)',
         empty: 'No books in the system, you can add them by clicking the "Add" button.',
+        removedBook: 'Book was removed successfully.',
+        serialNumberHelper: 'Serial number can\'t be changed later!',
         errors: {
           title: {
             required: 'Title is required'
@@ -194,7 +193,7 @@ export const en = {
         empty: 'No reservations in the system.',
         startDate: 'Report from',
         endDate: 'Report to',
-        printRaport: 'Drukuj report'
+        printReport: 'Print report'
       },
       manageReservations: {
         id: 'ID',
@@ -212,6 +211,29 @@ export const en = {
           rejectReservation: 'An error occured during rejecting the reservation, try again later.',
         }
       },
+      manageUsers: {
+        editUser: 'Edit user',
+        email: 'E-mail',
+        username: 'Username',
+        firstName: 'First name',
+        lastName: 'Last name',
+        password: 'Password',
+        roles: 'Roles',
+        actions: 'Actions',
+        errors: {
+          roles: {
+            oneOf: 'Niepoprawna rola.',
+            required: 'Użytkownik musi mieć rolę',
+          },
+          addUser: 'Nie udało się dodać użytkownika, spróbuj ponownie później.',
+          editUser: 'Nie udało się zedytować danych użytkownika, spróbuj ponownie później.'
+        },
+      },
     },
+    roles: {
+      [CLIENT_ROLE]: 'Client',
+      [MANAGER_ROLE]: 'Manager',
+      [EMPLOYEE_ROLE]: 'Employee'
+    }
   },
 }
