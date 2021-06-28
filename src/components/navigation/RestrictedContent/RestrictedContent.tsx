@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
 
-import { useHasRole } from 'hooks/useHasRole'
+import { useHasRoles } from 'hooks/useHasRole'
 import { UserRole } from 'types/UserRole'
 
 interface RestrictedContentProps {
@@ -13,7 +13,7 @@ const RestrictedContent: React.FC<RestrictedContentProps> = ({
   fallback,
   children
 }) => {
-  const isAllowed = useHasRole(accessRoles)
+  const isAllowed = useHasRoles(accessRoles)
 
   return isAllowed ? <>{children}</> : fallback || null
 }

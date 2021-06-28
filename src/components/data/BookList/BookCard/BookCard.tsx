@@ -24,10 +24,12 @@ interface Book {
 
 interface BookCardProps {
   item: Book
+  className?: string
 }
 
 const BookCard = ({
   item,
+  className,
 }: BookCardProps): JSX.Element => {
   const { t } = useTranslation()
   const history = useHistory()
@@ -51,7 +53,7 @@ const BookCard = ({
   }
 
   return (
-    <Styled.Card>
+    <Styled.Card className={className}>
       <CardActionArea onClick={handleRedirect}>
         <Styled.CardMedia image={item?.photos?.length ? item.photos[0] : placeholderPhoto} />
       </CardActionArea>

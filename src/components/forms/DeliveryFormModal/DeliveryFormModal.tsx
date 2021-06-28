@@ -77,7 +77,7 @@ const DeliveryFormModal = ({
 
   const handleChangeArticles = (params: GridEditCellPropsParams) => {
     rows[params.id as number - 1].amount = params.props.value as number
-    const newArticles = rows.filter(row => row.amount > 0).map((row) => ({
+    const newArticles = rows.filter(row => row.amount > 0).map(row => ({
       articleDetailId: row.id,
       amount: row.amount
     })) as DeliveryArticleBasic[]
@@ -99,8 +99,6 @@ const DeliveryFormModal = ({
             rows={rows}
             columns={columns}
             pageSize={5}
-            checkboxSelection
-            disableSelectionOnClick
             loading={isLoading}
             onEditCellChangeCommitted={handleChangeArticles}
           />
@@ -110,6 +108,7 @@ const DeliveryFormModal = ({
             helperText={touched.expectedDeliveryDate && t(errors.expectedDeliveryDate as string)}
             onChange={handleChangeDate}
             inputVariant="outlined"
+            disablePast
             label={t('screen.manageDeliveries.expectedDelivery')}
           />
         </Styled.Form>

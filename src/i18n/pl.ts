@@ -135,6 +135,10 @@ export const pl = {
         serialNumber: 'Numer seryjny',
         actions: 'Akcje',
         addOrEditBook: 'Dodaj/Edytuj książkę',
+        editBook: 'Edytuj książkę',
+        deleteBook: 'Usuń książkę',
+        bringOutBook: 'Wydaj',
+        returnBook: 'Przyjmij zwrot',
         photo: 'Zdjęcie (link)',
         empty: 'Brak książek w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
         removedBook: 'Książka została usunięta poprawnie.',
@@ -158,7 +162,9 @@ export const pl = {
           },
           addBook: 'Nie udało się dodać książki, spróbuj ponownie później.',
           editBook: 'Nie udało się zedytować danych książki, spróbuj ponownie później.',
-          removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.'
+          removeBook: 'Nie udało się usunąć książki, spróbuj ponownie później.',
+          bringOutBook: 'Książka o podanym numerze seryjnym nie istnieje lub nie jest w stanie zostać wydana.',
+          returnBook: 'Książka o podanym numerze seryjnym nie istnieje lub nie jest w stanie zostać zwrócona.',
         }
       },
       manageDeliveries: {
@@ -168,6 +174,7 @@ export const pl = {
         requestDate: 'Data zamówienia',
         expectedDelivery: 'Przewidywana data dostawy',
         addDelivery: 'Zarejestruj nową dostawę',
+        empty: 'Brak dostaw w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
         errors: {
           amount: {
             required: 'Ilość jest wymagana',
@@ -194,7 +201,7 @@ export const pl = {
         empty: 'Brak rezerwacji w systemie.',
         startDate: 'Raport od',
         endDate: 'Raport do',
-        printRaport: 'Drukuj raport',
+        printReport: 'Drukuj raport',
       },
       manageReservations: {
         id: 'ID',

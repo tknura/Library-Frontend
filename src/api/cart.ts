@@ -28,6 +28,11 @@ interface CartSubmitError {
   hints: string
 }
 
+interface CartMeta {
+  cartId: number
+  itemsNumber: number
+}
+
 const getCartItems = async (
   instance: AxiosInstance,
   cartId: number
@@ -118,10 +123,22 @@ const useSubmitCartMutation = (
   return useMutation('submitCart', (cartId: number) => putSubmitCart(fetch, cartId), options)
 }
 
+const getCartMeta = async (instance: AxiosInstance): Promise<CartMeta> => {
+  const { data } = await instance.get('/cart/meta')
+  return data
+}
+
+const useCartMetaQuery = (options?: UseQueryOptions<CartMeta, unknown>)
+: UseQueryResult<CartMeta, unknown> => {
+  const { fetch } = useFetch()
+  return useQuery('cartMeta', () => getCartMeta(fetch), options)
+}
+
 export {
   useGetCartItemsQuery,
   useAddCartItemMutation,
   useDeleteCartItemMutation,
   useEditCartItemMutation,
-  useSubmitCartMutation
+  useSubmitCartMutation,
+  useCartMetaQuery,
 }

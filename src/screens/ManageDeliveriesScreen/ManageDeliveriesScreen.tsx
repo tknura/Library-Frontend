@@ -25,8 +25,6 @@ const ManageDeliveriesScreen = (): JSX.Element => {
 
   const [isQueryEnabled, setQueryEnabled] = useState<boolean>(true)
   const [isDeliveryModalOpen, setDeliveryModalOpen] = useState<boolean>(false)
-  const [deliveryFormInitialValues,
-    setDeliveryFormInitialValues] = useState<DeliveryFormFields | null>(null)
   const { data } = useDeliveriesQuery({
     onSuccess: () => setQueryEnabled(false),
     enabled: isQueryEnabled
@@ -41,7 +39,6 @@ const ManageDeliveriesScreen = (): JSX.Element => {
   })
 
   const handleAddButton = () => {
-    setDeliveryFormInitialValues(null)
     setDeliveryModalOpen(true)
   }
 
@@ -50,10 +47,9 @@ const ManageDeliveriesScreen = (): JSX.Element => {
   }
 
   const handleDeliveryFormSubmit = (values: DeliveryFormFields) => {
-    const mutationHandler = addDeliveryMutate
-    mutationHandler({
+    addDeliveryMutate({
       deliveryArticles: values.deliveryArticles,
-      expectedDeliveryDate: values.expectedDeliveryDate
+      expectedDeliveryDate: values.expectedDeliveryDate.toISOString()
     })
   }
 
@@ -92,7 +88,7 @@ const ManageDeliveriesScreen = (): JSX.Element => {
           {!data?.length && (
             <Styled.NoDataContainer>
               <Typography color="primary">
-                {t('screen.manageBooks.empty')}
+                {t('screen.manageDeliveries.empty')}
               </Typography>
             </Styled.NoDataContainer>
           )}
@@ -102,7 +98,6 @@ const ManageDeliveriesScreen = (): JSX.Element => {
         open={isDeliveryModalOpen}
         onClose={handleCloseDeliveryModal}
         onSubmit={handleDeliveryFormSubmit}
-        initialValues={deliveryFormInitialValues !== null ? deliveryFormInitialValues : undefined}
       />
     </Styled.RootContainer>
   )

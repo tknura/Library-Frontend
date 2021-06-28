@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
-import { CLIENT_ROLE, EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
 import { FormikHelpers, useFormik } from 'formik'
-import { MenuItem } from '@material-ui/core'
 import { useTranslation } from 'react-i18next'
 
+import { EMPLOYEE_ROLE } from 'constants/userRoles'
 import { userFormSchema } from 'schemas/userFormSchema'
 import { UserRole } from 'types/UserRole'
 import * as Styled from './UserFormModal.styles'
@@ -32,7 +31,7 @@ const defaultValues = {
   lastName: '',
   password: '',
   repeatPassword: '',
-  roles: CLIENT_ROLE,
+  roles: EMPLOYEE_ROLE,
 }
 
 const UserFormModal = ({
@@ -51,6 +50,7 @@ const UserFormModal = ({
     values,
     errors,
     touched,
+    resetForm
   } = useFormik({
     initialValues,
     onSubmit: handleSubmit,
@@ -58,12 +58,9 @@ const UserFormModal = ({
   })
 
   useEffect(() => {
-    if (initialValues) {
-      setValues(initialValues)
-    } else {
-      setValues(defaultValues)
-    }
-  }, [initialValues, setValues])
+    resetForm()
+    setValues(initialValues)
+  }, [initialValues, resetForm, setValues])
 
   const handleRoleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setFieldValue('roles', event.target.value as UserRole)
@@ -143,19 +140,8 @@ const UserFormModal = ({
             helperText={touched.roles ? t(errors.roles as string) : ''}
             onChange={handleRoleSelectChange}
             required
-            // label={t('screen.manageUsers.roles')}
             variant="outlined"
-          >
-            <MenuItem value={CLIENT_ROLE}>
-              {t(`roles.${[CLIENT_ROLE]}`)}
-            </MenuItem>
-            <MenuItem value={EMPLOYEE_ROLE}>
-              {t(`roles.${[EMPLOYEE_ROLE]}`)}
-            </MenuItem>
-            <MenuItem value={MANAGER_ROLE}>
-              {t(`roles.${[MANAGER_ROLE]}`)}
-            </MenuItem>
-          </Styled.Select>
+          />
         </Styled.Form>
       </Styled.ModalContent>
       <Modal.Actions

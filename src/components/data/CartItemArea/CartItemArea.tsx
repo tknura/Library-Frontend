@@ -57,10 +57,10 @@ const CartItemArea = ({
       <Styled.CartItemDataContainer>
         <Styled.Image src={cartItem.photoUrl || placeholderPhoto} />
         <Styled.DescriptionContainer>
-          <Styled.Text variant="h4">
+          <Styled.Text variant="h5">
             {cartItem.title || t('screen.cart.title')}
           </Styled.Text>
-          <Styled.Text variant="h5">
+          <Styled.Text variant="subtitle1">
             {cartItem.author || t('screen.cart.author')}
           </Styled.Text>
         </Styled.DescriptionContainer>

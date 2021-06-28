@@ -5,7 +5,7 @@ import { UserRole } from 'types/UserRole'
 
 interface User {
   accessToken?: string
-  userRole?: UserRole
+  userRoles?: UserRole[]
   cartId?: number
 }
 
@@ -18,10 +18,10 @@ const useAuthorization = () => {
       accessToken: newAccessToken,
     }))
   }
-  const setRole = (newUserRole: UserRole) => {
+  const setRoles = (newUserRoles: UserRole[]) => {
     setUser(prevUser => ({
       ...(prevUser || {}),
-      userRole: newUserRole,
+      userRoles: newUserRoles,
     }))
   }
   const setCartId = (newCartId: number) => {
@@ -33,16 +33,16 @@ const useAuthorization = () => {
 
   const logout = () => setUser(null)
 
-  return { setToken, setRole, setCartId, logout, user }
+  return { setToken, setRoles, setCartId, logout, user }
 }
 
 const [
   AuthProvider,
   useSetToken,
   useSetCartId,
-  useSetRole,
+  useSetRoles,
   useLogout,
-  useUserRole,
+  useUserRoles,
   useUserCartId,
   useUserLoggedIn,
   useUserAccessToken,
@@ -50,9 +50,9 @@ const [
   useAuthorization,
   value => value.setToken,
   value => value.setCartId,
-  value => value.setRole,
+  value => value.setRoles,
   value => value.logout,
-  value => value.user?.userRole,
+  value => value.user?.userRoles,
   value => value.user?.cartId,
   value => !!value.user?.accessToken,
   value => value.user?.accessToken
@@ -62,9 +62,9 @@ export {
   AuthProvider,
   useSetToken,
   useSetCartId,
-  useSetRole,
+  useSetRoles,
   useLogout,
-  useUserRole,
+  useUserRoles,
   useUserCartId,
   useUserLoggedIn,
   useUserAccessToken,

@@ -1,5 +1,12 @@
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { BookList } from 'components/data/BookList/BookCardList'
 import styled from 'styled-components'
+
+const RootContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 const Loading = styled(CircularProgress)`
   position: absolute;
@@ -8,6 +15,12 @@ const Loading = styled(CircularProgress)`
   margin: -75px;
 `
 
+const StyledBookList = styled(BookList)`
+  width: 75%;
+`
+
 export {
-  Loading
+  RootContainer,
+  Loading,
+  StyledBookList as BookList
 }
