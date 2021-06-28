@@ -174,6 +174,7 @@ export const pl = {
         requestDate: 'Data zamówienia',
         expectedDelivery: 'Przewidywana data dostawy',
         addDelivery: 'Zarejestruj nową dostawę',
+        empty: 'Brak dostaw w systemie, możesz je dodać poprzez kliknięcie przycisku "Dodaj".',
         errors: {
           amount: {
             required: 'Ilość jest wymagana',

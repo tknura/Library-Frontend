@@ -88,7 +88,7 @@ const ManageDeliveriesScreen = (): JSX.Element => {
           {!data?.length && (
             <Styled.NoDataContainer>
               <Typography color="primary">
-                {t('screen.manageBooks.empty')}
+                {t('screen.manageDeliveries.empty')}
               </Typography>
             </Styled.NoDataContainer>
           )}

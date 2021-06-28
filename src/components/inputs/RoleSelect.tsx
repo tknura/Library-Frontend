@@ -8,7 +8,7 @@ const RoleSelect = (props: SelectProps): JSX.Element => {
 
   return (
     <Select {...props}>
-      <MenuItem value={CLIENT_ROLE}>
+      <MenuItem disabled value={CLIENT_ROLE}>
         {t(`roles.${[CLIENT_ROLE]}`)}
       </MenuItem>
       <MenuItem value={EMPLOYEE_ROLE}>

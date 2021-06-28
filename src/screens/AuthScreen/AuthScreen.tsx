@@ -8,7 +8,7 @@ import { SignInForm, SignInFormFields } from 'components/forms/SignInForm/SignIn
 import { SignUpForm, SignUpFormFields } from 'components/forms/SignUpForm/SignUpForm'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { useSetCartId, useSetRoles, useSetToken, useUserAccessToken, useUserCartId, useUserRoles } from 'components/providers/AuthProvider'
-import { CLIENT_ROLE } from 'constants/userRoles'
+import { CLIENT_ROLE, MANAGER_ROLE } from 'constants/userRoles'
 import { useSignInMutation, useSignUpMutation } from 'api/auth'
 import { BOOKS_ROUTE, MANAGE_ROUTE } from 'constants/routeNames'
 import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
@@ -47,7 +47,7 @@ const AuthScreen = (): JSX.Element => {
   })
   useUsersMetaQuery({
     enabled: !!accessToken,
-    onSuccess: ({ permissions: { roles } }) => setRoles([CLIENT_ROLE]),
+    onSuccess: ({ permissions: { roles } }) => setRoles(roles.map(role => role.roleName)),
     onError: () => show({ message: t('screen.signIn.errors.generic'), type: SNACKBAR_ERROR })
   })
 

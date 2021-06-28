@@ -174,6 +174,7 @@ export const en = {
         requestDate: 'Delivery request date',
         expectedDelivery: 'Expected delivery date',
         addDelivery: 'Register new delivery',
+        empty: 'No deliveries in the system, you can add them by clicking the "Add" button.',
         errors: {
           amount: {
             required: 'Amount is required',

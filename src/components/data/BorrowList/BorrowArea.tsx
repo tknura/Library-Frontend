@@ -34,7 +34,7 @@ const BorrowArea = ({
   return (
     <TableRow key={id}>
       <TableCell>
-        <Link to={`/${BOOKS_ROUTE}/${book.id}`}>
+        <Link to={`${BOOKS_ROUTE}/${book.id}`}>
           {`${book.author}, ${book.title}`}
         </Link>
       </TableCell>
