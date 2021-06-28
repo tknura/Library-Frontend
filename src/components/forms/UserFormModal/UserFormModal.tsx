@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
-import { CLIENT_ROLE } from 'constants/userRoles'
 import { FormikHelpers, useFormik } from 'formik'
 import { useTranslation } from 'react-i18next'
 
+import { EMPLOYEE_ROLE } from 'constants/userRoles'
 import { userFormSchema } from 'schemas/userFormSchema'
 import { UserRole } from 'types/UserRole'
 import * as Styled from './UserFormModal.styles'
@@ -31,7 +31,7 @@ const defaultValues = {
   lastName: '',
   password: '',
   repeatPassword: '',
-  roles: CLIENT_ROLE,
+  roles: EMPLOYEE_ROLE,
 }
 
 const UserFormModal = ({

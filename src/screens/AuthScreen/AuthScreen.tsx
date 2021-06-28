@@ -57,7 +57,7 @@ const AuthScreen = (): JSX.Element => {
         if (userCartId) {
           history.push(BOOKS_ROUTE)
         }
-      } else {
+      } else if (userRoles?.includes(MANAGER_ROLE)) {
         history.push(MANAGE_ROUTE)
       }
     }
