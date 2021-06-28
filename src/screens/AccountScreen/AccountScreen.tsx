@@ -4,7 +4,7 @@ import { AccountDataForm } from 'components/forms/AccountDataForm/AccountDataFor
 import { BorrowList } from 'components/data/BorrowList/BorrowList'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
 import { SNACKBAR_ERROR } from 'constants/snackbarTypes'
-import { useUsersMetaQuery, useUsersQuery } from 'api/users'
+import { useUsersMetaQuery, useUserQuery } from 'api/users'
 import { useReservationsQuery } from 'api/reservations'
 import * as Styled from './AccountScreen.styles'
 
@@ -19,9 +19,7 @@ const AccountScreen = (): JSX.Element => {
   const {
     isLoading: userLoading,
     isError: userError,
-    data: usersQueryData } = useUsersQuery()
-
-  const userQueryData = usersQueryData?.users.filter(user => user.id === userId)[0]
+    data: userQueryData } = useUserQuery(userId)
 
   const { show } = useShowSnackbar()
 
@@ -41,12 +39,12 @@ const AccountScreen = (): JSX.Element => {
   })) || []
 
   const userData = {
-    id: userQueryData?.id || 0,
-    email: userQueryData?.accountCredentialsDTO.emailAddress || '',
-    username: userQueryData?.accountCredentialsDTO.username || '',
-    firstName: userQueryData?.firstName || '',
-    lastName: userQueryData?.lastName || '',
-    password: userQueryData?.accountCredentialsDTO.password || ''
+    id: userQueryData?.userDTO.id || 0,
+    email: userQueryData?.userDTO.accountCredentialsDTO.emailAddress || '',
+    username: userQueryData?.userDTO.accountCredentialsDTO.username || '',
+    firstName: userQueryData?.userDTO.firstName || '',
+    lastName: userQueryData?.userDTO.lastName || '',
+    password: userQueryData?.userDTO.accountCredentialsDTO.password || ''
   }
 
   return (

@@ -46,6 +46,10 @@ interface User {
   photoUrl?: string
 }
 
+interface UserResponse {
+  userDTO: User
+}
+
 interface UsersResponse {
   users: User[]
 }
@@ -72,8 +76,8 @@ interface RoleValues {
   userId: number
 }
 
-const getUser = async (instance: AxiosInstance, userId: number): Promise<User> => {
-  const { data } = await instance.get(`/users/${userId}`)
+const getUser = async (instance: AxiosInstance, id: number): Promise<UserResponse> => {
+  const { data } = await instance.get('/users/', { params: { id } })
   return data
 }
 
@@ -95,8 +99,8 @@ const updateUser = async (
   return data
 }
 
-const useUserQuery = (userId: number, options?: UseQueryOptions<User, unknown>)
-: UseQueryResult<User, unknown> => {
+const useUserQuery = (userId: number, options?: UseQueryOptions<UserResponse, unknown>)
+: UseQueryResult<UserResponse, unknown> => {
   const { fetch } = useFetch()
   return useQuery(['user', userId], () => getUser(fetch, userId), options)
 }
