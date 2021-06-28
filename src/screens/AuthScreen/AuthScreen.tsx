@@ -7,8 +7,15 @@ import { useUsersMetaQuery } from 'api/users'
 import { SignInForm, SignInFormFields } from 'components/forms/SignInForm/SignInForm'
 import { SignUpForm, SignUpFormFields } from 'components/forms/SignUpForm/SignUpForm'
 import { useShowSnackbar } from 'components/providers/SnackbarProviders'
-import { useSetCartId, useSetRoles, useSetToken, useUserAccessToken, useUserCartId, useUserRoles } from 'components/providers/AuthProvider'
-import { CLIENT_ROLE, MANAGER_ROLE } from 'constants/userRoles'
+import {
+  useSetCartId,
+  useSetRoles,
+  useSetToken,
+  useUserAccessToken,
+  useUserCartId,
+  useUserRoles
+} from 'components/providers/AuthProvider'
+import { CLIENT_ROLE, EMPLOYEE_ROLE, MANAGER_ROLE } from 'constants/userRoles'
 import { useSignInMutation, useSignUpMutation } from 'api/auth'
 import { BOOKS_ROUTE, MANAGE_ROUTE } from 'constants/routeNames'
 import { SNACKBAR_ERROR, SNACKBAR_SUCCESS } from 'constants/snackbarTypes'
@@ -57,7 +64,7 @@ const AuthScreen = (): JSX.Element => {
         if (userCartId) {
           history.push(BOOKS_ROUTE)
         }
-      } else if (userRoles?.includes(MANAGER_ROLE)) {
+      } else if (userRoles?.includes(MANAGER_ROLE) || userRoles?.includes(EMPLOYEE_ROLE)) {
         history.push(MANAGE_ROUTE)
       }
     }
