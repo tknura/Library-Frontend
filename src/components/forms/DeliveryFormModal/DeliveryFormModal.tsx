@@ -1,7 +1,7 @@
 import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 import { GridColDef, GridEditCellPropsParams } from '@material-ui/data-grid'
 import { FormikHelpers, useFormik } from 'formik'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Modal, ModalProps } from 'components/utillity/Modal/Modal'
@@ -37,6 +37,14 @@ const DeliveryFormModal = ({
   const { isLoading, isError, data } = useBooksQuery({ refetchOnWindowFocus: false })
   const { t } = useTranslation()
   const { show } = useShowSnackbar()
+  const [rows, setRows] = useState(
+    data?.content.map((book) => ({
+      id: book.bookId,
+      title: book.name,
+      author: book.author,
+      amount: 0
+    })) || []
+  )
 
   if (isError) {
     show({ message: t('screen.details.errorMessage'), type: SNACKBAR_ERROR })
@@ -48,13 +56,6 @@ const DeliveryFormModal = ({
     { field: 'author', headerName: t('screen.manageBooks.author'), width: 210 },
     { field: 'amount', headerName: t('screen.manageDeliveries.quantity'), width: 120, editable: true }
   ]
-
-  const rows = data?.content.map((book) => ({
-    id: book.bookId,
-    title: book.name,
-    author: book.author,
-    amount: 0
-  })) || []
 
   const {
     handleSubmit: handleFormSubmit,
@@ -76,7 +77,9 @@ const DeliveryFormModal = ({
   }
 
   const handleChangeArticles = (params: GridEditCellPropsParams) => {
-    rows[params.id as number - 1].amount = params.props.value as number
+    const tempRows = rows
+    tempRows[params.id as number - 1].amount = params.props.value as number
+    setRows(tempRows)
     const newArticles = rows.filter(row => row.amount > 0).map(row => ({
       articleDetailId: row.id,
       amount: row.amount
